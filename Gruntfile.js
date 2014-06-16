@@ -23,12 +23,17 @@ module.exports = function (grunt) {
         paths: pathConfig,
         watch: {
             compass: {
-                files: ['<%= paths.app %>/styles/**/*'],
+                files: [
+                    '<%= paths.app %>/styles/**/*'
+                ],
                 tasks: ['compass:server']
             },
             test: {
                 files: ['<%= paths.app %>/javascripts/**/*.js'],
-                tasks: ['newer:jshint:test', 'karma:server:run'],
+                tasks: [
+                    'newer:jshint:test'
+                    // 'karma:server:run'
+                ],
                 options: {
                     spawn: false
                 }
@@ -77,7 +82,10 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            dist: ['<%= paths.tmp %>', '<%= paths.dist %>'],
+            dist: [
+                '<%= paths.tmp %>', 
+                '<%= paths.dist %>'
+            ],
             server: '<%= paths.tmp %>'
         },
         useminPrepare: {
@@ -139,6 +147,7 @@ module.exports = function (grunt) {
                 sassDir: '<%= paths.app %>/styles/',
                 imagesDir: '<%= paths.app %>/styles/images',
                 fontsDir: '<%= paths.app %>/images/fonts',
+                importPath: '<%= paths.app %>/components',
                 relativeAssets: true
             },
             dist: {
@@ -267,25 +276,33 @@ module.exports = function (grunt) {
             dist: {
                 src: ['<%= paths.dist %>/**/*.html', '<%= paths.dist %>/**/*.css'],
             }
+        },
+        bower: {
+            options: {
+                exclude: ['modernizr']
+            },
+            all: {
+                rjsConfig: '<%= paths.app %>/scripts/main.js'
+            }
         }
     });
 
     grunt.registerTask('server', [
         'concurrent:server',
         'connect:server',
-        'karma:server',
+        // 'karma:server',
         'open',
         'watch'
     ]);
 
     grunt.registerTask('test', [
         'jshint:test',
-        'karma:test'
+        // 'karma:test'
     ]);
 
     grunt.registerTask('test:travis', [
         'jshint:test',
-        'karma:travis'
+        // 'karma:travis'
     ]);
 
     grunt.registerTask('build:staging', [
@@ -295,7 +312,7 @@ module.exports = function (grunt) {
         'concat',
         'uglify',
         // 'cssmin', // Uncomment this line if using none-sass style
-        // 'requirejs:dist', // Uncomment this line if using RequireJS in your project
+        'requirejs:dist', // Uncomment this line if using RequireJS in your project
         'rev',
         'copy:compass',
         'imagemin',
@@ -310,7 +327,7 @@ module.exports = function (grunt) {
         'concat',
         'uglify',
         // 'cssmin', // Uncomment this line if using none-sass style
-        // 'requirejs:dist', // Uncomment this line if using RequireJS in your project
+        'requirejs:dist', // Uncomment this line if using RequireJS in your project
         'rev',
         'copy:compass',
         'imagemin',
