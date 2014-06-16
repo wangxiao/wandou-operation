@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         open: {
             server: {
                 path: 'http://127.0.0.1:<%= connect.options.port %>',
-                app: 'Google Chrome'
+                app: 'Google Chrome Canary'
             }
         },
         clean: {
@@ -269,7 +269,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('server', [
+    grunt.registerTask('serve', [
         'concurrent:server',
         'connect:server',
         'karma:server',
