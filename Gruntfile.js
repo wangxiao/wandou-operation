@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         paths: pathConfig,
         watch: {
             compass: {
-                files: ['<%= paths.app %>/compass/**/*'],
+                files: ['<%= paths.app %>/styles/**/*'],
                 tasks: ['compass:server']
             },
             test: {
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
                     '<%= paths.app %>/**/*.html',
                     '<%= paths.app %>/javascripts/**/*.js',
                     '<%= paths.app %>/images/**/*',
-                    '<%= paths.tmp %>/stylesheets/**/*.css',
+                    '<%= paths.tmp %>/styles/**/*.css',
                     '<%= paths.tmp %>/images/**/*'
                 ],
                 options: {
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
         },
         connect: {
             options: {
-                port: 9999,
+                port: 8801,
                 hostname: '0.0.0.0'
             },
             server: {
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         open: {
             server: {
                 path: 'http://127.0.0.1:<%= connect.options.port %>',
-                app: 'Google Chrome Canary'
+                app: 'Google Chrome'
             }
         },
         clean: {
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
         },
         usemin: {
             html: ['<%= paths.dist %>/**/*.html'],
-            css: ['<%= paths.dist %>/stylesheets/**/*.css'],
+            css: ['<%= paths.dist %>/styles/**/*.css'],
             options: {
                 dirs: ['<%= paths.dist %>'],
                 assetsDirs: ['<%= paths.dist %>']
@@ -117,7 +117,7 @@ module.exports = function (grunt) {
                     src: [
                         '**/*.html',
                         '!components/**/*.html',
-                        '!compass/**/*.html',
+                        '!styles/**/*.html',
                         'images/**/*.{webp,gif,png,jpg,jpeg,ttf,otf,svg}'
                     ]
                 }]
@@ -136,14 +136,14 @@ module.exports = function (grunt) {
         },
         compass: {
             options: {
-                sassDir: '<%= paths.app %>/compass/sass',
-                imagesDir: '<%= paths.app %>/compass/images',
+                sassDir: '<%= paths.app %>/styles/',
+                imagesDir: '<%= paths.app %>/styles/images',
                 fontsDir: '<%= paths.app %>/images/fonts',
                 relativeAssets: true
             },
             dist: {
                 options: {
-                    cssDir: '<%= paths.dist %>/stylesheets',
+                    cssDir: '<%= paths.dist %>/styles',
                     generatedImagesDir: '<%= paths.tmp %>/images',
                     httpGeneratedImagesPath: '/images/',
                     outputStyle: 'compressed',
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
             },
             server: {
                 options: {
-                    cssDir: '<%= paths.tmp %>/stylesheets',
+                    cssDir: '<%= paths.tmp %>/styles',
                     generatedImagesDir: '<%= paths.tmp %>/images',
                     debugInfo: true,
                     environment: 'development'
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%= paths.dist %>/javascripts/**/*.js',
-                        '<%= paths.dist %>/stylesheets/**/*.css',
+                        '<%= paths.dist %>/styles/**/*.css',
                         '<%= paths.dist %>/images/**/*.{webp,gif,png,jpg,jpeg,ttf,otf}'
                     ]
                 }
@@ -184,6 +184,7 @@ module.exports = function (grunt) {
         requirejs: {
             dist: {
                 options: {
+                    baseUrl: '<%= paths.app %>/scripts',
                     optimize: 'uglify',
                     uglify: {
                         toplevel: true,
@@ -269,7 +270,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('serve', [
+    grunt.registerTask('server', [
         'concurrent:server',
         'connect:server',
         'karma:server',
