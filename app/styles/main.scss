@@ -1,6 +1,17 @@
+@import "compass";
 $icon-font-path: "../components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 @import "../components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+@import "common/base";
 
-h1 {
-    color: red;
+.btn:hover {
+    @include transition(opacity, 0.4s);
+    opacity: 0.8;
 }
+.btn:active {
+    opacity: 1;
+}
+
+@import "common/account-header";
+@import "common/sidebar";
+
+@import "auth/main";

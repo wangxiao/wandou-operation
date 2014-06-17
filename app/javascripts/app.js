@@ -1,26 +1,39 @@
 define([
     'angular',
     'angularRoute',
-    'text!templates/a.html',
-    'jquery'
+    'jquery',
+    'text!templates/auth/sign-in.html',
+    'auth/main',
+    'text!templates/index/index.html',
+    'index/main',
+    'common/main'
 ], function(
     angular,
     angularRoute,
-    aTpl,
-    $
+    $,
+    signInTpl,
+    wdAuth,
+    indexTpl,
+    wdIndex,
+    wdCommon
 ) {
 'use strict';
-
     angular
-    .module('wdApp', ['ngRoute'])
+    .module('wdApp', ['ngRoute', 'wdAuth', 'wdIndex', 'wdCommon'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/wangxiao', {
-                template: aTpl
+            .when('/auth', {
+                template: signInTpl,
+                controller: 'wdLdapCtrl'
+            })
+            .when('/index', {
+                template: indexTpl,
+                controller: 'wdIndexCtrl'
             })
             .otherwise({
                 redirectTo: '/'
             });
     });
+    // 手工初始化 wdApp，一个 element 只能被初始化一次。
     angular.bootstrap(document, ['wdApp']);
 });

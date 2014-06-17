@@ -1,0 +1,42 @@
+$accountHeaderHeight: 50px;
+.account-header {
+    background-color: #fff;
+    padding: 0px 20px 0px 20px;
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    height: $accountHeaderHeight;
+    line-height: $accountHeaderHeight;
+    border-bottom: 1px solid $border-gray;
+    .left {
+        display: inline-block;
+        float: left;
+        .name {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .status {
+            display: inline-block;
+            color: $standard-green;
+            font-size: 15px;
+            margin-left: 5px;
+        }
+    }
+    .right {
+        display: inline-block;
+        float: right;
+        .email {
+            display: inline-block;
+        }
+        .sign-out-btn {
+            margin-left: 5px;
+            display: inline-block;
+            color: $standard-blue;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

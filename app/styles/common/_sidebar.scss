@@ -1,0 +1,35 @@
+.sidebar {
+    position: absolute;
+    top: $accountHeaderHeight;
+    margin: 20px 0px 0px 10px;
+    width: 200px;
+    .group {
+        list-style: none;
+        padding: 10px 10px 10px 20px;
+        border-bottom: 1px solid $border-gray;
+        &:last-child {
+            border-bottom: none;
+        }
+        .title {
+            font-size: 17px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .item {
+            color: $standard-green;
+            font-size: 13px;
+            line-height: 23px;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+            .num {
+                background-color: $standard-green;
+                color: #fff;
+                padding: 1px 3px 1px 3px; 
+                margin-left: 8px;
+                font-size: 8px;
+            }
+        }
+    }
+}
