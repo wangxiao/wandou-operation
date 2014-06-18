@@ -1,18 +1,15 @@
+/* 框架基础 */
 @import "compass";
 $icon-font-path: "../components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 @import "../components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+
+/* 公共基础 */
 @import "common/base";
-
-.btn:hover {
-    @include transition(opacity, 0.4s);
-    opacity: 0.8;
-}
-.btn:active {
-    opacity: 1;
-}
-
 @import "common/account-header";
 @import "common/sidebar";
 @import "common/footer";
+@import "common/common";
 
+/* 模块开始 */
 @import "auth/main";
+@import "index/main";

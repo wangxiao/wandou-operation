@@ -1,0 +1,8 @@
+.wd-content {
+    position: absolute;
+    top: $accountHeaderHeight + 10px;
+    left: $sidebarWidth + 40px;
+    right: 10px;
+    min-width: 850px;
+    margin-bottom: $footerHeight + 20px;
+}

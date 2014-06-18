@@ -1,8 +1,9 @@
+$sidebarWidth: 200px;
 .sidebar {
     position: absolute;
-    top: $accountHeaderHeight + 10px;
+    top: $accountHeaderHeight;
     margin: 20px 0px 0px 10px;
-    width: 200px;
+    width: $sidebarWidth;
     .group {
         list-style: none;
         padding: 10px 10px 10px 20px;

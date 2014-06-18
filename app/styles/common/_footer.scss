@@ -1,9 +1,11 @@
+$footerHeight: 37px;
 .footer {
     position: fixed;
     bottom: 0px;
     background-color: $background-gray;
     text-align: center;
     width: 100%;
+    height: $footerHeight;
     padding: 10px 0px;
     .help {
         margin: 0px;

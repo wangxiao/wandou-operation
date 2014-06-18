@@ -1,5 +1,6 @@
 $accountHeaderHeight: 50px;
 .account-header {
+    z-index: 200;
     background-color: #fff;
     padding: 0px 20px 0px 20px;
     position: fixed;
@@ -8,6 +9,7 @@ $accountHeaderHeight: 50px;
     height: $accountHeaderHeight;
     line-height: $accountHeaderHeight;
     border-bottom: 1px solid $border-gray;
+    box-shadow: 0px 0px 15px $border-gray;
     .left {
         display: inline-block;
         float: left;
