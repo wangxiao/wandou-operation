@@ -2,25 +2,46 @@ define([
     'angular',
     'angularRoute',
     'jquery',
+    'bootstrapModal',
     'text!templates/auth/sign-in.html',
     'auth/main',
     'text!templates/index/index.html',
     'index/main',
-    'common/main'
+    'common/main',
+    'text!templates/monitor/list-all.html',
+    'monitor/main',
+    'text!templates/rules/rules.html',
+    'rules/main',
+    'text!templates/search/search-filter.html',
+    'search/main'
 ], function(
     angular,
     angularRoute,
     $,
+    bootstrapModal,
     signInTpl,
     wdAuth,
     indexTpl,
     wdIndex,
-    wdCommon
+    wdCommon,
+    monitorTpl,
+    wdMonitor,
+    rulesTpl,
+    wdRules,
+    searchFilterTpl,
+    wdSearch
 ) {
 'use strict';
     angular
-    .module('wdApp', ['ngRoute', 'wdAuth', 'wdIndex', 'wdCommon'])
-    .config(function ($routeProvider) {
+    .module('wdApp', [
+        'ngRoute', 
+        'wdAuth', 
+        'wdIndex', 
+        'wdCommon', 
+        'wdMonitor', 
+        'wdRules',
+        'wdSearch'
+    ]).config(function ($routeProvider) {
         $routeProvider
             .when('/auth', {
                 template: signInTpl,
@@ -29,6 +50,18 @@ define([
             .when('/index', {
                 template: indexTpl,
                 controller: 'wdIndexCtrl'
+            })
+            .when('/monitor', {
+                template: monitorTpl,
+                controller: 'wdMonitorCtrl'
+            })
+            .when('/rules', {
+                template: rulesTpl,
+                controller: 'wdRulesCtrl'
+            })
+            .when('/search-filter', {
+                template: searchFilterTpl,
+                controller: 'wdSearchFilterCtrl'
             })
             .otherwise({
                 redirectTo: '/'

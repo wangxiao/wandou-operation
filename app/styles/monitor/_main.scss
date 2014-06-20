@@ -1,0 +1,153 @@
+.monitor {
+    .tips {
+        display: block;
+        margin-bottom: 10px;
+        .num {
+            color: $standard-green;
+            margin-left: 5px;
+            margin-right: 10px;
+        }
+    }
+    .toolbar {
+        height: 50px;
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+            select {
+                margin-right: 10px;
+            }
+            .page-label {
+                margin-left: 20px;
+            }
+            .page-input {
+                width: 30px;
+                height: 20px;
+                padding: 1px 2px 1px 2px;
+            }
+        }
+        .edit-all-btn {
+            background-color: #dfdfdf;
+            margin-left: 30px;
+            padding: 2px 5px 2px 5px;
+            font-size: 12px;
+        }
+    }
+    .edit-more-toolbar {
+        border: 1px solid $border-gray;
+        background-color: $background-gray;
+        padding: 10px 15px 10px 15px;
+        margin-bottom: 20px;
+        .btn {
+            background-color: #999;
+            border-radius: 0px;
+            height: 20px;
+            line-height: 20px;
+            padding: 0px 20px;
+            font-size: 13px;
+            margin-left: 25px;
+        }
+        .finish-btn {
+            background-color: $standard-green;
+            color: #fff;
+        }
+    }
+    .monitor-item {
+        .header {
+            p {
+                margin-right: 15px;
+                line-height: 25px;
+            }
+        }
+        .body {
+            .category-list {
+                padding: 10px 15px 10px 15px;
+                border-right: 1px solid $border-gray;
+                width: 20%;
+                float: left;
+                .item {
+                    color: $standard-green;
+                }
+            }
+            .old-list {
+                padding: 10px 15px 10px 15px;
+                border-right: 1px solid $border-gray;
+                width: 25%;
+                float: left;
+                .item {
+                    color: #888;
+                }
+            }
+            .new-list {
+                padding: 10px 15px 10px 15px;
+                border-right: 1px solid $border-gray;
+                width: 55%;
+                float: left;
+            }
+        }
+        .footer {
+            height: 40px;
+            line-height: 40px;
+            padding: 0px 15px;
+            font-size: 13px;
+            .left {
+                width: 50%;
+                float: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                .info-icon {
+                    color: #666;
+                    font-size: 16px;
+                }
+            }
+            .right {
+                float: right;
+                height: 100%;
+                p {
+                    margin-left: 5px;
+                    cursor: pointer;
+                    border-right: 1px solid #000;
+                    padding-right: 10px;
+                }
+                .publish {
+                    color: $standard-green;
+                    border: none;
+                }
+                .setting-icon {
+                    display: inline-block;
+                    height: 40px;
+                    line-height: 40px;
+                    border-left: 1px solid $border-gray;
+                    font-size: 16px;
+                    vertical-align: top;
+                    padding-left: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .footer {
+        margin-top: 20px;
+        overflow: hidden;
+        .left {
+            float: left;
+            .btn {
+                background-color: $standard-green;
+                color: #fff;
+                border-radius: 0px;
+                height: 24px;
+                line-height: 24px;
+                padding: 0px 20px;
+                font-size: 13px;
+                margin-left: 25px;                
+            }
+        }
+        .right {
+            float: right;
+            .pages-btns {
+                color: $standard-green;
+            }
+        }
+    }
+}

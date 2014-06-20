@@ -1,10 +1,4 @@
 .index {
-    h1 {
-        font-size: 25px;
-        color: $standard-green;
-        font-weight: 300;
-        margin: 15px 0px 25px 0px;
-    }
     .title {
         font-size: 18px;
         margin-bottom: 10px;
@@ -17,11 +11,24 @@
             border: none;
         }
         .top-chose {
-            width: auto;
-            height: 27px;
-            font-size: 12px;
-            color: #b0b0b0;
+            float: left;
+            display: inline-block;
             margin: 18px 0px 15px 20px;
+        }
+        .update {
+            display: inline-block;
+            float: right;
+            color: #888;
+            font-size: 13px;
+            margin: 18px 20px 15px 0px;
+            .update-btn {
+                margin-left: 30px;
+                color: $standard-green;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
         .data-table {
             margin: 0px;

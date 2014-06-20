@@ -1,0 +1,19 @@
+#wd-modal-id {
+    .modal-content {
+        .modal-header {
+            border: none;
+        }
+        .modal-footer {
+            border: none;
+        }
+        .btn-close {
+            background-color: $standard-green;
+            color: #fff;
+            border-radius: 0px;
+            height: 25px;
+            line-height: 25px;
+            font-size: 13px;
+            padding: 0px 20px;
+        }
+    }
+}

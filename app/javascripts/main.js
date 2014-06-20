@@ -1,16 +1,16 @@
 require.config({
     paths: {
-        bootstrap: '../components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap',
+        jquery: '../components/jquery/dist/jquery',
         angular: '../components/angular/angular',
         angularRoute: '../components/angular-route/angular-route',
-        jquery: '../components/jquery/dist/jquery',
+        bootstrapModal: '../components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal',
         underscore: '../components/underscore/underscore',
         text: '../components/requirejs-text/text',
         domready: '../components/requirejs-domready/domReady',
         templates: '../templates'
     },
     shim: {
-        bootstrap: {
+        bootstrapModal: {
             deps: [
                 'jquery'
             ]

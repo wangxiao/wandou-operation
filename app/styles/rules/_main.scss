@@ -1,0 +1,64 @@
+.rules-tpl {
+    .add-rule-btn {
+        background-color: $background-gray;
+        border-radius: 0px;
+    }
+    .add-rule-form {
+        .body {
+            input, select {
+                color: #000;
+            }
+            ul {
+                float: left;
+                margin-right: 30px;
+                li {
+                    height: 35px;
+                    line-height: 35px;
+                }
+            }
+            .title {
+                color: $standard-green;
+                margin-right: 10px;
+            }
+            .left {
+                float: left;
+                width: 30%;
+                border-right: 1px solid $border-gray;
+                padding: 20px 20px;
+                ul {
+                    margin-right: 0px;
+                    text-align: right;
+                }
+            }
+            .right {
+                padding: 20px 20px;
+                float: left;
+            }
+        }
+    }
+
+    .file-rule-form {
+        .body {
+            padding: 15px 20px;
+        }
+    }
+
+    .file-rule-form, .add-rule-form {
+        margin-top: 20px;
+        .footer {
+            .btns {
+                float: right;
+                p {
+                    cursor: pointer;
+                    border-right: 1px solid #000;
+                    margin-right: 5px;
+                    padding-right: 5px;
+                }
+                .finish {
+                    border: none;
+                    color: $standard-green;
+                }
+            }
+        }        
+    }
+}

@@ -1,0 +1,23 @@
+.search-tpl {
+    .search-form {
+        background-color: $background-gray;
+        padding: 20px 15px;
+        overflow: hidden;
+        select {
+            color: #000;
+        }
+        ul {
+            float: left;
+            color: #000;
+            width: 16%;
+            padding-right: 10px;
+            &.title-list {
+                text-align: right;
+            }
+            li {
+                height: 36px;
+                line-height: 36px;
+            }
+        }
+    }
+}

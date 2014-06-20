@@ -2,12 +2,16 @@ define([
     'angular',
     './directives/account-header',
     './directives/sidebar',
-    './directives/footer'
+    './directives/footer',
+    './directives/modal',
+    './directives/modal-btn'
 ], function(
     angular,
     accountHeader,
     sidebar,
-    footer
+    footer,
+    modal,
+    modalBtn
 ) {
 'use strict';
 
@@ -15,7 +19,9 @@ define([
         .module('wdCommon', [])
         .directive('wdAccountHeader', accountHeader)
         .directive('wdSidebar', sidebar)
-        .directive('wdFooter', footer);
+        .directive('wdFooter', footer)
+        .directive('wdModal', modal)
+        .directive('wdModalBtn', modalBtn);
 
 // 结束
 });
