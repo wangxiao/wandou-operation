@@ -1,6 +1,8 @@
 define([
+        'underscore',
         'text!templates/common/sidebar.html'
     ], function(
+        _,
         template
     ) {
 'use strict';
@@ -10,9 +12,14 @@ return [function() {
         template: template,
         scope: true,
         replace: true,
-        controller: ['$scope',
-        function($scope) {
-
+        controller: ['$scope', 'wdSidebarSer',
+        function($scope, wdSidebarSer) {
+            $scope.monitorList = {};
+            wdSidebarSer.getCounterListNum().then(function(data) {
+                _.each(data, function(v){
+                    $scope.monitorList[v.name] = v.value;
+                });
+            });
         }],
         link: function($scope, $element, $attrs, $controller) {
 

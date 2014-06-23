@@ -32,7 +32,11 @@
         }
         .data-table {
             margin: 0px;
+            th {
+                text-align: center;
+            }
             .item {
+                text-align: center;
                 color: #888;
             }
         }

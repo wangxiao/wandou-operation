@@ -1,15 +1,18 @@
 define([
     'angular',
-    './controllers/index'
+    './controllers/index',
+    './services/index'
 ], function(
     angular,
-    indexCtrl
+    indexCtrl,
+    indexSer
 ) {
 'use strict';
 
     angular
         .module('wdIndex', [])
-        .controller('wdIndexCtrl', indexCtrl);
+        .controller('wdIndexCtrl', indexCtrl)
+        .factory('wdIndexSer', indexSer);
 
 // 结束
 });

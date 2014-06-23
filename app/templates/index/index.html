@@ -4,53 +4,39 @@
     <h1>首页</h1>
     <div class="title">数据库总览</div>
     <div class="database-index">
-        <select class="top-chose form-control">
-            <option>TOP 2000</option>
-        </select>
+        <select class="top-chose form-control" ng-model="topNum" ng-options="num.name for num in topNumOptions"></select>
         <div class="update">
-            <p>上次更新：2014-06-18</p>
-            <p class="update-btn">更新到最新</p>
+            <p>上次更新：{{updateTime}}</p>
+            <p class="update-btn" ng-click="updateCoverage()">更新到最新</p>
         </div>
         <table class="data-table table table-striped">
             <tr>
                 <th></th>
-                <th>WDJ</th>
-                <th>竞品1</th>
-                <th>竞品2</th>
-                <th>竞品3</th>
-                <th>竞品4</th>
+                <th ng-repeat="item in coverageList">{{item.source}}</th>
             </tr>
             <tr>
                 <td>数据总库</td>
-                <td class="item">123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.total}}</td>
             </tr>
             <tr>
                 <td>应用主目录</td>
-                <td class="item">123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.softDetailNum}}</td>
             </tr>
             <tr>
                 <td>应用缓存目录</td>
-                <td class="item">123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.cacheNum}}</td>
             </tr>
             <tr>
                 <td>广告缓存目录</td>
-                <td class="item">123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
-                <td class="item">123123123</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.adPathNum}}</td>
+            </tr>
+            <tr>
+                <td>正则应用缓存目录</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.regCacheNum}}</td>
+            </tr>
+            <tr>
+                <td>系统缓存路径目录</td>
+                <td class="item" ng-repeat="item in coverageList">{{item.systemCacheNum}}</td>
             </tr>
         </table>
     </div>
@@ -59,21 +45,24 @@
         <div class="item">
             <div class="block orange">
                 <i class="glyphicon glyphicon-share-alt"></i>
-                <p class="num">1003</p>
+                <p ng-if="!counterList.monitorAll" class="coming">COMING SOON</p>
+                <p ng-if="counterList.monitorAll" class="num">{{counterList.monitorAll}}</p>
             </div>
             <p class="title">竞品数据待审核</p>
         </div>
         <div class="item">
             <div class="block pink">
                 <i class="glyphicon glyphicon-warning-sign"></i>
-                <p class="coming">COMING SOON</p>
+                <p ng-if="!counterList.warningAll" class="coming">COMING SOON</p>
+                <p ng-if="counterList.warningAll" class="num">{{counterList.warningAll}}</p>
             </div>
             <p class="title">警报待处理</p>
         </div>
         <div class="item">
             <div class="block blue">
                 <i class="glyphicon glyphicon-plus"></i>
-                <p class="coming">COMING SOON</p>
+                <p ng-if="!counterList.miningAll" class="coming">COMING SOON</p>
+                <p ng-if="counterList.miningAll" class="num">{{counterList.miningAll}}</p>
             </div>
             <p class="title">新条目待标注</p>
         </div>

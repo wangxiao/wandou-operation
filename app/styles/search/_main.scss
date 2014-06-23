@@ -1,8 +1,10 @@
 .search-tpl {
     .search-form {
+        position: relative;
         background-color: $background-gray;
         padding: 20px 15px;
         overflow: hidden;
+        margin-bottom: 15px;
         select {
             color: #000;
         }
@@ -17,6 +19,107 @@
             li {
                 height: 36px;
                 line-height: 36px;
+            }
+        }
+        .btns {
+            position: absolute;
+            right: 80px;
+            bottom: 20px;
+            .btn {
+                color: #000;
+                background-color: #cfcfcf;
+                height: 26px;
+                line-height: 26px;
+                padding: 0px 40px;
+                border-radius: 0px;
+                margin-left: 20px;
+                &.search-btn {
+                    color: #fff;
+                    background-color: $standard-green;
+                }
+            }
+        }
+    }
+    /* search-form end */
+    .toolbar {
+        overflow: hidden;
+        .left {
+            float: left;
+            .num {
+                color: $standard-green;
+            }
+        }
+        .right {
+            float: right;
+        }
+    }
+    .result-card {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        .footer {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            .edit-btn {
+                float: right;
+                border-left: 1px solid $border-gray;
+                height: 35px;
+                padding-left: 15px;
+                font-size: 17px;
+                line-height: 35px;
+                cursor: pointer;
+            }
+        }
+        table {
+            th {
+                text-align: center;
+                color: $standard-green;
+            }
+            td {
+                text-align: center;
+                border: none;
+            }
+        }
+    }
+    /* result-card end */
+    .pages {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        p {
+            cursor: pointer;
+            color: $standard-green;
+        }
+        .num {
+            margin: 3px;
+        }
+    }
+
+    .sql-form {
+        padding: 20px 15px;
+        margin-bottom: 10px;
+        background-color: $background-gray;
+        overflow: hidden;
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .btns {
+            float: right;
+            margin-top: 10px;
+            .btn {
+                color: #000;
+                background-color: #cfcfcf;
+                height: 26px;
+                line-height: 26px;
+                padding: 0px 40px;
+                border-radius: 0px;
+                margin-left: 20px;
+                &.search-btn {
+                    color: #fff;
+                    background-color: $standard-green;
+                }
             }
         }
     }

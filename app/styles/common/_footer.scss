@@ -1,5 +1,6 @@
 $footerHeight: 37px;
 .wd-footer-class {
+    z-index: 200;
     position: fixed;
     bottom: 0px;
     background-color: $background-gray;

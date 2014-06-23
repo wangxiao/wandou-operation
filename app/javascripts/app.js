@@ -13,7 +13,8 @@ define([
     'text!templates/rules/rules.html',
     'rules/main',
     'text!templates/search/search-filter.html',
-    'search/main'
+    'search/main',
+    'text!templates/search/sql-search.html'
 ], function(
     angular,
     angularRoute,
@@ -29,7 +30,8 @@ define([
     rulesTpl,
     wdRules,
     searchFilterTpl,
-    wdSearch
+    wdSearch,
+    sqlSearchTpl
 ) {
 'use strict';
     angular
@@ -41,7 +43,7 @@ define([
         'wdMonitor', 
         'wdRules',
         'wdSearch'
-    ]).config(function ($routeProvider) {
+    ]).config(function ($routeProvider, $httpProvider) {
         $routeProvider
             .when('/auth', {
                 template: signInTpl,
@@ -63,10 +65,30 @@ define([
                 template: searchFilterTpl,
                 controller: 'wdSearchFilterCtrl'
             })
+            .when('/sql-search', {
+                template: sqlSearchTpl,
+                controller: 'wdSqlSearchCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
+
+        // 全局 $http 请求配置。
+        $httpProvider.interceptors.push(function(wdConfig) {
+            return {
+                'request': function(config) {
+                    config.timeout = wdConfig.httpTimeout;
+                    config.url = wdConfig.apiUrl + config.url;
+                    return config;
+                },
+
+                'response': function(response) {
+                    return response.data;
+                }
+            };
+        });
     });
+
     // 手工初始化 wdApp，一个 element 只能被初始化一次。
     angular.bootstrap(document, ['wdApp']);
 });
