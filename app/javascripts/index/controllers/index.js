@@ -4,7 +4,7 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdIndexSer', function($scope, wdIndexSer) {
+return ['$scope', 'wdIndexSer', '$location', function($scope, wdIndexSer, $location) {
 
     $scope.topNumOptions = [
         {name: '全部', value: 0},
@@ -13,7 +13,7 @@ return ['$scope', 'wdIndexSer', function($scope, wdIndexSer) {
         {name: 'TOP500', value: 500},
         {name: 'TOP200', value: 200},
         {name: 'TOP100', value: 100},
-        {name: 'TOP50', value: 50}                
+        {name: 'TOP50', value: 50}
     ];
 
     // 选择数据库总览的数量，默认全部是 0 。
@@ -48,6 +48,10 @@ return ['$scope', 'wdIndexSer', function($scope, wdIndexSer) {
                 $scope.updateTime = formatTime(data[0].updateTime);
             }
         });
+    };
+
+    $scope.goToMonitor = function() {
+        $location.path('/monitor-all');
     };
 }];
 });

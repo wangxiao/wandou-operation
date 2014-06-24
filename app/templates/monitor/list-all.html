@@ -2,7 +2,12 @@
 <div wd-sidebar></div>
 <div class="monitor wd-content">
     <h1>竞品监控 - 全部竞品项目</h1>
-    <p class="tips">今日审核<span class="num">12312</span>剩余<span class="num">12312</span></p>
+    <p class="tips">
+        今日审核
+        <span class="num">{{counterList.todayReviewed}}</span>
+        剩余
+        <span class="num">{{counterList.monitorAll}}</span>
+    </p>
     <div class="toolbar">
         <div class="left">
             <input type="checkbox" class="form-control">
@@ -10,15 +15,9 @@
             <div class="edit-all-btn btn">批量快速编辑</div>
         </div>
         <div class="right">
-            <select class="form-control">
-                <option>应用主目录</option>
-            </select>
-            <select class="form-control">
-                <option>来自竞品1</option>
-            </select>
-            <select class="form-control">
-                <option>按照下载量排序</option>
-            </select>
+            <select class="form-control" ng-model="pathType" ng-options="title for title in pathTypeOptions"></select>
+            <select class="form-control" ng-model="source" ng-options="title for title in sourceOptions"></select>
+            <select class="form-control" ng-model="sort" ng-options="title for title in sortOptions"></select>
             <p class="page-label">每页展示</p>
             <input class="page-input" type="text" class="form-control" value="">
             <p>条</p>
@@ -30,43 +29,43 @@
         <div class="btn">自动生成</div>
         <div class="finish-btn btn">完成编辑</div>
     </div>
-    <div class="monitor-item wd-show-box">
+    <div class="monitor-item wd-show-box" ng-repeat="item in dataList">
         <div class="header">
             <input type="checkbox">
-            <p class="id">id:123123</p>
-            <p>应用目录</p>
-            <p>微信</p>
-            <p>1231231下载</p>
+            <p class="id">id:{{item.id}}</p>
+            <p ng-if="item.pathType">{{pathTypeOptions[item.pathType]}}</p>
+            <p ng-if="item.appName">{{item.appName}}</p>
+            <p ng-if="item.installCount">{{item.installCount}} 次下载</p>
             <br>
-            <p>包名：com.xxx.tab</p>
-            <p>正则包名：/com.xxx.tab</p>
-            <p>主路径：/storage/wangxiao/wangxiao</p>
-            <p>次路径：/wangxiao/wangxiao/wangxiao</p>
+            <p ng-if="item.pkgName">包名：{{item.pkgName}}</p>
+            <p ng-if="item.regPkgName">正则包名：{{item.regPkgName}}</p>
+            <p ng-if="item.filePath">主路径：{{item.filePath}}</p>
+            <p ng-if="item.subPath">次路径：{{item.subPath}}</p>
         </div>
         <div class="body">
             <ul class="category-list">
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
+                <li class="item">文件类别</li>
+                <li class="item">项目名</li>
+                <li class="item">文件描述</li>
+                <li class="item">清理风险</li>
+                <li class="item">清理风险缩写</li>
+                <li class="item">风险级别</li>
             </ul>
             <ul class="old-list">
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
+                <li class="item">{{item.srcContentType || '（空）'}}</li>
+                <li class="item">{{item.srcItemName || '（空）'}}</li>
+                <li class="item">{{item.srcDesc || '（空）'}}</li>
+                <li class="item">{{item.srcAlertInfo || '（空）'}}</li>
+                <li class="item">{{item.srcSimpleAlertInfo || '（空）'}}</li>
+                <li class="item">{{adviceLevelOptions[item.srcAdviceLevel] || '（空）'}}</li>
             </ul>
-            <ul class="new-list">
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
-                <li class="item">文件类别王潇王潇</li>
+            <ul class="old-list">
+                <li class="item">{{item.contentType || '（空）'}}</li>
+                <li class="item">{{item.itemName || '（空）'}}</li>
+                <li class="item">{{item.desc || '（空）'}}</li>
+                <li class="item">{{item.alertInfo || '（空）'}}</li>
+                <li class="item">{{item.simpleAlertInfo || '（空）'}}</li>
+                <li class="item">{{adviceLevelOptions[item.adviceLevel] || '（空）'}}</li>
             </ul>
         </div>
         <div class="footer">
@@ -105,3 +104,4 @@
 <!-- <div class="test-btn btn" wd-modal-btn data-title="点击"></div> -->
 <div wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}"></div>
 
+<div wd-loading data-show="{{showLoading}}"></div>

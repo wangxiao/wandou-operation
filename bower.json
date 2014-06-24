@@ -9,6 +9,7 @@
     "underscore": "~1.6.0",
     "bootstrap-sass-official": "~3.1.1+2",
     "requirejs-text": "~2.0.12",
-    "requirejs-domready": "~2.0.1"
+    "requirejs-domready": "~2.0.1",
+    "Snap.svg": "~0.3.0"
   }
 }

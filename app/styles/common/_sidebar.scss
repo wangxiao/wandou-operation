@@ -21,6 +21,9 @@ $sidebarWidth: 200px;
             font-size: 13px;
             line-height: 23px;
             cursor: pointer;
+            a {
+                color: $standard-green;
+            }
             &:hover {
                 text-decoration: underline;
             }

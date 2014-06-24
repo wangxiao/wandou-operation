@@ -5,6 +5,7 @@ define([
     './directives/footer',
     './directives/modal',
     './directives/modal-btn',
+    './directives/loading',
     './services/sidebar',
     './services/config'
 ], function(
@@ -14,6 +15,7 @@ define([
     footer,
     modal,
     modalBtn,
+    loading,
     sidebarSer,
     config
 ) {
@@ -26,6 +28,7 @@ define([
         .directive('wdFooter', footer)
         .directive('wdModal', modal)
         .directive('wdModalBtn', modalBtn)
+        .directive('wdLoading', loading)
         .factory('wdSidebarSer', sidebarSer)
         .factory('wdConfig', config);
 

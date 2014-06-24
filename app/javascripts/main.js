@@ -5,6 +5,8 @@ require.config({
         angularRoute: '../components/angular-route/angular-route',
         bootstrapModal: '../components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal',
         underscore: '../components/underscore/underscore',
+        snapSvg: '../components/Snap.svg/dist/snap.svg',
+        svgLoader: './base/svgLoader',
         text: '../components/requirejs-text/text',
         domready: '../components/requirejs-domready/domReady',
         templates: '../templates'
@@ -31,6 +33,16 @@ require.config({
         },
         underscore: {
             exports: '_'
+        },
+        snapSvg: {
+            exports: 'Snap'
+        },
+        svgLoader: {
+            exports: 'SVGLoader',
+            deps: [
+                'snapSvg',
+                'jquery'
+            ]
         }
     }
 });

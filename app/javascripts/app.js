@@ -53,9 +53,9 @@ define([
                 template: indexTpl,
                 controller: 'wdIndexCtrl'
             })
-            .when('/monitor', {
+            .when('/monitor-all', {
                 template: monitorTpl,
-                controller: 'wdMonitorCtrl'
+                controller: 'wdMonitorAllCtrl'
             })
             .when('/rules', {
                 template: rulesTpl,
