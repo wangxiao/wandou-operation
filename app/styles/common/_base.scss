@@ -6,7 +6,7 @@ $standard-orange: #e9bf31;
 $standard-wheat: #d4b526;
 $standard-olive-green: #79a800;
 $standard-blue-green: #34a97d;
-$standard-light-green: #95c60e;
+$standard-light-green: #ebf6e9;
 $standard-blue: #3788bb;
 
 /* 其他公用颜色 */
@@ -27,6 +27,9 @@ body {
 }
 
 /* 按钮基本 */
+.btn {
+    border-radius: 0px;
+}
 .btn:hover {
     @include transition(opacity, 0.4s);
     opacity: 0.8;

@@ -10,9 +10,9 @@
     </p>
     <div class="toolbar">
         <div class="left">
-            <input type="checkbox" class="form-control">
+            <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">
             <p>全选</p>
-            <div class="edit-all-btn btn">批量快速编辑</div>
+            <div class="edit-all-btn btn" ng-disabled="batchEditBtnDisabled" ng-click="batchEdit()">批量快速编辑</div>
         </div>
         <div class="right">
             <select class="form-control" ng-model="pathType" ng-options="title for title in pathTypeOptions"></select>
@@ -23,15 +23,15 @@
             <p>条</p>
         </div>
     </div>
-    <div class="edit-more-toolbar">
+    <div class="edit-more-toolbar" ng-if="batchEditStatus">
         <p>批量编辑</p>
-        <div class="btn">撤销编辑</div>
+        <div class="btn" ng-click="cancelBatchEdit()">撤销编辑</div>
         <div class="btn">自动生成</div>
         <div class="finish-btn btn">完成编辑</div>
     </div>
     <div class="monitor-item wd-show-box" ng-repeat="item in dataList">
         <div class="header">
-            <input type="checkbox">
+            <input type="checkbox" ng-checked="item.uiChecked" ng-click="checkedItem(item)">
             <p class="id">id:{{item.id}}</p>
             <p ng-if="item.pathType">{{pathTypeOptions[item.pathType]}}</p>
             <p ng-if="item.appName">{{item.appName}}</p>
@@ -52,33 +52,55 @@
                 <li class="item">风险级别</li>
             </ul>
             <ul class="old-list">
-                <li class="item">{{item.srcContentType || '（空）'}}</li>
+                <li class="item">{{item.srcContentType}}</li>
                 <li class="item">{{item.srcItemName || '（空）'}}</li>
                 <li class="item">{{item.srcDesc || '（空）'}}</li>
                 <li class="item">{{item.srcAlertInfo || '（空）'}}</li>
                 <li class="item">{{item.srcSimpleAlertInfo || '（空）'}}</li>
                 <li class="item">{{adviceLevelOptions[item.srcAdviceLevel] || '（空）'}}</li>
             </ul>
-            <ul class="old-list">
-                <li class="item">{{item.contentType || '（空）'}}</li>
+            <ul class="old-list" ng-if="!item.uiEditStatus">
+                <li class="item">{{item.contentType}}</li>
                 <li class="item">{{item.itemName || '（空）'}}</li>
                 <li class="item">{{item.desc || '（空）'}}</li>
                 <li class="item">{{item.alertInfo || '（空）'}}</li>
                 <li class="item">{{item.simpleAlertInfo || '（空）'}}</li>
                 <li class="item">{{adviceLevelOptions[item.adviceLevel] || '（空）'}}</li>
             </ul>
+            <ul class="old-list" ng-if="item.uiEditStatus">
+                <li class="item"><select></select></li>
+                <li class="item">
+                    <input type="text" class="form-control" ng-model="item.itemName">
+                </li>
+                <li class="item">
+                    <input type="text" class="form-control" ng-model="item.desc">
+                </li>
+                <li class="item">
+                    <input type="text" class="form-control" ng-model="item.alertInfo">
+                </li>
+                <li class="item">
+                    <input type="text" class="form-control" ng-model="item.simpleAlertInfo">
+                </li>
+                <li class="item">
+                    <select class="form-control" ng-model="adviceLevelOptions[item.adviceLevel]" ng-options="title for title in adviceLevelOptions"></select>
+                </li>
+            </ul>
         </div>
         <div class="footer">
             <div class="left">
-                <i class="info-icon glyphicon glyphicon-info-sign"></i>
+                <i wd-modal-btn data-title="" class="info-icon glyphicon glyphicon-time" ng-click="showDetailHistory(item.id)"></i>
                 <p class="info">竞品 1 新索拉卡解放东路就阿里山的减肥啦</p>
             </div>
             <div class="right">
-                <p>快速编辑</p>
-                <p>忽略条目</p>
-                <p>审核完成</p>
-                <p class="publish">上线条目</p>
-                <i class="setting-icon glyphicon glyphicon-cog"></i>
+                <p ng-if="!item.uiEditStatus" class="btn" ng-click="editItem(item)">快速编辑</p>
+                <p ng-if="item.uiEditStatus" class="editing">[编辑中]</p>
+                <p class="btn" ng-click="cancelEditItem(item)" ng-if="item.uiEditStatus">撤销编辑</p>
+                <p class="btn" ng-if="item.uiEditStatus">自动生成</p>
+                <p class="publish btn" ng-if="item.uiEditStatus" ng-click="finishEditItem(item)">完成编辑</p>
+                <p class="btn" ng-if="!item.uiEditStatus">忽略条目</p>
+                <p class="btn" ng-if="!item.uiEditStatus">审核完成</p>
+                <p class="publish btn" ng-if="!item.uiEditStatus">上线条目</p>
+                <i class="setting-icon btn glyphicon glyphicon-info-sign" title="查看详情" ng-click="showDetail(item.id)"></i>
             </div>
         </div>
     </div>
@@ -98,10 +120,10 @@
             </div>
         </div>
     </div>
+    <div class="wd-modal" wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}"></div>
 </div>
 <div wd-footer></div>
 
 <!-- <div class="test-btn btn" wd-modal-btn data-title="点击"></div> -->
-<div wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}"></div>
 
 <div wd-loading data-show="{{showLoading}}"></div>

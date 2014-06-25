@@ -9,6 +9,7 @@
  * Copyright 2014, Codrops
  * http://www.codrops.com
  */
+/* jshint ignore:start */
 ;( function( window ) {
     
     'use strict';
@@ -32,7 +33,7 @@
     SVGLoader.prototype.options = {
         speedIn : 500,
         easingIn : mina.linear
-    }
+    };
 
     SVGLoader.prototype._init = function() {
         var s = Snap( this.el.querySelector( 'svg' ) );
@@ -107,3 +108,4 @@
     window.SVGLoader = SVGLoader;
 
 })( window );
+/* jshint ignore:end */

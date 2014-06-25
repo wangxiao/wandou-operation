@@ -1,0 +1,104 @@
+<div class="monitor-detail wd-content">
+    <div class="main-info">
+        <p class="title">id:{{detail.id}}</p><p class="title">{{pathTypeOptions[detail.pathType - 1]}}</p><br>
+        <p class="title2">应用名：{{detail.appName}}</p><p class="title2">{{detail.installCount}} 次下载</p><br>
+        <p>包名（pkgName）：{{detail.pkgName}}</p><br>
+        <p>正则包名（regPkgName）：{{detail.regPkgName}}</p><a>验证</a><br>
+        <p>路径（filePath）：{{detail.filePath}}</p><br>
+        <p>子路径（subPath）：{{detail.subPath}}</p><br>
+        <p>根路径（rootPath）：{{detail.rootPath}}</p><br>
+        <p>上次修改时间（latestModification）：{{detail.updateTime | date:'yyyy-MM-dd'}}</p><br>
+        <p>最近跟新人（lastUpdateBy）：{{detail.lastUpdatedBy}}</p><br>
+        <p>上线状态（onlineStatus）：{{detail.onlineStatus}}</p><br>
+        <p>客户端最低版本号（leastVC）：{{detail.leastVC}}</p>
+    </div>
+    <div class="title">今日警报详情</div>
+    <div class="warn-detail">
+        <p class="title">建议清理被取消：12312 次</p><br>
+        <p>123213 次展示</p>
+        <p>0.12%取消率</p>
+        <p>被取消总体积 12.3M</p>
+        <p>次均被取消体积 12.1k</p>
+        <br>
+        <p class="title">谨慎清理被取消：0 次</p><br>
+        <p>1123123次展示</p>
+        <p>0.00% 清理率</p>
+        <p>被清理总体积0.0M</p>
+        <p>次均被清理体积0.0k</p>
+        <br>
+        <p class="title">被暂不清理：123次</p><br>
+        <p>123123次展示</p>
+        <p>0.12%暂不清理率</p>
+        <p>被暂不清理总体积12312M</p>
+        <p>次均被取消体积12.1k</p>
+        <br>
+        <p>暂不清理主要原因：“里面是有用的东西”，“其他”</p>
+    </div>
+    <div class="title">条目信息详情</div>
+    <div class="editable-detail wd-show-box">
+        <div class="body">
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>原始数据</th>
+                    <th>线上数据</th>
+                </tr>
+                <tr>
+                    <td class="title">文件类别</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>
+                <tr>
+                    <td class="title">项目名</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>
+                <tr>
+                    <td class="title">文件描述</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>
+                <tr>
+                    <td class="title">清理风险</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>                
+                <tr>
+                    <td class="title">清理风险缩写</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>
+                <tr>
+                    <td class="title">风险级别</td>
+                    <td>NA</td>
+                    <td>下载的照片</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="btns">
+                <p class="btn">编辑</p>
+            </div>
+        </div>
+    </div>
+    <div class="title">竞品监控历史</div>
+    <div class="history-box">
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+    </div>
+    <div class="title">条目编辑历史</div>
+    <div class="history-box">
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+        <p>2014-03-21 是看得见啊傅雷家书拉法基都拉进来的健身房里捡垃圾的李开复</p><br>
+    </div>
+</div>
+<div wd-account-header></div>
+<div wd-sidebar></div>
+<div wd-footer></div>
+<div wd-loading data-show="{{showLoading}}"></div>

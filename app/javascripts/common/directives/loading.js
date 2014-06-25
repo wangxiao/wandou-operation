@@ -21,7 +21,7 @@ return [function() {
             var mina = mina || {};
             $element.show();
             var loader = new SvgLoader($element[0], {
-                speedIn: 400,
+                speedIn: 500,
                 easingIn: mina.easeinout 
             });
 

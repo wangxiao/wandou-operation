@@ -1,0 +1,61 @@
+.monitor-detail {
+    p {
+        margin-right: 10px;
+        line-height: 23px;
+    }
+    .title {
+        font-size: 14px;
+        line-height: 30px;
+        height: 30px;
+    }
+    .main-info {
+        margin: 20px 0px 20px 0px;
+        background: $standard-light-green;
+        padding: 10px 15px;
+        .title, .title2 {
+            color: $standard-green;
+        }
+        .title {
+            font-size: 20px;
+            height: 28px;
+            line-height: 28px;
+        }
+        .title2 {
+            font-size: 14px;
+            height: 25px;
+            line-height: 25px;
+        }
+    }
+    .warn-detail {
+        margin: 10px 0px 20px 0px;
+        padding: 20px 15px;
+        background-color: $standard-green;
+        p {
+            color: #a9e07b;
+        }
+        .title {
+            color: #fff;
+        }
+    }
+    .editable-detail {
+        margin: 10px 0px 20px 0px;
+        .title {
+            width: 25%;
+            font-size: 12px;
+            color: $standard-green;
+            text-align: center;
+        }
+        table tr th {
+            color: #fff;
+            background-color: $standard-green;
+        }
+        .btns {
+            float: right;
+        }
+    }
+    .history-box {
+        border: 1px solid $standard-green;
+        padding: 20px 15px;
+        margin: 10px 0px;
+    }
+}

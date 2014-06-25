@@ -90,6 +90,8 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 .info-icon {
+                    cursor: pointer;
+                    vertical-align: text-top;
                     color: #666;
                     font-size: 16px;
                 }
@@ -98,10 +100,11 @@
                 float: right;
                 height: 100%;
                 p {
-                    margin-left: 5px;
                     cursor: pointer;
                     border-right: 1px solid #000;
-                    padding-right: 10px;
+                }
+                .editing {
+                    border: none;
                 }
                 .publish {
                     color: $standard-green;
@@ -109,19 +112,18 @@
                 }
                 .setting-icon {
                     display: inline-block;
-                    height: 40px;
-                    line-height: 40px;
+                    height: 100%;
+                    line-height: 27px;
                     border-left: 1px solid $border-gray;
                     font-size: 16px;
                     vertical-align: top;
                     padding-left: 15px;
-                    cursor: pointer;
+                    margin-right: -10px;    
                 }
             }
         }
     }
     .footer {
-        margin-top: 20px;
         overflow: hidden;
         .left {
             float: left;
@@ -141,6 +143,12 @@
             .pages-btns {
                 color: $standard-green;
             }
+        }
+    }
+    .wd-modal {
+        .history-id {
+            margin-left: 10px;
+            color: $standard-green;
         }
     }
 }

@@ -9,6 +9,7 @@ define([
     'index/main',
     'common/main',
     'text!templates/monitor/list-all.html',
+    'text!templates/monitor/monitor-detail.html',
     'monitor/main',
     'text!templates/rules/rules.html',
     'rules/main',
@@ -26,6 +27,7 @@ define([
     wdIndex,
     wdCommon,
     monitorTpl,
+    monitorDetailTpl,
     wdMonitor,
     rulesTpl,
     wdRules,
@@ -56,6 +58,10 @@ define([
             .when('/monitor-all', {
                 template: monitorTpl,
                 controller: 'wdMonitorAllCtrl'
+            })
+            .when('/monitor-detail', {
+                template: monitorDetailTpl,
+                controller: 'wdMonitorDetailCtrl'
             })
             .when('/rules', {
                 template: rulesTpl,
