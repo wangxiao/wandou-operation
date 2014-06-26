@@ -4,7 +4,8 @@ define([
     template
 ) {
 'use strict';
-return [function() {
+return ['wdModalSer', '$q',
+function(wdModalSer, $q) {
     return {
         restrict: 'A',
         template: template,
@@ -21,11 +22,19 @@ return [function() {
             }, function(value) {
                 $element.find('.modal-body').html(value);
             });
-
-            // $element.on('hidden.bs.modal', function (e) {
-            //     $element.find('.modal-body').html('');
-            //     $element.find('.modal-title').html('');
-            // });
+            $scope.$watch(function() {
+                return $attrs.show;
+            }, function(value) {
+                if (value === 'true') {
+                    $element.modal('show');
+                } else {
+                    $element.modal('hide');
+                }
+            });
+            $element.on('hidden.bs.modal', function (e) {
+                wdModalSer.defer.resolve();
+                wdModalSer.defer = $q.defer();
+            });
         }
     };
 }];

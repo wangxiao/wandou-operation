@@ -84,7 +84,9 @@ define([
             return {
                 'request': function(config) {
                     config.timeout = wdConfig.httpTimeout;
-                    config.url = wdConfig.apiUrl + config.url;
+                    if (!/^[http|https]/.test(config.url)) {
+                        config.url = wdConfig.apiUrl + config.url;
+                    }
                     return config;
                 },
 

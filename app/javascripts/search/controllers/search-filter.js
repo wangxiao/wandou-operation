@@ -3,8 +3,10 @@ define([
 ) {
 'use strict';
 return ['$scope',
-function rules($scope) {
+function($scope) {
+    $scope.dataList = [];
+    $scope.search = function() {
 
-
+    };
 }];
 });

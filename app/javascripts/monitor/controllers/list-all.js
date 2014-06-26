@@ -4,11 +4,11 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdMonitorSer', '$timeout', '$location',
-function indexCtrl($scope, wdMonitorSer, $timeout, $location) {
+return ['$scope', 'wdMonitorSer', '$timeout', '$location', 'wdDataSetting', 'wdModalSer',
+function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdModalSer) {
     $scope.dataList = [];
     $scope.counterList = {};
-    $scope.pathTypeOptions = ['全部', '普通缓存路径', '系统缓存路径', '广告路径', '正则缓存路径', '应用主目录'];
+    $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.pathType = $scope.pathTypeOptions[0];
     $scope.adviceLevelOptions = ['建议清理', '谨慎清理'];
     $scope.sortOptions = ['按照下载量排序', '按照 id 排序', '按照项目名排序', '按照条目类型排序', '按照来源排序'];
@@ -18,6 +18,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location) {
     $scope.isCheckedAll = false;
     $scope.batchEditStatus = false;
     $scope.batchEditBtnDisabled = true;
+    $scope.showModal = false;
 
     // 是否显示 loading
     $scope.showLoading = true;
@@ -44,9 +45,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location) {
     wdMonitorSer.getCompeteAllList().then(function(data) {
         $scope.dataList = data;
         getSourceOptions(data);
-        $timeout(function() {
-            $scope.showLoading = false;
-        }, 1000);
+        $scope.showLoading = false;
     });
 
     wdMonitorSer.getContentTypeList().then(function(data) {
@@ -82,6 +81,10 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location) {
                 $scope.modalTitle = '竞品监控历史' + '<span class="history-id">id: ' + id + '</span>';
                 $scope.modalContent = v.changeHistory;
             }
+        });
+        $scope.showModal = true;
+        wdModalSer.show().then(function() {
+            $scope.showModal = false;
         });
     };
     $scope.checkedItem = function(item) {

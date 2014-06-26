@@ -1,18 +1,21 @@
 define([
     'angular',
     './controllers/search-filter',
-    './controllers/sql-search'
+    './controllers/sql-search',
+    './services/search'
 ], function(
     angular,
     searchFilterCtrl,
-    sqlSearchCtrl
+    sqlSearchCtrl,
+    searchSer
 ) {
 'use strict';
 
     angular
         .module('wdSearch', [])
         .controller('wdSearchFilterCtrl', searchFilterCtrl)
-        .controller('wdSqlSearchCtrl', sqlSearchCtrl);
+        .controller('wdSqlSearchCtrl', sqlSearchCtrl)
+        .factory('wdSearchSer', searchSer);
 
 // 结束
 });

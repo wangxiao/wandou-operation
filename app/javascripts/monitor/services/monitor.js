@@ -4,8 +4,6 @@ define([
 'use strict';
 return ['$http',
 function($http) {
-    var dataList = [];
-
     return {
         getCompeteAllList: function() {
             return $http.get('/review/list?type=needReview&offset=0&length=10');

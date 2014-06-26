@@ -20,6 +20,7 @@ return ['$scope', 'wdIndexSer', '$location', function($scope, wdIndexSer, $locat
     $scope.topNum = $scope.topNumOptions[0];
     $scope.coverageList = [];
     $scope.counterList = {};
+    $scope.showLoading = true;
 
     function formatTime(time) {
         var date = time ? new Date(time) : new Date();
@@ -28,6 +29,7 @@ return ['$scope', 'wdIndexSer', '$location', function($scope, wdIndexSer, $locat
 
     $scope.$watch('topNum', function(newValue, oldValue) {
         wdIndexSer.getCoverageList(newValue.value).then(function(data) {
+            $scope.showLoading = false;
             $scope.coverageList = data;
             if (data[0]) {
                 $scope.updateTime = formatTime(data[0].updateTime);
