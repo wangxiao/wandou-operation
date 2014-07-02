@@ -70,6 +70,9 @@
                 float: left;
                 .item {
                     color: #888;
+                    input {
+                        width: 100%;
+                    }
                 }
             }
             .new-list {
@@ -142,6 +145,10 @@
             float: right;
             .pages-btns {
                 color: $standard-green;
+                p {
+                    cursor: pointer;
+                    margin-left: 20px;
+                }
             }
         }
     }

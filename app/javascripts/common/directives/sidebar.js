@@ -1,7 +1,9 @@
 define([
+        'jquery',
         'underscore',
         'text!templates/common/sidebar.html'
     ], function(
+        $,
         _,
         template
     ) {
@@ -22,7 +24,6 @@ return [function() {
             });
         }],
         link: function($scope, $element, $attrs, $controller) {
-
         }
     };
 }];

@@ -3,7 +3,7 @@
         background-color: $background-gray;
         border-radius: 0px;
     }
-    .add-rule-form {
+    .doc-rule-form {
         .body {
             input, select {
                 color: #000;
@@ -22,12 +22,16 @@
             }
             .left {
                 float: left;
-                width: 30%;
+                width: 50%;
                 border-right: 1px solid $border-gray;
                 padding: 20px 20px;
-                ul {
+                ul.title {
                     margin-right: 0px;
                     text-align: right;
+                }
+                ul.content li {
+                    width: 292px;
+                    overflow: hidden;
                 }
             }
             .right {
@@ -40,10 +44,23 @@
     .file-rule-form {
         .body {
             padding: 15px 20px;
+            .detail-input {
+                width: 400px;
+            }
+            .title {
+                color: $standard-green;
+                margin-left: 20px; 
+            }
+        }
+        p {
+            margin-right: 5px;
+        }
+        input {
+            margin-right: 10px;
         }
     }
 
-    .file-rule-form, .add-rule-form {
+    .file-rule-form, .doc-rule-form {
         margin-top: 20px;
         .footer {
             .btns {
@@ -54,11 +71,22 @@
                     margin-right: 5px;
                     padding-right: 5px;
                 }
+                .edit {
+                    border: none;
+                }
                 .finish {
                     border: none;
                     color: $standard-green;
                 }
             }
         }        
+    }
+    .pages-btns {
+        margin: 20px 0px;
+        text-align: center;
+        color: $standard-green;
+        p {
+            margin-right: 20px;
+        }
     }
 }

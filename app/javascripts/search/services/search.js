@@ -11,6 +11,11 @@ function($http) {
                     sql: sql
                 }
             });
+        },
+        searchBy: function(opts) {
+            return $http.get('/appStoragePath/list', {
+                params: opts
+            });
         }
     };
 

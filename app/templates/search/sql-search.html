@@ -2,7 +2,7 @@
 <div class="search-tpl wd-content">
     <h1>MySql 检索</h1>
     <div class="sql-form">
-        <p class="title">输入 Query 语句（暂时只能搜索 select * ）</p>
+        <p class="title">输入 Query 语句（暂时只能搜索 select * 并且一定要加入 limit 限制）</p>
         <textarea class="form-control" rows="5" ng-model="sqlQuery"></textarea>
         <div class="btns">
             <div class="btn search-btn" ng-click="searchSql()">搜索</div>
@@ -10,17 +10,19 @@
     </div>
     <!-- sql-form end -->
 
-    <div class="toolbar">
+    <div class="toolbar" ng-if="dataList.length">
         <div class="left">
-            <p>共找到 <span class="num">123</span> 条结果</p>
+            <!-- <p>共找到 <span class="num">123</span> 条结果</p> -->
         </div>
         <div class="right">
                 <select class="form-control">
                     <option>按下载量排序</option>
                 </select>
+            <!--
                 <p class="page-label">每页展示</p>
-                <input class="page-input" type="text" class="form-control" value="">
+                <input class="page-input form-control" type="text" ng-model="pageListLength" value="{{pageListLength}}" ng-model-options="{ debounce: 1000 }">
                 <p>条</p>
+            -->
         </div>
     </div>
     <!-- toolbar end -->
@@ -63,19 +65,15 @@
         </div>
     </div>
     <!-- result-card end -->
-
+<!--
     <div class="pages">
-        <p>第一页</p>
-        <p class="num">1</p>
-        <p class="num">2</p>
-        <p class="num">3</p>
-        <p class="num">4</p>
-        <p class="num">5</p>
-        <p>最后一页</p>
+        <p>上一页</p>
+        <p>下一页</p>
     </div>
+-->
 </div>
 
 <div wd-account-header></div>
 <div wd-sidebar></div>
 <div wd-footer></div>
-<div wd-loading data-show="{{showLoading}}"></div>
+<!-- <div wd-loading data-show="{{showLoading}}"></div> -->

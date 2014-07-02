@@ -3,6 +3,7 @@ require.config({
         jquery: '../components/jquery/dist/jquery',
         angular: '../components/angular/angular',
         angularRoute: '../components/angular-route/angular-route',
+        // angularAnimate: '../components/angular-animate/angular-animate',
         bootstrapModal: '../components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal',
         underscore: '../components/underscore/underscore',
         snapSvg: '../components/Snap.svg/dist/snap.svg',
@@ -28,6 +29,11 @@ require.config({
                 'angular'
             ],
         },
+        // angularAnimate: {
+        //     deps: [
+        //         'angular'
+        //     ],
+        // },
         jquery: {
             exports: '$'
         },

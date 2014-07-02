@@ -11,7 +11,8 @@ define([
     'text!templates/monitor/list-all.html',
     'text!templates/monitor/monitor-detail.html',
     'monitor/main',
-    'text!templates/rules/rules.html',
+    'text!templates/rules/doc-rules.html',
+    'text!templates/rules/label-rules.html',
     'rules/main',
     'text!templates/search/search-filter.html',
     'search/main',
@@ -29,7 +30,8 @@ define([
     monitorTpl,
     monitorDetailTpl,
     wdMonitor,
-    rulesTpl,
+    docRulesTpl,
+    labelRulesTpl,
     wdRules,
     searchFilterTpl,
     wdSearch,
@@ -38,7 +40,7 @@ define([
 'use strict';
     angular
     .module('wdApp', [
-        'ngRoute', 
+        'ngRoute',
         'wdAuth', 
         'wdIndex', 
         'wdCommon', 
@@ -63,9 +65,13 @@ define([
                 template: monitorDetailTpl,
                 controller: 'wdMonitorDetailCtrl'
             })
-            .when('/rules', {
-                template: rulesTpl,
-                controller: 'wdRulesCtrl'
+            .when('/doc-rules', {
+                template: docRulesTpl,
+                controller: 'wdDocRulesCtrl'
+            })
+            .when('/label-rules', {
+                template: labelRulesTpl,
+                controller: 'wdLabelRulesCtrl'
             })
             .when('/search-filter', {
                 template: searchFilterTpl,

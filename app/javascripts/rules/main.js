@@ -1,15 +1,21 @@
 define([
     'angular',
-    './controllers/rules'
+    './controllers/doc-rules',
+    './services/rules',
+    './controllers/label-rules',
 ], function(
     angular,
-    rulesCtrl
+    docRulesCtrl,
+    rulesSer,
+    labelRulesCtrl
 ) {
 'use strict';
 
     angular
         .module('wdRules', [])
-        .controller('wdRulesCtrl', rulesCtrl);
+        .controller('wdDocRulesCtrl', docRulesCtrl)
+        .factory('wdRulesSer', rulesSer)
+        .controller('wdLabelRulesCtrl', labelRulesCtrl);
 
 // 结束
 });

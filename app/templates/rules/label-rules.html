@@ -1,0 +1,33 @@
+<div class="rules-tpl wd-content">
+    <h1>竞品监控规则 - 文件描述规则</h1>
+    <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
+
+    <div class="file-rule-form wd-show-box" ng-repeat="item in dataList">
+        <div class="header">
+            <p>{{item.type.toUpperCase()}} 类文案</p>
+        </div>
+        <div class="body">
+            <p class="title">字段名</p>
+            <p ng-if="!item.uiEditStatus">{{item.field || '（空）'}}</p>
+            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.field">
+            <p class="title">类别</p>
+            <p ng-if="!item.uiEditStatus">{{item.type || '（空）'}}</p>
+            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.type">
+            <p class="title">规则详情</p>
+            <p ng-if="!item.uiEditStatus">{{item.labelContent || '（空）'}}</p>
+            <input ng-if="item.uiEditStatus" class="detail-input form-control" type="text" value="" ng-model="item.labelContent">  
+        </div>
+        <div class="footer">
+            <div class="btns">
+                <p ng-if="!item.uiEditStatus" class="edit" ng-click="editItem(item)">编辑条目</p>
+                <p ng-if="item.uiEditStatus">删除条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="cancelItem(item)">撤销编辑</p>
+                <p  ng-if="item.uiEditStatus" class="finish" ng-click="finishItem(item)">完成编辑</p>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div wd-account-header></div>
+<div wd-sidebar></div>
+<div wd-footer></div>

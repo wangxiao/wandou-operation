@@ -1,0 +1,79 @@
+<div wd-account-header></div>
+<div wd-sidebar></div>
+<div class="rules-tpl wd-content">
+    <h1>竞品监控规则 - 文案生成规则</h1>
+    <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
+
+    <div class="doc-rule-form wd-show-box" ng-repeat="item in dataList">
+        <div class="header">
+            <p>规则 {{item.id}}</p>
+        </div>
+        <div class="body">
+            <div class="left">
+                <ul class="title">
+                    <li>
+                        <p class="title">原始项目名</p>
+                    </li>
+                    <li>
+                        <p class="title">原始 NOTICE</p>
+                    </li>
+                </ul>
+                <ul class="content">
+                    <li>
+                        <p ng-if="!item.uiEditStatus">{{item.srcItemName || '（空）'}}</p>
+                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.srcItemName">
+                    </li>
+                    <li>
+                        <p ng-if="!item.uiEditStatus">{{item.srcNotice || '（空）'}}</p>
+                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.srcNotice">
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <ul>
+                    <li>
+                        <p class="title">项目名</p>
+                        <p ng-if="!item.uiEditStatus">{{item.ourItemName || '（空）'}}</p>
+                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.ourItemName">
+                    </li>
+                    <li>
+                        <p class="title">文件分类</p>
+                        <select class="form-control">
+                            <option>应用主目录</option>
+                        </select>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <p class="title">文件描述</p>
+                        <p ng-if="!item.uiEditStatus">{{item.ourDesc || '（空）'}}</p>
+                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.ourDesc">
+                    </li>
+                    <li>
+                        <p class="title">清理风险</p>
+                        <select class="form-control">
+                            <option>应用主目录</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <!-- right end -->
+        </div>
+        <div class="footer">
+            <div class="btns">
+                <p ng-if="!item.uiEditStatus" class="edit" ng-click="editItem(item);">编辑条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="delItem(item);">删除条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="cancelItem(item);">撤销编辑</p>
+                <p ng-if="item.uiEditStatus" class="finish" ng-click="finishItem(item);">完成编辑</p>
+            </div>
+        </div>
+    </div>
+    <!-- doc-rule-form end -->
+
+    <div class="pages-btns">
+        <p ng-click="pageUp();">上一页</p>
+        <p ng-click="pageDown();">下一页</p>
+    </div>
+
+</div>
+<div wd-footer></div>

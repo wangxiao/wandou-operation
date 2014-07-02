@@ -11,28 +11,38 @@
             </a>
         </li>
         <li class="item">
-            竞品新增条目
-            <span ng-if="monitorList.monitorNew" class="num" title="{{monitorList.monitorNew}}">{{monitorList.monitorNew}}</span>
+            <a href="/#/monitor-all?action=new">
+                竞品新增条目
+                <span ng-if="monitorList.monitorNew" class="num" title="{{monitorList.monitorNew}}">{{monitorList.monitorNew}}</span>
+            </a>
         </li>
         <li class="item">
-            竞品下线条目
-            <span ng-if="monitorList.monitorDelete" class="num" title="{{monitorList.monitorDelete}}">{{monitorList.monitorDelete}}</span>
+            <a href="/#/monitor-all?action=offline">
+                竞品下线条目
+                <span ng-if="monitorList.monitorDelete" class="num" title="{{monitorList.monitorDelete}}">{{monitorList.monitorDelete}}</span>
+            </a>
         </li>
         <li class="item">
-            竞品改变信息
-            <span ng-if="monitorList.monitorModify" class="num" title="{{monitorList.monitorModify}}">{{monitorList.monitorModify}}</span>
+            <a href="/#/monitor-all?action=change">
+                竞品改变信息
+                <span ng-if="monitorList.monitorModify" class="num" title="{{monitorList.monitorModify}}">{{monitorList.monitorModify}}</span>
+            </a>
         </li>
         <li class="item">
-            审核完待上线
-            <span ng-if="monitorList.needOnline" class="num" title="{{monitorList.needOnline}}">{{monitorList.needOnline}}</span>
+            <a href="/#/monitor-all?action=online">
+                审核完待上线
+                <span ng-if="monitorList.needOnline" class="num" title="{{monitorList.needOnline}}">{{monitorList.needOnline}}</span>
+            </a>
         </li>
     </ul>
     <ul class="group">
         <li class="title">竞品监控规则</li>
         <li class="item">
-            <a href="/#/rules">文案生成规则</a>
+            <a href="/#/doc-rules">文案生成规则</a>
         </li>
-        <li class="item">文件描述规则</li>
+        <li class="item">
+            <a href="/#/label-rules">文件描述规则</a>
+        </li>
         <li class="item">清理风险规则</li>
         <li class="item">文件类型规则</li>
     </ul>

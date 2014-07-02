@@ -4,7 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdIndexSer', '$location', function($scope, wdIndexSer, $location) {
+return ['$scope', 'wdIndexSer', '$location', 'wdDataSetting',
+function($scope, wdIndexSer, $location, wdDataSetting) {
 
     $scope.topNumOptions = [
         {name: '全部', value: 0},
@@ -17,7 +18,7 @@ return ['$scope', 'wdIndexSer', '$location', function($scope, wdIndexSer, $locat
     ];
 
     // 选择数据库总览的数量，默认全部是 0 。
-    $scope.topNum = $scope.topNumOptions[0];
+    $scope.topNum = $scope.topNumOptions[4];
     $scope.coverageList = [];
     $scope.counterList = {};
     $scope.showLoading = true;

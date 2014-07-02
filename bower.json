@@ -10,6 +10,7 @@
     "bootstrap-sass-official": "~3.1.1+2",
     "requirejs-text": "~2.0.12",
     "requirejs-domready": "~2.0.1",
-    "Snap.svg": "~0.3.0"
+    "Snap.svg": "~0.3.0",
+    "angular-animate": "~1.2.19"
   }
 }

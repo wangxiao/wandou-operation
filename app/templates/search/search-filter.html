@@ -16,25 +16,25 @@
         </ul>
         <ul>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.id">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.pkgName">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.filePath">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.subPath">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.regPkgName">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.rootPath">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.adviceDesc">
             </li>
         </ul>
         <ul class="title-list">
@@ -47,22 +47,22 @@
         </ul>
         <ul>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.itemName">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.desc">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.alertInfo">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.simpleAlertInfo">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.appName">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.installCount">
             </li>
         </ul>
         <ul class="title-list">
@@ -75,40 +75,34 @@
         </ul>
         <ul>
             <li>
-                <select class="form-control">
-                    <option>应用主目录</option>
-                </select>
+                <select class="form-control" ng-model="filterMap.pathTypeOption" ng-options="value for value in pathTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control">
-                    <option>下载的照片</option>
-                </select>
+                <select class="form-control" ng-model="filterMap.contentTypeOption" ng-options="value.title for value in contentTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control">
-                    <option>建议清理</option>
-                </select>
+                <select class="form-control" ng-model="filterMap.adviceLevelOption" ng-options="value for value in adviceLevelOptions"></select>
+            </li>
+            <li>
+                <input type="text" class="form-control" value="" ng-model="filterMap.lastUpdatedBy">
             </li>
             <li>
                 <input type="text" class="form-control" value="">
             </li>
             <li>
-                <input type="text" class="form-control" value="">
-            </li>
-            <li>
-                <input type="text" class="form-control" value="">
+                <input type="text" class="form-control" value="" ng-model="filterMap.leastVC">
             </li>
         </ul>
         <div class="btns">
-            <div class="btn">重写</div>
-            <div class="btn search-btn">搜索</div>
+            <div class="btn" ng-click="reset();">重写</div>
+            <div class="btn search-btn" ng-click="search();">搜索</div>
         </div>
     </div>
     <!-- search-form end -->
 
-    <div class="toolbar">
+    <div class="toolbar" ng-if="dataList.length">
         <div class="left">
-            <p>共找到 <span class="num">123</span> 条结果</p>
+            <!-- <p>共找到 <span class="num">123</span> 条结果</p> -->
         </div>
         <div class="right">
                 <select class="form-control">
@@ -161,13 +155,8 @@
     <!-- result-card end -->
 
 
-    <div class="pages">
-        <p>第一页</p>
-        <p class="num">1</p>
-        <p class="num">2</p>
-        <p class="num">3</p>
-        <p class="num">4</p>
-        <p class="num">5</p>
-        <p>最后一页</p>
+    <div class="pages" ng-if="dataList.length">
+        <p>上一页</p>
+        <p>下一页</p>
     </div>
 </div>

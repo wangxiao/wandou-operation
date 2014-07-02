@@ -1,16 +1,18 @@
 <div class="monitor-detail wd-content">
     <div class="main-info">
-        <p class="title">id:{{detail.id}}</p><p class="title">{{pathTypeOptions[detail.pathType]}}</p><br>
-        <p class="title2">应用名：{{detail.appName}}</p><p class="title2">{{detail.installCount}} 次下载</p><br>
-        <p>包名（pkgName）：{{detail.pkgName}}</p><br>
-        <p>正则包名（regPkgName）：{{detail.regPkgName}}</p><a>验证</a><br>
-        <p>路径（filePath）：{{detail.filePath}}</p><br>
-        <p>子路径（subPath）：{{detail.subPath}}</p><br>
-        <p>根路径（rootPath）：{{detail.rootPath}}</p><br>
-        <p>上次修改时间（latestModification）：{{detail.updateTime | date:'yyyy-MM-dd'}}</p><br>
-        <p>最近跟新人（lastUpdateBy）：{{detail.lastUpdatedBy}}</p><br>
-        <p>上线状态（onlineStatus）：{{detail.onlineStatus}}</p><br>
-        <p>客户端最低版本号（leastVC）：{{detail.leastVC}}</p>
+        <p class="title">id:{{detail.id}}</p>
+        <p class="title">{{pathTypeOptions[detail.pathType]}}</p><br>
+        <p class="title2">应用名：{{detail.appName || '（空）'}}</p>
+        <p class="title2">{{detail.installCount}} 次下载</p><br>
+        <p>包名（pkgName）：{{detail.pkgName || '（空）'}}</p><br>
+        <p>正则包名（regPkgName）：{{detail.regPkgName || '（空）'}}</p><a>验证</a><br>
+        <p>路径（filePath）：{{detail.filePath || '（空）'}}</p><br>
+        <p>子路径（subPath）：{{detail.subPath || '（空）'}}</p><br>
+        <p>根路径（rootPath）：{{detail.rootPath || '（空）'}}</p><br>
+        <p>上次修改时间（latestModification）：{{detail.updateTime | date:'yyyy-MM-dd' || '（空）'}}</p><br>
+        <p>最近跟新人（lastUpdateBy）：{{detail.lastUpdatedBy || '（空）'}}</p><br>
+        <p>上线状态（onlineStatus）：{{detail.onlineStatus || '（空）'}}</p><br>
+        <p>客户端最低版本号（leastVC）：{{detail.leastVC || '（空）'}}</p>
     </div>
     <div class="title">今日警报详情</div>
     <div class="warn-detail">
@@ -101,4 +103,3 @@
 <div wd-account-header></div>
 <div wd-sidebar></div>
 <div wd-footer></div>
-<div wd-loading data-show="{{showLoading}}"></div>

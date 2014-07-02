@@ -10,7 +10,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.counterList = {};
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.pathType = $scope.pathTypeOptions[0];
-    $scope.adviceLevelOptions = ['建议清理', '谨慎清理'];
+    $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.sortOptions = ['按照下载量排序', '按照 id 排序', '按照项目名排序', '按照条目类型排序', '按照来源排序'];
     $scope.sort = $scope.sortOptions[0];
     $scope.sourceOptions = ['全部'];
@@ -19,9 +19,14 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.batchEditStatus = false;
     $scope.batchEditBtnDisabled = true;
     $scope.showModal = false;
+    $scope.pageListLength = wdDataSetting.pageListLength();
 
     // 是否显示 loading
     $scope.showLoading = true;
+    $scope.contentTypeOptions = [];
+
+    // 当前数据显示的位置，用来分页获取数据，默认从头开始。
+    $scope.offset = 0;
 
     function getSourceOptions(data) {
         var arr = [];
@@ -33,7 +38,21 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             }
         });
         arr = _.uniq(arr);
-        $scope.sourceOptions = $scope.sourceOptions.concat(arr);
+        $scope.sourceOptions = _.uniq($scope.sourceOptions.concat(arr));
+    }
+
+    function getContentTypeOptions() {
+        return wdDataSetting.getContentTypeOptions().then(function(data) {
+            $scope.contentTypeOptions = data;
+            _.each($scope.dataList, function(v) {
+                var t = wdDataSetting.getContentTypeTitle(v.contentType);
+                if (t) {
+                    v.uiContentTypeTitle = t.title;
+                    // 给 select 使用
+                    v.uiContentTypeOption = t;
+                }
+            });
+        });
     }
 
     wdMonitorSer.getCounterList().then(function(data) {
@@ -42,38 +61,94 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     });
 
-    wdMonitorSer.getCompeteAllList().then(function(data) {
-        $scope.dataList = data;
-        getSourceOptions(data);
-        $scope.showLoading = false;
-    });
+    function formatData() {
+        getSourceOptions($scope.dataList);
+        getContentTypeOptions();
 
-    wdMonitorSer.getContentTypeList().then(function(data) {
-        // console.log(data);
-    });
+    }
+
+    function showAllData() {
+        wdMonitorSer.getCompeteAllList({
+            action: $location.search().action,
+            length: $scope.pageListLength,
+            offset: $scope.offset
+        }).then(function(data) {
+            console.log(data);
+            if (data.length) {
+                $scope.dataList = data;
+                $scope.showLoading = false;
+                formatData();
+            } else {
+                $scope.pageUp();
+            }
+        });
+    }
 
     $scope.editItem = function(item) {
         // 备份当前数据
         item.uiOldData = _.clone(item);
         item.uiEditStatus = true;
+        item.uiAdviceLevel = $scope.adviceLevelOptions[item.adviceLevel];
     };
     $scope.cancelEditItem = function(item) {
         item.uiEditStatus = false;
-        // 此处修改的可能不对 item 没有关联到 dataList 上面
-        item = _.clone(item.uiOldData);
+        _.each($scope.dataList, function(v, i) {
+            if (v.id === item.id) {
+                $scope.dataList[i] = item.uiOldData;
+            }
+        });
     };
     $scope.finishEditItem = function(item) {
         item.uiEditStatus = false;
+        item.contentType = item.uiContentTypeOption.id;
+        item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).title;
+        item.adviceLevel = $scope.adviceLevelOptions.indexOf(item.uiAdviceLevel);
         delete item.uiOldData;
+        wdMonitorSer.upDateCompeteData(item).then(function(data) {
+            console.log(data);
+        });
+    };
+    $scope.ignoreItem = function(id) {
+        wdMonitorSer.ignoreCompeteDate(id).then(function(data) {
+            console.log(data);
+        });
+    };
+    $scope.publicItem = function(id) {
+        wdMonitorSer.publicCompeteData(id).then(function(data) {
+            console.log(data);
+        });
+    };
+    $scope.offlineItem = function(id) {
+        wdMonitorSer.offlineCompeteDate(id).then(function(data) {
+            console.log(data);
+        });
     };
     $scope.showDetail = function(id) {
         $location.path('/monitor-detail').search({id: id});
     };
     $scope.batchEdit = function() {
         $scope.batchEditStatus = true;
+        _.each($scope.dataList, function(v) {
+            if (v.uiChecked) {
+                $scope.editItem(v);
+            }
+        });
     };
     $scope.cancelBatchEdit = function() {
         $scope.batchEditStatus = false;
+        _.each($scope.dataList, function(v) {
+            if (v.uiChecked) {
+                $scope.cancelEditItem(v);
+            }
+        });
+    };
+    $scope.finishBatchEdit = function() {
+        $scope.batchEditStatus = false;
+        _.each($scope.dataList, function(v) {
+            if (v.uiChecked) {
+                $scope.finishEditItem(v);
+            }
+        });
     };
     $scope.showDetailHistory = function(id) {
         _.each($scope.dataList, function(v) {
@@ -117,5 +192,34 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             $scope.batchEditBtnDisabled = false;
         }
     };
+    $scope.pageUp = function() {
+        $scope.offset = Math.max($scope.offset - $scope.pageListLength, 0);
+    };
+    $scope.pageDown = function() {
+        $scope.offset = $scope.offset + $scope.pageListLength;
+    };
+
+    // 根据单页显示数量变化请求数据
+    $scope.$watch('pageListLength', _.debounce(function(value) {
+        $scope.$apply(function() {
+            var reg = /[^\d]/g;
+            if (value && !reg.test(value)) {
+                if (value < 1) {
+                    $scope.pageListLength = 1;
+                }
+                if (value > 100) {
+                    $scope.pageListLength = 100;
+                }
+                wdDataSetting.pageListLength($scope.pageListLength);
+                showAllData();
+            }
+        });
+    }, 300));
+
+    // 翻页逻辑
+    $scope.$watch('offset', function(value) {
+        console.log('offset:' + value);
+        showAllData();
+    });
 }];
 });
