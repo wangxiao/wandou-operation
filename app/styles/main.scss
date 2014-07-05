@@ -6,8 +6,8 @@ $icon-font-path: "../components/bootstrap-sass-official/vendor/assets/fonts/boot
 /* 公共基础 */
 @import "common/base";
 @import "common/modal";
-@import "common/modal-btn";
 @import "common/loading";
+@import "common/little-loading";
 @import "common/account-header";
 @import "common/sidebar";
 @import "common/footer";

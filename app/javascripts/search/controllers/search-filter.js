@@ -19,6 +19,11 @@ function($scope, wdDataSetting, wdSearchSer) {
         $scope.contentTypeOptions = data;
         $scope.filterMap.contentTypeOption = $scope.contentTypeOptions[0];
     });
+
+    $scope.getPathType = function(pathType) {
+        return wdDataSetting.getPathType(pathType);
+    };
+    
     $scope.search = function() {
         wdSearchSer.searchBy($scope.filterMap).then(function(data) {
             $scope.dataList = data;

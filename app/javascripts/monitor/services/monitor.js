@@ -6,24 +6,9 @@ return ['$http',
 function($http) {
     return {
         getCompeteAllList: function(opts) {
-            // return $http.post('/review/list', {}, {
-            //     params: {
-            //         type: 'needReview',
-            //         offset: 0,
-            //         length: 10,
-            //         filter: {
-            //             action: action || '',
-            //             top: 10
-            //         }
-            //     }
-            // });
+            opts.type = 'needReview';
             return $http.get('/review/list', {
-                params: {
-                    type: 'needReview',
-                    offset: opts.offset || 0,
-                    length: opts.length || 10,
-                    action: opts.action || ''
-                }
+                params: opts
             });
         },
         getCounterList: function() {
@@ -33,35 +18,46 @@ function($http) {
             return $http.get('/review/list/' + id);
         },
         upDateCompeteData: function(data) {
-            return $http.post('/mining/action', {}, {
+            return $http.post('/review/update', {}, {
                 params: {
-                    type: 1, //1：修改 2：上线 3：忽略 4：下线
-                    data: data,
+                    action: 'save',
+                    reviewAppStoragePath: data,
                     id: data.id
                 }
             });
         },
-        publicCompeteData: function(id) {
-            return $http.post('/mining/action', {}, {
+        publicCompeteData: function(data) {
+            return $http.post('/review/update', {}, {
                 params: {
-                    type: 2, //1：修改 2：上线 3：忽略 4：下线
-                    id: id
+                    action: 'online',
+                    reviewAppStoragePath: data,
+                    id: data.id
                 }
             });
         },
-        ignoreCompeteDate: function(id) {
-            return $http.post('/mining/action', {}, {
+        ignoreCompeteDate: function(data) {
+            return $http.post('/review/update', {}, {
                 params: {
-                    type: 3, //1：修改 2：上线 3：忽略 4：下线
-                    id: id
+                    action: 'ignore',
+                    reviewAppStoragePath: data,
+                    id: data.id
                 }
             });
         },
-        offlineCompeteDate: function(id) {
-            return $http.post('/mining/action', {}, {
+        offlineCompeteDate: function(data) {
+            return $http.post('/review/update', {}, {
                 params: {
-                    type: 4, //1：修改 2：上线 3：忽略 4：下线
-                    id: id
+                    action: 'offline',
+                    reviewAppStoragePath: data,
+                    id: data.id
+                }
+            });
+        },
+        // 自动生成文案
+        autoLabel: function(data) {
+            return $http.post('/rule/autolabel', {}, {
+                params: {
+                    reviewAppStoragePath: data
                 }
             });
         }

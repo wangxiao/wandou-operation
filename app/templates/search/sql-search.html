@@ -26,11 +26,11 @@
         </div>
     </div>
     <!-- toolbar end -->
-
-    <div class="result-card wd-show-box" ng-repeat="item in dataList">
+    <p class="error" ng-if="dataList.reason">错误原因：{{dataList.reason}}</p>
+    <div ng-if="!dataList.reason" class="result-card wd-show-box" ng-repeat="item in dataList">
         <div class="header">
             <p ng-if="item.id">id:{{item.id}}</p>
-            <p ng-if="item.pathType">{{pathTypeOptions[item.pathType]}}</p>
+            <p ng-if="item.pathType">{{getPathType(item.pathType)}}</p>
             <p ng-if="item.appName">{{item.appName}}</p>
             <p ng-if="item.installCount">{{item.installCount}} 下载</p>
             <br>

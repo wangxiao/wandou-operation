@@ -8,16 +8,17 @@
         剩余
         <span class="num">{{counterList.monitorAll}}</span>
     </p>
-    <div class="toolbar">
+    <div ng-if="dataList.length" class="toolbar">
         <div class="left">
             <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">
             <p>全选</p>
             <div class="edit-all-btn btn" ng-disabled="batchEditBtnDisabled" ng-click="batchEdit()">批量快速编辑</div>
         </div>
         <div class="right">
-            <select class="form-control" ng-model="pathType" ng-options="title for title in pathTypeOptions"></select>
+            <select class="form-control" ng-model="pathType" ng-options="title.name for title in pathTypeOptions"></select>
             <select class="form-control" ng-model="source" ng-options="title for title in sourceOptions"></select>
-            <select class="form-control" ng-model="sort" ng-options="title for title in sortOptions"></select>
+            <select class="form-control" ng-model="sort" ng-options="title.name for title in sortOptions"></select>
+            <select class="form-control" ng-model="order" ng-options="title.name for title in orderOptions"></select>
             <p class="page-label">每页展示</p>
             <input class="page-input form-control" type="text" ng-model="pageListLength" value="{{pageListLength}}" ng-model-options="{ debounce: 300 }">
             <p>条</p>
@@ -33,7 +34,7 @@
         <div class="header">
             <input type="checkbox" ng-checked="item.uiChecked" ng-click="checkedItem(item)">
             <p class="id">id:{{item.id}}</p>
-            <p ng-if="item.pathType">{{pathTypeOptions[item.pathType]}}</p>
+            <p ng-if="item.pathType">{{getPathType(item.pathType)}}</p>
             <p ng-if="item.appName">{{item.appName}}</p>
             <p ng-if="item.installCount">{{item.installCount}} 次下载</p>
             <br>
@@ -91,24 +92,33 @@
         <div class="footer">
             <div class="left">
                 <i data-title="" class="info-icon glyphicon glyphicon-time" ng-click="showDetailHistory(item.id)"></i>
-                <p class="info">竞品 1 新索拉卡解放东路就阿里山的减肥啦</p>
+                <p class="info">
+                    {{item.changeHistories[item.changeHistories.length - 1].src}}
+                    &nbsp;
+                    {{item.changeHistories[item.changeHistories.length - 1].field}}
+                    &nbsp;
+                    “{{item.changeHistories[item.changeHistories.length - 1].from}}”
+                    变为
+                    “{{item.changeHistories[item.changeHistories.length - 1].to}}”
+                </p>
             </div>
             <div class="right">
                 <p ng-if="!item.uiEditStatus" class="btn" ng-click="editItem(item)">快速编辑</p>
                 <p ng-if="item.uiEditStatus" class="editing">[编辑中]</p>
                 <p class="btn" ng-click="cancelEditItem(item)" ng-if="item.uiEditStatus">撤销编辑</p>
-                <p class="btn" ng-if="item.uiEditStatus">自动生成</p>
+                <p class="btn" ng-if="item.uiEditStatus" ng-click="autoLabelItem(item)">自动生成</p>
                 <p class="publish btn" ng-if="item.uiEditStatus" ng-click="finishEditItem(item)">完成编辑</p>
-                <p class="btn" ng-if="!item.uiEditStatus" ng-click="ignoreItem(item.id)">忽略条目</p>
+                <p class="btn" ng-if="!item.uiEditStatus" ng-click="ignoreItem(item)">忽略条目</p>
                 <p class="btn" ng-if="!item.uiEditStatus">审核完成</p>
-                <p class="publish btn" ng-if="!item.uiEditStatus" ng-click="publicItem(item.id)">上线条目</p>
+                <p class="publish btn" ng-if="!item.uiEditStatus" ng-click="publicItem(item)">上线条目</p>
                 <i class="setting-icon btn glyphicon glyphicon-info-sign" title="查看详情" ng-click="showDetail(item.id)"></i>
             </div>
         </div>
     </div>
-    <div class="footer">
+    <h3 ng-if="!dataList.length" class="error">无数据</h3>
+    <div class="footer" ng-if="dataList.length">
         <div class="left">
-            <input type="checkbox" class="form-control">
+            <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">
             <p>全选</p>
             <div class="btn">批量上线</div>
         </div>
@@ -120,6 +130,7 @@
         </div>
     </div>
     <div class="wd-modal" wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}" data-show="{{showModal}}"></div>
+    <!-- <div class="wd-little-loading" data-visible="true"></div> -->
 </div>
 <div wd-footer></div>
 <!-- <div wd-loading data-show="{{showLoading}}"></div> -->

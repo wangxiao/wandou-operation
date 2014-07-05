@@ -5,6 +5,7 @@ define([
     './directives/footer',
     './directives/modal',
     './directives/loading',
+    './directives/little-loading',
     './services/sidebar',
     './services/config',
     './services/data-setting',
@@ -17,6 +18,7 @@ define([
     footer,
     modal,
     loading,
+    littleLoading,
     sidebarSer,
     config,
     dataSetting,
@@ -32,6 +34,7 @@ define([
         .directive('wdFooter', footer)
         .directive('wdModal', modal)
         .directive('wdLoading', loading)
+        .directive('wdLittleLoading', littleLoading)
         .factory('wdSidebarSer', sidebarSer)
         .factory('wdConfig', config)
         .factory('wdDataSetting', dataSetting)

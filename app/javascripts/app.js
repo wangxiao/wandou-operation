@@ -73,6 +73,14 @@ define([
                 template: labelRulesTpl,
                 controller: 'wdLabelRulesCtrl'
             })
+            .when('/risk-rules', {
+                template: docRulesTpl,
+                controller: 'wdDocRulesCtrl'
+            })
+            .when('/file-type-rules', {
+                template: labelRulesTpl,
+                controller: 'wdLabelRulesCtrl'
+            })
             .when('/search-filter', {
                 template: searchFilterTpl,
                 controller: 'wdSearchFilterCtrl'

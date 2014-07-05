@@ -8,17 +8,16 @@ return ['$scope', 'wdIndexSer', '$location', 'wdDataSetting',
 function($scope, wdIndexSer, $location, wdDataSetting) {
 
     $scope.topNumOptions = [
-        {name: '全部', value: 0},
+        {name: '全部', value: -1},
+        {name: 'TOP5000', value: 5000},
         {name: 'TOP2000', value: 2000},
-        {name: 'TOP1000', value: 1000},
         {name: 'TOP500', value: 500},
-        {name: 'TOP200', value: 200},
         {name: 'TOP100', value: 100},
         {name: 'TOP50', value: 50}
     ];
 
     // 选择数据库总览的数量，默认全部是 0 。
-    $scope.topNum = $scope.topNumOptions[4];
+    $scope.topNum = $scope.topNumOptions[0];
     $scope.coverageList = [];
     $scope.counterList = {};
     $scope.showLoading = true;

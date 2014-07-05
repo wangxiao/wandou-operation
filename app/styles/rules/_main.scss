@@ -32,6 +32,9 @@
                 ul.content li {
                     width: 292px;
                     overflow: hidden;
+                    input {
+                        width: 100%;
+                    }
                 }
             }
             .right {

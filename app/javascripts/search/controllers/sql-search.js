@@ -33,6 +33,10 @@ function($scope, wdSearchSer, wdStorage, wdDataSetting, $location, $window) {
         }
     };
 
+    $scope.getPathType = function(pathType) {
+        return wdDataSetting.getPathType(pathType);
+    };
+    
     $scope.showDetail = function(id) {
         $location.path('/monitor-detail').search({id: id});
     };

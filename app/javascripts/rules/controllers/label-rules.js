@@ -25,8 +25,16 @@ function($scope, wdRulesSer) {
         item.uiOld = _.clone(item);
         item.uiEditStatus = true;
     };
-    $scope.delItem = function() {
-
+    $scope.delItem = function(item) {
+        if (item.id) {
+            _.find($scope.dataList, function(v, i) {
+                if (item.id === v.id) {
+                    $scope.dataList.splice(i, 1);
+                }
+            });
+        } else {
+            $scope.dataList.shift();
+        }
     };
     $scope.cancelItem = function(item) {
         if (item.id) {

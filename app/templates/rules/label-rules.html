@@ -20,12 +20,13 @@
         <div class="footer">
             <div class="btns">
                 <p ng-if="!item.uiEditStatus" class="edit" ng-click="editItem(item)">编辑条目</p>
-                <p ng-if="item.uiEditStatus">删除条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="delItem(item)">删除条目</p>
                 <p ng-if="item.uiEditStatus" ng-click="cancelItem(item)">撤销编辑</p>
                 <p  ng-if="item.uiEditStatus" class="finish" ng-click="finishItem(item)">完成编辑</p>
             </div>
         </div>
-    </div>    
+    </div>
+    <h3 ng-if="!dataList.length" class="error">无数据</h3>
 </div>
 
 <div wd-account-header></div>

@@ -75,7 +75,7 @@
         </ul>
         <ul>
             <li>
-                <select class="form-control" ng-model="filterMap.pathTypeOption" ng-options="value for value in pathTypeOptions"></select>
+                <select class="form-control" ng-model="filterMap.pathTypeOption" ng-options="value.name for value in pathTypeOptions"></select>
             </li>
             <li>
                 <select class="form-control" ng-model="filterMap.contentTypeOption" ng-options="value.title for value in contentTypeOptions"></select>
@@ -118,7 +118,7 @@
     <div class="result-card wd-show-box" ng-repeat="item in dataList">
         <div class="header">
             <p ng-if="item.id">id:{{item.id}}</p>
-            <p ng-if="item.pathType">{{pathTypeOptions[item.pathType]}}</p>
+            <p ng-if="item.pathType">{{getPathType(item.pathType)}}</p>
             <p ng-if="item.appName">{{item.appName}}</p>
             <p ng-if="item.installCount">{{item.installCount}} 下载</p>
             <br>

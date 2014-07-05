@@ -11,10 +11,21 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.pathType = $scope.pathTypeOptions[0];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
-    $scope.sortOptions = ['按照下载量排序', '按照 id 排序', '按照项目名排序', '按照条目类型排序', '按照来源排序'];
+    $scope.sortOptions = [
+        {value: 'installCount', name: '按照下载量排序'},
+        {value: 'id', name: '按照 id 排序'},
+        {value: 'itemName', name: '按照项目名排序'},
+        {value: 'contentType', name: '按照条目类型排序'},
+        {value: 'source', name: '按照来源排序'}
+    ];
     $scope.sort = $scope.sortOptions[0];
-    $scope.sourceOptions = ['全部'];
+    $scope.sourceOptions = wdDataSetting.sourceOptions;
     $scope.source = $scope.sourceOptions[0];
+    $scope.orderOptions = [
+        {value:'desc', name: '降序'},
+        {value:'asc', name: '升序'}
+    ];
+    $scope.order = $scope.orderOptions[0];
     $scope.isCheckedAll = false;
     $scope.batchEditStatus = false;
     $scope.batchEditBtnDisabled = true;
@@ -70,19 +81,26 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     function showAllData() {
         wdMonitorSer.getCompeteAllList({
             action: $location.search().action,
-            length: $scope.pageListLength,
-            offset: $scope.offset
+            size: $scope.pageListLength,
+            offset: $scope.offset,
+            pathType: $scope.pathType.value,
+            source: $scope.sourceOptions.indexOf($scope.source) ? $scope.source : null,
+            orderBy: $scope.sort.value,
+            order: $scope.order.value
         }).then(function(data) {
-            console.log(data);
+            $scope.dataList = data;
+            $scope.showLoading = false;
             if (data.length) {
-                $scope.dataList = data;
-                $scope.showLoading = false;
                 formatData();
             } else {
                 $scope.pageUp();
             }
         });
     }
+
+    $scope.getPathType = function(pathType) {
+        return wdDataSetting.getPathType(pathType);
+    };
 
     $scope.editItem = function(item) {
         // 备份当前数据
@@ -98,28 +116,41 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             }
         });
     };
-    $scope.finishEditItem = function(item) {
+    $scope.finishEditItem = function(item, flag) {
         item.uiEditStatus = false;
         item.contentType = item.uiContentTypeOption.id;
         item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).title;
         item.adviceLevel = $scope.adviceLevelOptions.indexOf(item.uiAdviceLevel);
         delete item.uiOldData;
-        wdMonitorSer.upDateCompeteData(item).then(function(data) {
+        if (!flag) {
+            wdMonitorSer.upDateCompeteData(item).then(function(data) {
+                console.log(data);
+            });
+        }
+    };
+    $scope.ignoreItem = function(item) {
+        $scope.finishEditItem(item, true);
+        wdMonitorSer.ignoreCompeteDate(item).then(function(data) {
             console.log(data);
         });
     };
-    $scope.ignoreItem = function(id) {
-        wdMonitorSer.ignoreCompeteDate(id).then(function(data) {
+    $scope.publicItem = function(item) {
+        $scope.finishEditItem(item, true);
+        wdMonitorSer.publicCompeteData(item).then(function(data) {
             console.log(data);
         });
     };
-    $scope.publicItem = function(id) {
-        wdMonitorSer.publicCompeteData(id).then(function(data) {
+    $scope.offlineItem = function(item) {
+        $scope.finishEditItem(item, true);
+        wdMonitorSer.offlineCompeteDate(item).then(function(data) {
             console.log(data);
         });
     };
-    $scope.offlineItem = function(id) {
-        wdMonitorSer.offlineCompeteDate(id).then(function(data) {
+    // 自动生成文案
+    $scope.autoLabelItem = function(item) {
+        var item2 = _.clone(item);
+        delete item2.uiOldData;
+        wdMonitorSer.autoLabel(item2).then(function(data) {
             console.log(data);
         });
     };
@@ -154,7 +185,10 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         _.each($scope.dataList, function(v) {
             if (v.id === id) {
                 $scope.modalTitle = '竞品监控历史' + '<span class="history-id">id: ' + id + '</span>';
-                $scope.modalContent = v.changeHistory;
+                $scope.modalContent = '';
+                _.each(v.changeHistories, function(m) {
+                    $scope.modalContent = '<p>' + m.time + '</p><p>' + m.src + '</p><p>' + m.field + '</p>操作：<p>' + m.action + '</p><p>从</p><p>' + m.from + '</p><p>变为</p><p>' + m.to + '</p><br>';
+                });
             }
         });
         $scope.showModal = true;
@@ -216,9 +250,17 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     }, 300));
 
+    $scope.$watchCollection(function() {
+        return [$scope.pathType, $scope.source, $scope.sort, $scope.order];
+    }, _.debounce(function(value) {
+        $scope.$apply(function() {
+            $scope.offset = 0;
+            showAllData();
+        });
+    }, 300));
+    
     // 翻页逻辑
     $scope.$watch('offset', function(value) {
-        console.log('offset:' + value);
         showAllData();
     });
 }];

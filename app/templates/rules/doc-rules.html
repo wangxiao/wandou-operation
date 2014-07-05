@@ -38,9 +38,8 @@
                     </li>
                     <li>
                         <p class="title">文件分类</p>
-                        <select class="form-control">
-                            <option>应用主目录</option>
-                        </select>
+                        <p ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle}}</p>
+                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
                     </li>
                 </ul>
                 <ul>
@@ -51,9 +50,8 @@
                     </li>
                     <li>
                         <p class="title">清理风险</p>
-                        <select class="form-control">
-                            <option>应用主目录</option>
-                        </select>
+                        <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevel}}</p>
+                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title for title in adviceLevelOptions"></select>
                     </li>
                 </ul>
             </div>
@@ -69,8 +67,8 @@
         </div>
     </div>
     <!-- doc-rule-form end -->
-
-    <div class="pages-btns">
+    <h3 ng-if="!dataList.length" class="error">无数据</h3>
+    <div ng-if="dataList.length" class="pages-btns">
         <p ng-click="pageUp();">上一页</p>
         <p ng-click="pageDown();">下一页</p>
     </div>

@@ -8,8 +8,24 @@ return ['$http', '$q', 'wdStorage',
 function($http, $q, wdStorage) {
     var contentTypeOptions = [];
     return {
-        pathTypeOptions: ['全部', '普通缓存路径', '系统缓存路径', '广告路径', '正则缓存路径', '应用主目录'],
+        pathTypeOptions: [
+            {value: null, name: '全部'},
+            {value: 1, name: '普通缓存路径'},
+            {value: 2, name: '系统缓存路径'},
+            {value: 3, name: '广告路径'},
+            {value: 4, name: '正则缓存路径'},
+            {value: 5, name: '应用主目录'}
+        ],
+        getPathType: function(pathType) {
+            return _.find(this.pathTypeOptions, function(v) {
+                if (pathType === v.value) {
+                    return true;
+                }
+            }).name;
+        },
         adviceLevelOptions: ['建议清理', '谨慎清理'],
+        // 这个字段应该从服务器获取，写在客户端不是很合理。
+        sourceOptions: ['全部', 'liebao', '360', 'lbe', 'wdj'],
         pageListLength: function(value) {
             if (value) {
                 wdStorage.value('page-list-length', value);
@@ -23,7 +39,14 @@ function($http, $q, wdStorage) {
                 defer.resolve(contentTypeOptions);
             } else {
                 $http.get('/meta/list/').then(function(data) {
-                    contentTypeOptions = data.contentTypes;
+                    contentTypeOptions = [];
+                    // 根据运营给出的逻辑，去掉前 50，并且显示上面要增加 id。
+                    _.each(data.contentTypes, function(v, i) {
+                        if (v.id > 50) {
+                            v.title = v.id + ' ' + v.title;
+                            contentTypeOptions.push(v);
+                        }
+                    });
                     defer.resolve(contentTypeOptions);
                 });
             }
