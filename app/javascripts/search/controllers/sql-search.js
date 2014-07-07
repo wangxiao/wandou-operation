@@ -34,7 +34,7 @@ function($scope, wdSearchSer, wdStorage, wdDataSetting, $location, $window) {
     };
 
     $scope.getPathType = function(pathType) {
-        return wdDataSetting.getPathType(pathType);
+        return wdDataSetting.getPathType(pathType).title;
     };
     
     $scope.showDetail = function(id) {

@@ -21,7 +21,7 @@ function($scope, wdDataSetting, wdSearchSer) {
     });
 
     $scope.getPathType = function(pathType) {
-        return wdDataSetting.getPathType(pathType);
+        return wdDataSetting.getPathType(pathType).title;
     };
     
     $scope.search = function() {

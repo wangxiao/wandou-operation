@@ -17,16 +17,34 @@ function($http, $q, wdStorage) {
             {value: 5, name: '应用主目录'}
         ],
         getPathType: function(pathType) {
-            return _.find(this.pathTypeOptions, function(v) {
-                if (pathType === v.value) {
+            if (pathType === 0 || pathType) {
+                return _.find(this.pathTypeOptions, function(v) {
+                    if (pathType === v.value) {
+                        return true;
+                    }
+                });
+            }
+        },
+        adviceLevelOptions: [
+            {value: 0, name: '建议清理'},
+            {value: 1, name: '谨慎清理'}
+        ],
+        getAdviceLevel: function(adviceLevel) {
+            return _.find(this.adviceLevelOptions, function(v) {
+                if (adviceLevel === v.value) {
                     return true;
                 }
-            }).name;
+            });
         },
-        adviceLevelOptions: ['建议清理', '谨慎清理'],
         // 这个字段应该从服务器获取，写在客户端不是很合理。
-        sourceOptions: ['全部', 'liebao', '360', 'lbe', 'wdj'],
-        pageListLength: function(value) {
+        sourceOptions: [
+            {value: null, name: '全部'},
+            {value: 'liebao', name: 'liebao'},
+            {value: '360', name: '360'},
+            {value: 'lbe', name: 'lbe'},
+            {value: 'wdj', name: 'wdj'}
+        ],
+       pageListLength: function(value) {
             if (value) {
                 wdStorage.value('page-list-length', value);
             } else {

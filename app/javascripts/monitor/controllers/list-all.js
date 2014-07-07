@@ -6,6 +6,8 @@ define([
 'use strict';
 return ['$scope', 'wdMonitorSer', '$timeout', '$location', 'wdDataSetting', 'wdModalSer',
 function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdModalSer) {
+    // 是否是第一次进入
+    $scope.isFirst = true; 
     $scope.dataList = [];
     $scope.counterList = {};
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
@@ -39,19 +41,6 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     // 当前数据显示的位置，用来分页获取数据，默认从头开始。
     $scope.offset = 0;
 
-    function getSourceOptions(data) {
-        var arr = [];
-        _.each(data, function(v) {
-            if (!v.source) {
-                arr.push('无来源');
-            } else {
-                arr.push(v.source);
-            }
-        });
-        arr = _.uniq(arr);
-        $scope.sourceOptions = _.uniq($scope.sourceOptions.concat(arr));
-    }
-
     function getContentTypeOptions() {
         return wdDataSetting.getContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
@@ -61,8 +50,16 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                     v.uiContentTypeTitle = t.title;
                     // 给 select 使用
                     v.uiContentTypeOption = t;
-                }
+                }              
             });
+        });
+    }
+
+    function getAdviceLevel() {
+        _.each($scope.dataList, function(v) {
+            v.uiAdviceLevel = wdDataSetting.getAdviceLevel(v.adviceLevel);
+            v.uiAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.adviceLevel).name;
+            v.uiSrcAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.srcAdviceLevel).name;
         });
     }
 
@@ -73,9 +70,8 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     });
 
     function formatData() {
-        getSourceOptions($scope.dataList);
         getContentTypeOptions();
-
+        getAdviceLevel();
     }
 
     function showAllData() {
@@ -84,10 +80,11 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             size: $scope.pageListLength,
             offset: $scope.offset,
             pathType: $scope.pathType.value,
-            source: $scope.sourceOptions.indexOf($scope.source) ? $scope.source : null,
+            source: $scope.source.value,
             orderBy: $scope.sort.value,
             order: $scope.order.value
         }).then(function(data) {
+            $scope.isFirst = false;
             $scope.dataList = data;
             $scope.showLoading = false;
             if (data.length) {
@@ -99,14 +96,14 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     }
 
     $scope.getPathType = function(pathType) {
-        return wdDataSetting.getPathType(pathType);
+        return wdDataSetting.getPathType(pathType).title;
     };
 
     $scope.editItem = function(item) {
         // 备份当前数据
         item.uiOldData = _.clone(item);
         item.uiEditStatus = true;
-        item.uiAdviceLevel = $scope.adviceLevelOptions[item.adviceLevel];
+        item.uiAdviceLevel = wdDataSetting.getAdviceLevel(item.adviceLevel);
     };
     $scope.cancelEditItem = function(item) {
         item.uiEditStatus = false;
@@ -116,11 +113,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             }
         });
     };
+    // 保存当前编辑，flag 是内部参数，用来标记是否只是界面改变，还是需要真正的提交数据。
     $scope.finishEditItem = function(item, flag) {
         item.uiEditStatus = false;
         item.contentType = item.uiContentTypeOption.id;
         item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).title;
-        item.adviceLevel = $scope.adviceLevelOptions.indexOf(item.uiAdviceLevel);
+        item.adviceLevel = item.uiAdviceLevel.value;
         delete item.uiOldData;
         if (!flag) {
             wdMonitorSer.upDateCompeteData(item).then(function(data) {
@@ -244,6 +242,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                 if (value > 100) {
                     $scope.pageListLength = 100;
                 }
+                $scope.showLoading = true;
                 wdDataSetting.pageListLength($scope.pageListLength);
                 showAllData();
             }
@@ -254,6 +253,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         return [$scope.pathType, $scope.source, $scope.sort, $scope.order];
     }, _.debounce(function(value) {
         $scope.$apply(function() {
+            $scope.showLoading = true;
             $scope.offset = 0;
             showAllData();
         });

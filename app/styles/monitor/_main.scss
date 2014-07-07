@@ -54,32 +54,26 @@
             }
         }
         .body {
-            .category-list {
-                padding: 10px 15px 10px 15px;
-                border-right: 1px solid $border-gray;
-                width: 20%;
-                float: left;
-                .item {
-                    color: $standard-green;
+            .title {
+                color: $standard-green;
+                text-align: center;
+                width: 16%;
+                border: none;
+            }
+            table {
+                td {
+                    border: none;
+                    padding: 10px 15px;
+                    width: 42%;
+                    border-left: 1px solid $border-gray;
+
+                }
+                tr {
+                    margin-bottom: 10px;
                 }
             }
-            .old-list {
-                padding: 10px 15px 10px 15px;
-                border-right: 1px solid $border-gray;
-                width: 25%;
-                float: left;
-                .item {
-                    color: #888;
-                    input {
-                        width: 100%;
-                    }
-                }
-            }
-            .new-list {
-                padding: 10px 15px 10px 15px;
-                border-right: 1px solid $border-gray;
-                width: 55%;
-                float: left;
+            input {
+                width: 95%;
             }
         }
         .footer {

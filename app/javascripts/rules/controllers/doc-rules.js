@@ -8,6 +8,14 @@ return ['$scope', 'wdRulesSer', 'wdDataSetting',
 function($scope, wdRulesSer, wdDataSetting) {
     $scope.dataList = [];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
+    $scope.docDescOptions = [];
+    wdRulesSer.getLabelRules().then(function(data) {
+        _.each(data, function(v) {
+            $scope.docDescOptions.push(v.type);
+        });
+        $scope.docDescOptions = _.uniq($scope.docDescOptions);
+    });
+
     wdRulesSer.getDocRules().then(function(data) {
         $scope.dataList = data.splice(0, 10);
         console.log($scope.dataList);
@@ -20,7 +28,8 @@ function($scope, wdRulesSer, wdDataSetting) {
             _.each($scope.dataList, function(v, i) {
                 $scope.dataList[i].uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.ourContentType);
                 $scope.dataList[i].uiContentTypeTitle = $scope.dataList[i].uiContentTypeOption.title;
-                $scope.dataList[i].uiAdviceLevel = wdDataSetting.adviceLevelOptions[v.ourAdviceLevel];
+                $scope.dataList[i].uiAdviceLevel = wdDataSetting.getAdviceLevel(v.ourAdviceLevel);
+                $scope.dataList[i].uiAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.ourAdviceLevel).name;
             });
         });
     }

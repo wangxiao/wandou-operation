@@ -46,12 +46,12 @@
                     <li>
                         <p class="title">文件描述</p>
                         <p ng-if="!item.uiEditStatus">{{item.ourDesc || '（空）'}}</p>
-                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.ourDesc">
+                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.ourDesc" ng-options="title for title in docDescOptions"></select>
                     </li>
                     <li>
                         <p class="title">清理风险</p>
-                        <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevel}}</p>
-                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title for title in adviceLevelOptions"></select>
+                        <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevelTitle}}</p>
+                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
                     </li>
                 </ul>
             </div>

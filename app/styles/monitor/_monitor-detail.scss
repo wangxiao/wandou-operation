@@ -39,11 +39,17 @@
     }
     .editable-detail {
         margin: 10px 0px 20px 0px;
+        td {
+            width: 40%;
+        }
         .title {
-            width: 25%;
+            width: 20%;
             font-size: 12px;
             color: $standard-green;
             text-align: center;
+        }
+        input {
+            width: 90%;
         }
         table tr th {
             color: #fff;
@@ -51,6 +57,10 @@
         }
         .btns {
             float: right;
+
+            .finish {
+                color: $standard-green;
+            }
         }
     }
     .history-box {

@@ -8,7 +8,7 @@
         剩余
         <span class="num">{{counterList.monitorAll}}</span>
     </p>
-    <div ng-if="dataList.length" class="toolbar">
+    <div class="toolbar">
         <div class="left">
             <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">
             <p>全选</p>
@@ -16,7 +16,7 @@
         </div>
         <div class="right">
             <select class="form-control" ng-model="pathType" ng-options="title.name for title in pathTypeOptions"></select>
-            <select class="form-control" ng-model="source" ng-options="title for title in sourceOptions"></select>
+            <select class="form-control" ng-model="source" ng-options="title.name for title in sourceOptions"></select>
             <select class="form-control" ng-model="sort" ng-options="title.name for title in sortOptions"></select>
             <select class="form-control" ng-model="order" ng-options="title.name for title in orderOptions"></select>
             <p class="page-label">每页展示</p>
@@ -44,50 +44,56 @@
             <p ng-if="item.subPath">次路径：{{item.subPath}}</p>
         </div>
         <div class="body">
-            <ul class="category-list">
-                <li class="item">文件类别</li>
-                <li class="item">项目名</li>
-                <li class="item">文件描述</li>
-                <li class="item">清理风险</li>
-                <li class="item">清理风险缩写</li>
-                <li class="item">风险级别</li>
-            </ul>
-            <ul class="old-list">
-                <li class="item">（无）</li>
-                <li class="item">{{item.srcItemName || '（空）'}}</li>
-                <li class="item">{{item.srcDesc || '（空）'}}</li>
-                <li class="item">{{item.srcAlertInfo || '（空）'}}</li>
-                <li class="item">{{item.srcSimpleAlertInfo || '（空）'}}</li>
-                <li class="item">{{adviceLevelOptions[item.srcAdviceLevel] || '（空）'}}</li>
-            </ul>
-            <ul class="old-list" ng-if="!item.uiEditStatus">
-                <li class="item">{{item.uiContentTypeTitle || '（空）'}}</li>
-                <li class="item">{{item.itemName || '（空）'}}</li>
-                <li class="item">{{item.desc || '（空）'}}</li>
-                <li class="item">{{item.alertInfo || '（空）'}}</li>
-                <li class="item">{{item.simpleAlertInfo || '（空）'}}</li>
-                <li class="item">{{adviceLevelOptions[item.adviceLevel] || '（空）'}}</li>
-            </ul>
-            <ul class="old-list" ng-if="item.uiEditStatus">
-                <li class="item">
-                    <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
-                </li>
-                <li class="item">
-                    <input type="text" class="form-control" ng-model="item.itemName">
-                </li>
-                <li class="item">
-                    <input type="text" class="form-control" ng-model="item.desc">
-                </li>
-                <li class="item">
-                    <input type="text" class="form-control" ng-model="item.alertInfo">
-                </li>
-                <li class="item">
-                    <input type="text" class="form-control" ng-model="item.simpleAlertInfo">
-                </li>
-                <li class="item">
-                    <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title for title in adviceLevelOptions"></select>
-                </li>
-            </ul>
+            <table class="table table-condensed">
+                <tr>
+                    <td class="title">文件类别</td>
+                    <td>（无）</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">项目名</td>
+                    <td>{{item.srcItemName || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.itemName || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" ng-model="item.itemName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">文件描述</td>
+                    <td>{{item.srcDesc || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.desc || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" ng-model="item.desc">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">清理风险</td>
+                    <td>{{item.srcAlertInfo || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.desc || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" ng-model="item.alertInfo">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">清理风险缩写</td>
+                    <td>{{item.srcSimpleAlertInfo || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.simpleAlertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" ng-model="item.simpleAlertInfo">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">风险级别</td>
+                    <td>{{item.uiSrcAdviceLevelTitle || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiAdviceLevelTitle || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="footer">
             <div class="left">
@@ -115,7 +121,7 @@
             </div>
         </div>
     </div>
-    <h3 ng-if="!dataList.length" class="error">无数据</h3>
+    <h3 ng-if="!dataList.length && !isFirst" class="error">无数据</h3>
     <div class="footer" ng-if="dataList.length">
         <div class="left">
             <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">
@@ -130,7 +136,7 @@
         </div>
     </div>
     <div class="wd-modal" wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}" data-show="{{showModal}}"></div>
-    <!-- <div class="wd-little-loading" data-visible="true"></div> -->
+    <div ng-if="showLoading" class="wd-little-loading" data-visible="true"></div>
 </div>
 <div wd-footer></div>
 <!-- <div wd-loading data-show="{{showLoading}}"></div> -->
