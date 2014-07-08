@@ -5,41 +5,34 @@
     }
     .doc-rule-form {
         .body {
+            position: relative;
             input, select {
                 color: #000;
-            }
-            ul {
-                float: left;
-                margin-right: 30px;
-                li {
-                    height: 35px;
-                    line-height: 35px;
-                }
             }
             .title {
                 color: $standard-green;
                 margin-right: 10px;
+                min-width: 110px;
+                text-align: right;
             }
-            .left {
-                float: left;
-                width: 50%;
+            .border-right {
                 border-right: 1px solid $border-gray;
-                padding: 20px 20px;
-                ul.title {
-                    margin-right: 0px;
-                    text-align: right;
-                }
-                ul.content li {
-                    width: 292px;
-                    overflow: hidden;
-                    input {
-                        width: 100%;
-                    }
-                }
             }
-            .right {
-                padding: 20px 20px;
-                float: left;
+            table td {
+                padding: 15px 15px 10px 5px;
+                border: none;
+                min-width: 130px;
+            }
+            .flag {
+                position: absolute;
+                color: #fff;
+                padding: 40px 25px 0px 25px;
+                @include rotate(-45deg);
+                &.flag-compete {
+                    background-color: $standard-blue;
+                    left: -40px;
+                    top: -24px;
+                }
             }
         }
     }
@@ -89,6 +82,7 @@
         text-align: center;
         color: $standard-green;
         p {
+            cursor: pointer;
             margin-right: 20px;
         }
     }

@@ -59,14 +59,16 @@
                 text-align: center;
                 width: 16%;
                 border: none;
+                padding: 15px 0px;
             }
             table {
                 td {
                     border: none;
-                    padding: 10px 15px;
+                    padding: 15px 10px 15px 31px;
                     width: 42%;
                     border-left: 1px solid $border-gray;
-
+                    position: relative;
+                    overflow: hidden;
                 }
                 tr {
                     margin-bottom: 10px;
@@ -74,6 +76,22 @@
             }
             input {
                 width: 95%;
+            }
+            .flag {
+                position: absolute;
+                color: #fff;
+                padding: 40px 25px 0px 25px;
+                @include rotate(-45deg);
+                &.flag-compete {
+                    background-color: $standard-blue;
+                    left: -40px;
+                    top: -24px;
+                }
+                &.flag-our {
+                    background-color: $standard-red;
+                    top: -25px;
+                    left: -42px;
+                }
             }
         }
         .footer {

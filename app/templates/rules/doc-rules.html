@@ -9,53 +9,43 @@
             <p>规则 {{item.id}}</p>
         </div>
         <div class="body">
-            <div class="left">
-                <ul class="title">
-                    <li>
-                        <p class="title">原始项目名</p>
-                    </li>
-                    <li>
-                        <p class="title">原始 NOTICE</p>
-                    </li>
-                </ul>
-                <ul class="content">
-                    <li>
-                        <p ng-if="!item.uiEditStatus">{{item.srcItemName || '（空）'}}</p>
-                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.srcItemName">
-                    </li>
-                    <li>
-                        <p ng-if="!item.uiEditStatus">{{item.srcNotice || '（空）'}}</p>
-                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.srcNotice">
-                    </li>
-                </ul>
-            </div>
-            <div class="right">
-                <ul>
-                    <li>
-                        <p class="title">项目名</p>
-                        <p ng-if="!item.uiEditStatus">{{item.ourItemName || '（空）'}}</p>
-                        <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.ourItemName">
-                    </li>
-                    <li>
-                        <p class="title">文件分类</p>
-                        <p ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle}}</p>
-                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <p class="title">文件描述</p>
-                        <p ng-if="!item.uiEditStatus">{{item.ourDesc || '（空）'}}</p>
-                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.ourDesc" ng-options="title for title in docDescOptions"></select>
-                    </li>
-                    <li>
-                        <p class="title">清理风险</p>
-                        <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevelTitle}}</p>
-                        <select ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
-                    </li>
-                </ul>
-            </div>
-            <!-- right end -->
+            <div class="flag flag-compete">竞品</div>
+            <table class="table table-condensed">
+                <tr>
+                    <td class="title">原始项目名</td>
+                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcItemName || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.srcItemName">
+                    </td>
+                    <td class="title">项目名</td>
+                    <td ng-if="!item.uiEditStatus">{{item.ourItemName || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.ourItemName">
+                    </td>
+                    <td class="title">文件描述</td>
+                    <td ng-if="!item.uiEditStatus">{{item.ourDesc || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.ourDesc" ng-options="title for title in docDescOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">原始 NOTICE</td>
+                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcNotice || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <textarea class="form-control" value="" ng-model="item.srcNotice"></textarea>
+                    </td>
+                    <td class="title">文件分类</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>
+                    </td>
+                    <td class="title">清理风险</td>
+                    <td ng-if="!item.uiEditStatus">{{item.ourAlertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="footer">
             <div class="btns">

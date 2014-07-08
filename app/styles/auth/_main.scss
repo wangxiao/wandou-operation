@@ -1,14 +1,24 @@
 .sign-in-view {
     text-align: center;
-    .sign-in-btn {
+    .sign-in {
         /* 垂直居中 */
         position: absolute;
-        top: 50%;
+        top: 30%;
+        left: 50%;
         @include translateX(-50%);
         background-color: $standard-green;
-        a {
+        width: 260px;
+        padding: 20px;
+        p {
             color: #fff;
             text-decoration: none;
+        }
+        .sign-in-form {
+            text-align: center;
+            width: 100%;
+            input {
+                margin-top: 10px;
+            }
         }
     }
 }

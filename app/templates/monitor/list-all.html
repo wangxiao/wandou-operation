@@ -47,10 +47,16 @@
             <table class="table table-condensed">
                 <tr>
                     <td class="title">文件类别</td>
-                    <td>（无）</td>
-                    <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
+                    <td>
+                        <span class="flag flag-compete">{{item.source}}</span>
+                        （无）
+                    </td>
+                    <td ng-if="!item.uiEditStatus">
+                        <span class="flag flag-our">新生成</span>
+                        {{item.uiContentTypeTitle || '（空）'}}
+                    </td>
                     <td ng-if="item.uiEditStatus">
-                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
+                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>
                     </td>
                 </tr>
                 <tr>
@@ -88,10 +94,12 @@
                 <tr>
                     <td class="title">风险级别</td>
                     <td>{{item.uiSrcAdviceLevelTitle || '（空）'}}</td>
-                    <td ng-if="!item.uiEditStatus">{{item.uiAdviceLevelTitle || '（空）'}}</td>
+                    <td>{{item.uiAdviceLevelTitle || '（空）'}}</td>
+                    <!--
                     <td ng-if="item.uiEditStatus">
                         <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
                     </td>
+                    -->
                 </tr>
             </table>
         </div>
@@ -116,6 +124,7 @@
                 <p class="publish btn" ng-if="item.uiEditStatus" ng-click="finishEditItem(item)">完成编辑</p>
                 <p class="btn" ng-if="!item.uiEditStatus" ng-click="ignoreItem(item)">忽略条目</p>
                 <p class="btn" ng-if="!item.uiEditStatus">审核完成</p>
+                <p class="btn" ng-if="!item.uiEditStatus" ng-click="offlineItem(item)">下线条目</p>
                 <p class="publish btn" ng-if="!item.uiEditStatus" ng-click="publicItem(item)">上线条目</p>
                 <i class="setting-icon btn glyphicon glyphicon-info-sign" title="查看详情" ng-click="showDetail(item.id)"></i>
             </div>

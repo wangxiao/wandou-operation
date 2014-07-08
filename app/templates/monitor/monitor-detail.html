@@ -54,7 +54,7 @@
                     <td>{{detail.uiSrcContentTypeTitle || "(无)"}}</td>
                     <td ng-if="!editStatus">{{detail.uiContentTypeTitle || "(无)"}}</td>
                     <td ng-if="editStatus">
-                        <select class="form-control" ng-model="detail.uiContentTypeOption" ng-options="t.title for t in contentTypeOptions"></select>
+                        <select class="form-control" ng-model="detail.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>
                     </td>
                 </tr>
                 <tr>
@@ -92,10 +92,12 @@
                 <tr>
                     <td class="title">风险级别</td>
                     <td>{{detail.uiSrcAdviceLevelTitle || "(空)"}}</td>
-                    <td ng-if="!editStatus">{{detail.uiAdviceLevelTitle || "(空)"}}</td>
+                    <td>{{detail.uiAdviceLevelTitle || "(空)"}}</td>
+                    <!--
                     <td ng-if="editStatus">
                         <select class="form-control" ng-model="detail.uiAdviceLevel" ng-options="t.name for t in adviceLevelOptions"></select>
                     </td>
+                    -->
                 </tr>
             </table>
         </div>

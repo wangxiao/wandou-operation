@@ -37,6 +37,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     // 是否显示 loading
     $scope.showLoading = true;
     $scope.contentTypeOptions = [];
+    
+    // 用于数据服务，获取根据 action 获取。
+    var actionObj = {
+        new: 1,
+        offline: 3,
+        change: 2
+    };
 
     // 当前数据显示的位置，用来分页获取数据，默认从头开始。
     $scope.offset = 0;
@@ -76,7 +83,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
 
     function showAllData() {
         wdMonitorSer.getCompeteAllList({
-            action: $location.search().action,
+            action: actionObj[$location.search().action],
             size: $scope.pageListLength,
             offset: $scope.offset,
             pathType: $scope.pathType.value,
@@ -84,6 +91,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             orderBy: $scope.sort.value,
             order: $scope.order.value
         }).then(function(data) {
+            console.log(data);
             $scope.isFirst = false;
             $scope.dataList = data;
             $scope.showLoading = false;
@@ -95,6 +103,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     }
 
+    function deleteItem(id) {
+        _.find($scope.dataList, function(v, i) {
+            if (v.id === id) {
+                $scope.dataList.splice(i, 1);
+            }
+        });
+    }
     $scope.getPathType = function(pathType) {
         return wdDataSetting.getPathType(pathType).title;
     };
@@ -105,6 +120,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         item.uiEditStatus = true;
         item.uiAdviceLevel = wdDataSetting.getAdviceLevel(item.adviceLevel);
     };
+
     $scope.cancelEditItem = function(item) {
         item.uiEditStatus = false;
         _.each($scope.dataList, function(v, i) {
@@ -113,11 +129,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             }
         });
     };
+
     // 保存当前编辑，flag 是内部参数，用来标记是否只是界面改变，还是需要真正的提交数据。
     $scope.finishEditItem = function(item, flag) {
         item.uiEditStatus = false;
         item.contentType = item.uiContentTypeOption.id;
-        item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).title;
+        item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).uiTitle;
         item.adviceLevel = item.uiAdviceLevel.value;
         delete item.uiOldData;
         if (!flag) {
@@ -130,26 +147,37 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         $scope.finishEditItem(item, true);
         wdMonitorSer.ignoreCompeteDate(item).then(function(data) {
             console.log(data);
+            deleteItem(item.id);
         });
     };
     $scope.publicItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.publicCompeteData(item).then(function(data) {
             console.log(data);
+            deleteItem(item.id);
         });
     };
     $scope.offlineItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.offlineCompeteDate(item).then(function(data) {
             console.log(data);
+            deleteItem(item.id);
         });
     };
     // 自动生成文案
     $scope.autoLabelItem = function(item) {
-        var item2 = _.clone(item);
-        delete item2.uiOldData;
-        wdMonitorSer.autoLabel(item2).then(function(data) {
+        var backup = _.clone(item);
+        delete item.uiOldData;
+        wdMonitorSer.autoLabel(item).then(function(data) {
             console.log(data);
+            _.find($scope.dataList, function(v, i) {
+                if (item.id === v.id) {
+                    $scope.dataList[i] = data;
+                    $scope.dataList[i].uiEditStatus = true;
+                    $scope.dataList[i].uiOldData = item.uiOldData;
+                }
+            });
+            formatData();           
         });
     };
     $scope.showDetail = function(id) {

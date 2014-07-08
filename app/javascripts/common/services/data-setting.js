@@ -61,7 +61,7 @@ function($http, $q, wdStorage) {
                     // 根据运营给出的逻辑，去掉前 50，并且显示上面要增加 id。
                     _.each(data.contentTypes, function(v, i) {
                         if (v.id > 50) {
-                            v.title = v.id + ' ' + v.title;
+                            v.uiTitle = v.id + ' ' + v.title;
                             contentTypeOptions.push(v);
                         }
                     });
@@ -74,7 +74,7 @@ function($http, $q, wdStorage) {
             contentType = Number(contentType);
             return _.find(contentTypeOptions, function(v) {
                 if (Number(v.id) === contentType) {
-                    return v.title;
+                    return v.uiTitle;
                 }
             });
         }

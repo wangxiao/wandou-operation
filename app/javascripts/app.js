@@ -16,7 +16,8 @@ define([
     'rules/main',
     'text!templates/search/search-filter.html',
     'search/main',
-    'text!templates/search/sql-search.html'
+    'text!templates/search/sql-search.html',
+    'text!templates/rules/content-type-rules.html'
 ], function(
     angular,
     angularRoute,
@@ -35,7 +36,8 @@ define([
     wdRules,
     searchFilterTpl,
     wdSearch,
-    sqlSearchTpl
+    sqlSearchTpl,
+    contentTypeRulesTpl
 ) {
 'use strict';
     angular
@@ -73,13 +75,9 @@ define([
                 template: labelRulesTpl,
                 controller: 'wdLabelRulesCtrl'
             })
-            .when('/risk-rules', {
-                template: docRulesTpl,
-                controller: 'wdDocRulesCtrl'
-            })
-            .when('/file-type-rules', {
-                template: labelRulesTpl,
-                controller: 'wdLabelRulesCtrl'
+            .when('/content-type-rules', {
+                template: contentTypeRulesTpl,
+                controller: 'wdContentTypeRulesCtrl'
             })
             .when('/search-filter', {
                 template: searchFilterTpl,
@@ -90,11 +88,11 @@ define([
                 controller: 'wdSqlSearchCtrl'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/auth'
             });
 
         // 全局 $http 请求配置。
-        $httpProvider.interceptors.push(function(wdConfig) {
+        $httpProvider.interceptors.push(function(wdConfig, $location) {
             return {
                 'request': function(config) {
                     config.timeout = wdConfig.httpTimeout;
@@ -105,6 +103,9 @@ define([
                 },
 
                 'response': function(response) {
+                    if (response.status === 403) {
+                        $location.path('/auth');
+                    }
                     return response.data;
                 }
             };

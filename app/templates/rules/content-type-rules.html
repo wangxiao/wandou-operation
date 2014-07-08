@@ -1,20 +1,20 @@
 <div class="rules-tpl wd-content">
-    <h1>竞品监控规则 - {{title}}</h1>
+    <h1>竞品监控规则 - 文件类型规则</h1>
     <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
 
     <div class="file-rule-form wd-show-box" ng-repeat="item in dataList">
         <div class="header">
-            <p>{{item.type.toUpperCase()}} 类文案</p>
+            <p>id：{{item.id || "新建"}}</p>
         </div>
         <div class="body">
-            <p class="title">字段名</p>
-            <p>{{item.field || '（空）'}}</p>
-            <p class="title">类别</p>
-            <p ng-if="!item.uiEditStatus">{{item.type || '（空）'}}</p>
-            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.type">
-            <p class="title">规则详情</p>
-            <p ng-if="!item.uiEditStatus">{{item.labelContent || '（空）'}}</p>
-            <input ng-if="item.uiEditStatus" class="detail-input form-control" type="text" value="" ng-model="item.labelContent">  
+            <p class="title">文件类型</p>
+            <p>{{item.title || '（空）'}}</p>
+            <p class="title">清理风险</p>
+            <p ng-if="!item.uiEditStatus">{{item.alertInfo || '（空）'}}</p>
+            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.alertInfo">
+            <p class="title">风险级别</p>
+            <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevel.name}}</p>  
+            <select  ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
         </div>
         <div class="footer">
             <div class="btns">

@@ -32,13 +32,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting) {
             $scope.contentTypeOptions = data;
             var t = wdDataSetting.getContentTypeTitle($scope.detail.contentType);
             if (t) {
-                $scope.detail.uiContentTypeTitle = t.title;
+                $scope.detail.uiContentTypeTitle = t.uiTitle;
                 // 给 select 使用
                 $scope.detail.uiContentTypeOption = t;
             }
             t = wdDataSetting.getContentTypeTitle($scope.detail.srcContentType);
             if (t) {
-                $scope.detail.uiSrcContentTypeTitle = t.title;
+                $scope.detail.uiSrcContentTypeTitle = t.uiTitle;
                 // 给 select 使用
                 $scope.detail.uiSrcContentTypeOption = t;
             }
@@ -54,7 +54,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting) {
     };
     $scope.finish = function(item) {
         $scope.editStatus = false;
-        item.uiContentTypeTitle = item.uiContentTypeOption.title;
+        item.uiContentTypeTitle = item.uiContentTypeOption.uiTitle;
         wdMonitorSer.upDateCompeteData(item).then(function(data) {
             console.log(data);
         });

@@ -78,10 +78,10 @@
                 <select class="form-control" ng-model="filterMap.pathTypeOption" ng-options="value.name for value in pathTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control" ng-model="filterMap.contentTypeOption" ng-options="value.title for value in contentTypeOptions"></select>
+                <select class="form-control" ng-model="filterMap.contentTypeOption" ng-options="value.uiTitle for value in contentTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control" ng-model="filterMap.adviceLevelOption" ng-options="value for value in adviceLevelOptions"></select>
+                <select class="form-control" ng-model="filterMap.adviceLevelOption" ng-options="value.name for value in adviceLevelOptions"></select>
             </li>
             <li>
                 <input type="text" class="form-control" value="" ng-model="filterMap.lastUpdatedBy">

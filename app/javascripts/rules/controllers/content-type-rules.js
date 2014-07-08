@@ -4,37 +4,30 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdRulesSer', '$location',
-function($scope, wdRulesSer, $location) {
-    $scope.field = $location.search().action; 
-    switch ($scope.field) {
-        case 'desc':
-            $scope.title = '文件描述规则';
-        break;
-        case 'alertInfo':
-            $scope.title = '清理风险规则';
-        break;
-    }
-    
+return ['$scope', 'wdRulesSer', '$location', 'wdDataSetting',
+function($scope, wdRulesSer, $location, wdDataSetting) {    
     $scope.dataList = [];
-    wdRulesSer.getLabelRules().then(function(data) {
+    $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
+    wdDataSetting.getContentTypeOptions().then(function(data) {
         console.log(data);
-        filter($scope.field, data);
+        $scope.dataList = data;
+        formatData();
     });
-    function filter(field, data) {
-        _.each(data, function(v) {
-            if (v.field === field) {
-                $scope.dataList.push(v);
-            }
+
+    function formatData() {
+        _.each($scope.dataList, function(v) {
+            v.uiAdviceLevel = wdDataSetting.getAdviceLevel(v.adviceLevel);
         });
     }
+
     $scope.addItem = function() {
         if (!$scope.dataList.length || $scope.dataList[0].id) {
             $scope.dataList.unshift({
-                field: $scope.field,
-                type: '',
-                labelContent: '',
-                uiEditStatus: true
+                adviceLevel: 1,
+                alertInfo: '',
+                desc: '',
+                id: null,
+                title: ''
             });
         }
     };
@@ -67,6 +60,7 @@ function($scope, wdRulesSer, $location) {
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
         delete item.uiOld;
+        item.adviceLevel = item.uiAdviceLevel.value;
     };
 }];
 });

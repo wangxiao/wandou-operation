@@ -1,5 +1,11 @@
 <div class="sign-in-view">
-    <div class="btn sign-in-btn">
-        <a href="#/index">使用 LDAP 账号登录</a>
+    <div class="sign-in">
+        <p>使用 LDAP 账号登录</p>
+        <div class="sign-in-form">
+            <form id="sign-in-form" name="sign-in-form" method="post">
+                <input name="j_username" type="text" class="form-control" value="" ng-model="name" placeholder="username">
+                <input name="j_password" type="password" class="form-control" value="" ng-model="password" placeholder="password">
+            </form>
+        </div>
     </div>
 </div>

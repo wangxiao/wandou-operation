@@ -6,6 +6,20 @@ define([
 'use strict';
 return ['$scope', 'wdRulesSer', 'wdDataSetting',
 function($scope, wdRulesSer, wdDataSetting) {
+    $scope.alertInfoOptions = [
+        {name: 'a', value: 'a'},
+        {name: 'b', value: 'b'},
+        {name: 'c', value: 'c'},
+        {name: 'd', value: 'd'},
+        {name: 'e', value: 'e'}
+    ];
+    function getAlertInfo(alertInfo) {
+        return _.find($scope.alertInfoOptions, function(v) {
+            if (v.value === alertInfo) {
+                return true;
+            }
+        });
+    }
     $scope.dataList = [];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.docDescOptions = [];
@@ -17,7 +31,6 @@ function($scope, wdRulesSer, wdDataSetting) {
     });
 
     wdRulesSer.getDocRules().then(function(data) {
-        $scope.dataList = data.splice(0, 10);
         console.log($scope.dataList);
         formatData();
     });
@@ -27,15 +40,16 @@ function($scope, wdRulesSer, wdDataSetting) {
             $scope.contentTypeOptions = data;
             _.each($scope.dataList, function(v, i) {
                 $scope.dataList[i].uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.ourContentType);
-                $scope.dataList[i].uiContentTypeTitle = $scope.dataList[i].uiContentTypeOption.title;
+                $scope.dataList[i].uiContentTypeTitle = $scope.dataList[i].uiContentTypeOption.uiTitle;
                 $scope.dataList[i].uiAdviceLevel = wdDataSetting.getAdviceLevel(v.ourAdviceLevel);
                 $scope.dataList[i].uiAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.ourAdviceLevel).name;
+                $scope.dataList[i].uiAlertInfo = getAlertInfo(v.ourAlertInfo);
             });
         });
     }
 
     $scope.addItem = function() {
-        if ($scope.dataList[0].id) {
+        if (!$scope.dataList.length || $scope.dataList[0].id) {
             $scope.dataList.unshift({
                 // id: 11,
                 // ourAdviceLevel: 1,
@@ -81,6 +95,7 @@ function($scope, wdRulesSer, wdDataSetting) {
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
         delete item.uiOld;
+        item.ourAlertInfo = item.uiAlertInfo.value;
     };
 
 }];

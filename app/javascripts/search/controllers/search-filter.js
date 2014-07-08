@@ -9,10 +9,7 @@ function($scope, wdDataSetting, wdSearchSer) {
     $scope.dataList = [];
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
-    $scope.filterMap = {
-        pathTypeOption: $scope.pathTypeOptions[1],
-        adviceLevelOption: $scope.adviceLevelOptions[0]
-    };
+    
     // 原始数据，用来恢复
     var origin = _.clone($scope.filterMap);
     wdDataSetting.getContentTypeOptions().then(function(data) {
@@ -25,10 +22,14 @@ function($scope, wdDataSetting, wdSearchSer) {
     };
     
     $scope.search = function() {
-        wdSearchSer.searchBy($scope.filterMap).then(function(data) {
+        wdSearchSer.searchBy({
+            filter: $scope.filterMap  
+        }).then(function(data) {
+            console.log(123);
             $scope.dataList = data;
         });
     };
+
     $scope.reset = function() {
         $scope.filterMap = _.clone(origin);
     };
