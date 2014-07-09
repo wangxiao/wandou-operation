@@ -10,12 +10,16 @@ return [function() {
         template: template,
         scope: true,
         replace: true,
-        controller: ['$scope',
-        function($scope) {
-
+        controller: ['$scope', 'wdLdap', '$location', 'wdDataSetting',
+        function($scope, wdLdap, $location, wdDataSetting) {
+            $scope.userName = wdDataSetting.userName();
+            $scope.signOut = function() {
+                wdLdap.signOut().then(function() {
+                    $location.path('/auth');
+                });
+            };
         }],
         link: function($scope, $element, $attrs, $controller) {
-
         }
     };
 }];

@@ -101,12 +101,16 @@ define([
                     }
                     return config;
                 },
-
                 'response': function(response) {
+                    // if (response.status === 403) {
+                    //     $location.path('/auth');
+                    // }
+                    return response.data;
+                },
+                'responseError': function(response) {
                     if (response.status === 403) {
                         $location.path('/auth');
                     }
-                    return response.data;
                 }
             };
         });

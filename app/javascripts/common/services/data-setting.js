@@ -8,6 +8,13 @@ return ['$http', '$q', 'wdStorage',
 function($http, $q, wdStorage) {
     var contentTypeOptions = [];
     return {
+        userName: function(value) {
+            if (value) {
+                wdStorage.value('user-name', value);
+            } else {
+                return wdStorage.value('user-name');
+            }
+        },
         pathTypeOptions: [
             {value: null, name: '全部'},
             {value: 1, name: '普通缓存路径'},
