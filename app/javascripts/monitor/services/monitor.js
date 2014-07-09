@@ -11,6 +11,12 @@ function($http) {
                 params: opts
             });
         },
+        getCompeteOnlineList: function(opts) {
+            opts.type = 'needOnline';
+            return $http.get('/review/list', {
+                params: opts
+            });
+        },
         getCounterList: function() {
             return $http.get('/counter/list');
         },

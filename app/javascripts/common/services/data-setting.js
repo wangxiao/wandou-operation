@@ -6,7 +6,10 @@ define([
 'use strict';
 return ['$http', '$q', 'wdStorage',
 function($http, $q, wdStorage) {
+    // 过滤过的 contentType
     var contentTypeOptions = [];
+    // 全部 contentType
+    var allContentTypeOptions = [];
     return {
         userName: function(value) {
             if (value) {
@@ -73,6 +76,23 @@ function($http, $q, wdStorage) {
                         }
                     });
                     defer.resolve(contentTypeOptions);
+                });
+            }
+            return defer.promise;
+        },
+        getAllContentTypeOptions: function() {
+            var defer = $q.defer();
+            if (allContentTypeOptions.length) {
+                defer.resolve(allContentTypeOptions);
+            } else {
+                $http.get('/meta/list/').then(function(data) {
+                    allContentTypeOptions = [];
+                    // 根据运营给出的逻辑，去掉前 50，并且显示上面要增加 id。
+                    _.each(data.contentTypes, function(v, i) {
+                        v.uiTitle = v.id + ' ' + v.title;
+                        allContentTypeOptions.push(v);
+                    });
+                    defer.resolve(allContentTypeOptions);
                 });
             }
             return defer.promise;

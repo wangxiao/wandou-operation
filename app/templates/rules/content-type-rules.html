@@ -9,6 +9,7 @@
         <div class="body">
             <p class="title">文件类型</p>
             <p>{{item.title || '（空）'}}</p>
+            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.title">
             <p class="title">清理风险</p>
             <p ng-if="!item.uiEditStatus">{{item.alertInfo || '（空）'}}</p>
             <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.alertInfo">

@@ -14,7 +14,20 @@
             <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.type">
             <p class="title">规则详情</p>
             <p ng-if="!item.uiEditStatus">{{item.labelContent || '（空）'}}</p>
-            <input ng-if="item.uiEditStatus" class="detail-input form-control" type="text" value="" ng-model="item.labelContent">  
+            <input ng-if="item.uiEditStatus" class="detail-input form-control" type="text" value="" ng-model="item.labelContent">
+
+            <!-- 字段为 alertInfo 时候才用 -->
+            <div ng-if="item.uiSimpleAlertInfo">
+                <p class="title">字段名</p>
+                <p>{{item.uiSimpleAlertInfo.field || '（空）'}}</p>
+                <p class="title">类别</p>
+                <p>{{item.type || '（空）'}}</p>
+                <p class="title">规则详情</p>
+                <p ng-if="!item.uiEditStatus">{{item.uiSimpleAlertInfo.labelContent || '（空）'}}</p>
+                <input ng-if="item.uiEditStatus" class="detail-input form-control" type="text" value="" ng-model="item.uiSimpleAlertInfo.labelContent">  
+            </div>
+            <!-- 字段为 alertInfo 时候才用 end -->
+
         </div>
         <div class="footer">
             <div class="btns">

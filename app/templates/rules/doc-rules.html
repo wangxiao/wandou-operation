@@ -1,7 +1,7 @@
 <div wd-account-header></div>
 <div wd-sidebar></div>
 <div class="rules-tpl wd-content">
-    <h1>竞品监控规则 - 文案生成规则</h1>
+    <h1>竞品监控规则 - 文案映射规则</h1>
     <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
 
     <div class="doc-rule-form wd-show-box" ng-repeat="item in dataList">
@@ -9,7 +9,7 @@
             <p>规则 {{item.id}}</p>
         </div>
         <div class="body">
-            <div class="flag flag-compete">竞品</div>
+            <div class="flag flag-compete">原始</div>
             <table class="table table-condensed">
                 <tr>
                     <td class="title">原始项目名</td>
@@ -29,7 +29,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="title">原始 NOTICE</td>
+                    <td class="title">Notice</td>
                     <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcNotice || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
                         <textarea class="form-control" value="" ng-model="item.srcNotice"></textarea>
@@ -43,6 +43,30 @@
                     <td ng-if="!item.uiEditStatus">{{item.ourAlertInfo || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
                         <select class="form-control" ng-model="item.uiAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">原始描述信息</td>
+                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcDesc || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <textarea class="form-control" value="" ng-model="item.srcDesc"></textarea>
+                    </td>
+                    <td class="title">风险缩写</td>
+                    <td ng-if="!item.uiEditStatus">{{item.ourSimpleAlertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiSimpleAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
+                    </td>
+                    <td class="title">风险级别</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiAdviceLevel.name}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">原始风险</td>
+                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcAlertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <textarea class="form-control" value="" ng-model="item.srcAlertInfo"></textarea>
                     </td>
                 </tr>
             </table>

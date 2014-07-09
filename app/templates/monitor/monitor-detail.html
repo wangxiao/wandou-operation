@@ -125,13 +125,11 @@
     <div class="title" ng-if="detail.editHistories.length">条目编辑历史</div>
     <div class="history-box" ng-if="detail.editHistories.length">
         <ul>
-            <li ng-repeat="item in detail.changeHistories">
-                <p>{{item.time}}</p>
-                <p>来源：{{item.src}}</p>
-                <p>字段：{{item.field}}</p>
-                <p>操作：{{item.action}}</p>
-                <p>从“{{item.from}}”</p>
-                <p>变成“{{item.to}}”</p>
+            <li ng-repeat="item in detail.editHistories">
+                <p>{{item.editUser}}</p>
+                <p>操作：{{item.actionType}}</p>
+                <p>“{{item.content}}”</p>
+                <p>修改时间：{{item.editTime}}</p>
             </li>
         </ul>
     </div>

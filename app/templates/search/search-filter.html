@@ -66,8 +66,8 @@
             </li>
         </ul>
         <ul class="title-list">
-            <li>所属数据库</li>
-            <li>文件类别</li>
+            <li>条目类别</li>
+            <li>内容类别</li>
             <li>风险级别</li>
             <li>最后更新人</li>
             <li>更新时间</li>
@@ -75,13 +75,13 @@
         </ul>
         <ul>
             <li>
-                <select class="form-control" ng-model="filterMap.pathTypeOption" ng-options="value.name for value in pathTypeOptions"></select>
+                <select class="form-control" ng-model="filterMap.ui.pathTypeOption" ng-options="value.name for value in pathTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control" ng-model="filterMap.contentTypeOption" ng-options="value.uiTitle for value in contentTypeOptions"></select>
+                <select class="form-control" ng-model="filterMap.ui.contentTypeOption" ng-options="value.uiTitle for value in contentTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control" ng-model="filterMap.adviceLevelOption" ng-options="value.name for value in adviceLevelOptions"></select>
+                <select class="form-control" ng-model="filterMap.ui.adviceLevelOption" ng-options="value.name for value in adviceLevelOptions"></select>
             </li>
             <li>
                 <input type="text" class="form-control" value="" ng-model="filterMap.lastUpdatedBy">
@@ -100,16 +100,18 @@
     </div>
     <!-- search-form end -->
 
-    <div class="toolbar" ng-if="dataList.length">
+    <div class="toolbar" ng-class="{hide:!dataList.length}">
         <div class="left">
             <!-- <p>共找到 <span class="num">123</span> 条结果</p> -->
         </div>
         <div class="right">
+                <!--
                 <select class="form-control">
                     <option>按下载量排序</option>
                 </select>
+                -->
                 <p class="page-label">每页展示</p>
-                <input class="page-input" type="text" class="form-control" value="">
+                <input class="page-input" type="text" class="form-control" ng-model="pageListLength">
                 <p>条</p>
         </div>
     </div>

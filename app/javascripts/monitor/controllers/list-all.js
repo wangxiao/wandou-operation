@@ -41,8 +41,8 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     // 用于数据服务，获取根据 action 获取。
     var actionObj = {
         new: 1,
-        offline: 3,
-        change: 2
+        change: 2,
+        offline: 3
     };
 
     // 当前数据显示的位置，用来分页获取数据，默认从头开始。
@@ -82,15 +82,15 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     }
 
     function showAllData() {
-        wdMonitorSer.getCompeteAllList({
-            action: actionObj[$location.search().action],
+        var opts = {
             size: $scope.pageListLength,
             offset: $scope.offset,
             pathType: $scope.pathType.value,
             source: $scope.source.value,
             orderBy: $scope.sort.value,
             order: $scope.order.value
-        }).then(function(data) {
+        };
+        var success = function(data) {
             console.log(data);
             $scope.isFirst = false;
             $scope.dataList = data;
@@ -100,7 +100,18 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             } else {
                 $scope.pageUp();
             }
-        });
+        };
+        if ($location.search().action === 'online') {
+            wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
+                success(data);
+            });            
+        } else {
+            opts.action = actionObj[$location.search().action];
+            wdMonitorSer.getCompeteAllList(opts).then(function(data) {
+                success(data);
+            });            
+        }
+
     }
 
     function deleteItem(id) {

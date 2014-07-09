@@ -13,7 +13,9 @@ function($http) {
             });
         },
         searchBy: function(opts) {
-            return $http.get('/appStoragePath/list', {
+            return $http.post('/appStoragePath/list', {}, {
+                offset: opts.offset,
+                length: opts.size,
                 params: opts
             });
         }

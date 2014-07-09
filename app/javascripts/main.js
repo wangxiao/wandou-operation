@@ -10,7 +10,8 @@ require.config({
         svgLoader: './base/svgLoader',
         text: '../components/requirejs-text/text',
         domready: '../components/requirejs-domready/domReady',
-        templates: '../templates'
+        templates: '../templates',
+        transformers: './base/trans'
     },
     shim: {
         bootstrapModal: {

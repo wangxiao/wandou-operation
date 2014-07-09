@@ -1,5 +1,5 @@
 /* jshint ignore:start */
-var wangxiao = "li,p,.header,.footer";
+(function() {
 var T, baidu = T = baidu || {
     version: "1.3.9"
 };
@@ -211,7 +211,7 @@ baidu.dom.getPosition = function (a) {
         k = a.offsetParent;
         while (k && k != j.body) {
             h.left -= k.scrollLeft;
-            if (!d.opera || k.tagName != "p") {
+            if (!d.opera || k.tagName != "TR") {
                 h.top -= k.scrollTop
             }
             k = k.offsetParent
@@ -711,17 +711,17 @@ baidu.object.extend(baidu.zhidao.Sketchpad.prototype, {
         a.style.position = "absolute";
         a.style.width = this.width + "px";
         a.style.height = this.height + "px";
-        a.style.backgroundColor = "#fff";
+        a.style.fontSize = '25px';
         this.source.parentNode.insertBefore(a, this.source);
         this.position = baidu.dom.getPosition(this.field);
         this.arenaLeft = this.width - (this.pxwidth * this.pxh);
-        this.field.innerHTML = "<div style='position:absolute; top:0px; left:" + this.arenaLeft + "px; width:" + this.pxwidth * this.pxh + "px; height:" + this.pxheight * this.pxv + "px;'></div>";
+        this.field.innerHTML = "<div style='z-index:200;font-size:25px;position:absolute; top:0px; left:" + this.arenaLeft + "px; width:" + this.pxwidth * this.pxh + "px; height:" + this.pxheight * this.pxv + "px;'></div>";
         this.arena = this.field.firstChild;
         baidu.event.on(window, "onresize", function () {
             h.width = baidu.dom.g("center").offsetWidth;
             h.field && (h.field.style.width = h.width + "px")
         });
-        var m = document.querySelectorAll(wangxiao);
+        var m = this.source.getElementsByTagName("TABLE");
         var f = this.ts = [];
         this.max = m.length - 1;
         for (var e = 0; e < this.max; e++) {
@@ -817,7 +817,8 @@ baidu.object.extend(baidu.zhidao.Sketchpad.prototype, {
         }
     }
 });
-(function () {
+
+window.startTrans = function () {
     var o = [
         [0, 0, 336, 496, 336, 496, 496, 224, 0, 3574, 3574, 3574, 3574, 3574, 3574, 3574, 0, 432, 432, 432, 432, 432, 952, 952],
         [0, 0, 160, 240, 240, 112, 496, 496, 0, 240, 496, 504, 504, 1016, 1020, 252, 0, 432, 432, 432, 432, 432, 1008, 1008],
@@ -843,7 +844,9 @@ baidu.object.extend(baidu.zhidao.Sketchpad.prototype, {
         [0, 0, 5376, 7936, 5376, 7936, 7936, 3584, 0, 57184, 57184, 237368, 991006, 794374, 7936, 7936, 0, 6912, 6912, 6912, 6912, 6912, 15232, 15232],
         [0, 0, 5376, 7936, 5376, 7936, 7936, 3584, 0, 2088831, 2088831, 7936, 7936, 7936, 7936, 7936, 0, 6912, 6912, 6912, 6912, 6912, 15232, 15232]
     ];
-    var g = new baidu.zhidao.Sketchpad(document.getElementById("center"));
+    var centerDom = document.getElementById("center");
+    centerDom.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    var g = new baidu.zhidao.Sketchpad(centerDom);
     g.render();
     var b = [],
         c = 0;
@@ -860,9 +863,11 @@ baidu.object.extend(baidu.zhidao.Sketchpad.prototype, {
         i.interval = 50;
         i.duration = 160;
         i.render = function (r) {
-            var q = document.body.style;
             var t = Math.ceil(r / 0.25);
-            q.paddingTop = q.paddingLeft = [7, 4, 2, 1, 0][t] + "px"
+            var b = document.body.style;
+            b.paddingTop = b.paddingLeft = [27, 24, 22, 21, 0][t] + "px"
+            var q = document.getElementById('center').style;
+            q.paddingTop = q.paddingLeft = [27, 24, 22, 21, 0][t] + "px"
         };
         i.launch()
     }
@@ -1159,10 +1164,14 @@ baidu.object.extend(baidu.zhidao.Sketchpad.prototype, {
                     return 1 - (Math.cos(i * 4.5 * Math.PI) * Math.exp(-i * 6))
                 }
             })
+            centerDom.style.backgroundColor = 'rgba(0, 0, 0, 1)';
         }]
     ];
     for (var j = 0; j < e.length; j++) {
         setTimeout(e[j][1], e[j][0] + 1200)
     }
+}
+
+console.log('transform');
 })();
 /* jshint ignore:end */

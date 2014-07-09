@@ -88,7 +88,7 @@ define([
                 controller: 'wdSqlSearchCtrl'
             })
             .otherwise({
-                redirectTo: '/auth'
+                redirectTo: '/index'
             });
 
         // 全局 $http 请求配置。
@@ -102,15 +102,13 @@ define([
                     return config;
                 },
                 'response': function(response) {
-                    // if (response.status === 403) {
-                    //     $location.path('/auth');
-                    // }
                     return response.data;
                 },
                 'responseError': function(response) {
-                    if (response.status === 403) {
+                    if (response.status === 403 || response.status === 404) {
                         $location.path('/auth');
                     }
+                    return response;
                 }
             };
         });

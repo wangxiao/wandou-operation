@@ -8,7 +8,7 @@ return ['$scope', 'wdRulesSer', '$location', 'wdDataSetting',
 function($scope, wdRulesSer, $location, wdDataSetting) {    
     $scope.dataList = [];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
-    wdDataSetting.getContentTypeOptions().then(function(data) {
+    wdDataSetting.getAllContentTypeOptions().then(function(data) {
         console.log(data);
         $scope.dataList = data;
         formatData();
