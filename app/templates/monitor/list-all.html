@@ -123,7 +123,7 @@
                 <p class="btn" ng-if="item.uiEditStatus" ng-click="autoLabelItem(item)">自动生成</p>
                 <p class="publish btn" ng-if="item.uiEditStatus" ng-click="finishEditItem(item)">完成编辑</p>
                 <p class="btn" ng-if="!item.uiEditStatus" ng-click="ignoreItem(item)">忽略条目</p>
-                <p class="btn" ng-if="!item.uiEditStatus">审核完成</p>
+                <p class="btn" ng-if="!item.uiEditStatus" ng-click="checkFinish(item)">审核完成</p>
                 <p class="btn" ng-if="!item.uiEditStatus" ng-click="offlineItem(item)">下线条目</p>
                 <p class="publish btn" ng-if="!item.uiEditStatus" ng-click="publicItem(item)">上线条目</p>
                 <i class="setting-icon btn glyphicon glyphicon-info-sign" title="查看详情" ng-click="showDetail(item.id)"></i>
@@ -138,7 +138,7 @@
             <div class="btn">批量上线</div>
         </div>
         <div class="right">
-            <div class="pages-btns">
+            <div class="pages-btns" ng-if="dataList.length === pageListLength">
                 <p ng-click="pageUp();">上一页</p>
                 <p ng-click="pageDown();">下一页</p>
             </div>

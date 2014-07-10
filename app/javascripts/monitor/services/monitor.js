@@ -32,6 +32,15 @@ function($http) {
                 }
             });
         },
+        // 审核完成
+        checkFinishCompeteData: function(data) {
+            return $http.post('/review/update', {}, {
+                params: {
+                    action: 'reviewed',
+                    id: data.id
+                }
+            });
+        },
         publicCompeteData: function(data) {
             return $http.post('/review/update', {}, {
                 params: {

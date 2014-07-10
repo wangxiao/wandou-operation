@@ -46,12 +46,28 @@ function($scope, wdRulesSer, $location) {
     }
     $scope.addItem = function() {
         if (!$scope.dataList.length || $scope.dataList[0].id) {
-            $scope.dataList.unshift({
-                field: $scope.field,
-                type: '',
-                labelContent: '',
-                uiEditStatus: true
-            });
+            switch ($scope.field) {
+                case 'desc':
+                    $scope.dataList.unshift({
+                        field: $scope.field,
+                        type: '',
+                        labelContent: '',
+                        uiEditStatus: true
+                    });
+                break;
+                case 'alertInfo':
+                    $scope.dataList.unshift({
+                        field: $scope.field,
+                        type: '',
+                        labelContent: '',
+                        uiEditStatus: true,
+                        uiSimpleAlertInfo: {
+                            field: 'simpleAlertInfo',
+                            labelContent: ''
+                        }
+                    });
+                break;
+            }
         }
     };
     $scope.editItem = function(item) {
@@ -67,6 +83,9 @@ function($scope, wdRulesSer, $location) {
                     }
                 });
             });
+            if (item.uiSimpleAlertInfo) {
+                wdRulesSer.deleteLabelRules(item.uiSimpleAlertInfo);
+            }
         } else {
             $scope.dataList.shift();
         }
@@ -87,8 +106,16 @@ function($scope, wdRulesSer, $location) {
         delete item.uiOld;
         if (item.id) {
             wdRulesSer.updateLabelRules(item);
+            if (item.uiSimpleAlertInfo) {
+                item.uiSimpleAlertInfo.type = item.type;
+                wdRulesSer.updateLabelRules(item.uiSimpleAlertInfo);
+            }
         } else {
             wdRulesSer.addLabelRules(item);
+            if (item.uiSimpleAlertInfo) {
+                item.uiSimpleAlertInfo.type = item.type;
+                wdRulesSer.addLabelRules(item.uiSimpleAlertInfo);
+            }
         }
     };
 }];

@@ -10,6 +10,11 @@ function($http, $q, wdStorage) {
     var contentTypeOptions = [];
     // 全部 contentType
     var allContentTypeOptions = [];
+    var labelIdOptions = [];
+    var labelOrderTypeOptions = [];
+    var contentOrderTypeOptions = [];
+    var contentShowTypeOptions = [];
+
     return {
         userName: function(value) {
             if (value) {
@@ -99,9 +104,92 @@ function($http, $q, wdStorage) {
         },
         getContentTypeTitle: function(contentType) {
             contentType = Number(contentType);
-            return _.find(contentTypeOptions, function(v) {
+            return _.find(allContentTypeOptions, function(v) {
                 if (Number(v.id) === contentType) {
                     return v.uiTitle;
+                }
+            });
+        },
+        getLabelIdOptions: function() {
+            var defer = $q.defer();
+            if (labelIdOptions.length) {
+                defer.resolve(labelIdOptions);
+            } else {
+                $http.get('/label/list/').then(function(data) {
+                    labelIdOptions = data;
+                    defer.resolve(labelIdOptions);
+                });
+            }
+            return defer.promise;
+        },
+        getLabelId: function(labelId) {
+            return _.find(labelIdOptions, function(v) {
+                if (v.id === labelId) {
+                    return true;
+                }
+            }); 
+        },
+        getLabelOrderTypeOptions: function() {
+            var defer = $q.defer();
+            $http.get('/enum/list').then(function(data) {
+                console.log(data);
+                var arr = [];
+                _.each(data, function(v) {
+                    if (v.fieldName === 'labelOrderType') {
+                        arr.push(v);
+                    }
+                });
+                labelOrderTypeOptions = arr;
+                defer.resolve(arr);
+            });
+            return defer.promise;
+        },
+        getLabelOrderType: function(value) {
+            return _.find(labelOrderTypeOptions, function(v) {
+                if (v.value === value) {
+                    return true;
+                }
+            });
+        },
+        getContentOrderTypeOptions: function() {
+            var defer = $q.defer();
+            $http.get('/enum/list').then(function(data) {
+                var arr = [];
+                _.each(data, function(v) {
+                    if (v.fieldName === 'contentOrderType') {
+                        arr.push(v);
+                    }
+                });
+                contentOrderTypeOptions = arr;
+                defer.resolve(arr);
+            });
+            return defer.promise;
+        },
+        getContentOrderType: function(value) {
+            return _.find(contentOrderTypeOptions, function(v) {
+                if (v.value === value) {
+                    return true;
+                }
+            });
+        },
+        getContentShowTypeOptions: function() {
+            var defer = $q.defer();
+            $http.get('/enum/list').then(function(data) {
+                var arr = [];
+                _.each(data, function(v) {
+                    if (v.fieldName === 'contentShowType') {
+                        arr.push(v);
+                    }
+                });
+                contentShowTypeOptions = arr;
+                defer.resolve(arr);
+            });
+            return defer.promise;
+        },
+        getContentShowType: function(value) {
+            return _.find(contentShowTypeOptions, function(v) {
+                if (v.value === value) {
+                    return true;
                 }
             });
         }

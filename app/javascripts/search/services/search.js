@@ -18,6 +18,9 @@ function($http) {
                 length: opts.size,
                 params: opts
             });
+        },
+        applistSearch: function(udid) {
+            return $http.get('/pkgName/list/' + udid);
         }
     };
 

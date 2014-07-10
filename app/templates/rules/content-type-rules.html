@@ -7,15 +7,54 @@
             <p>id：{{item.id || "新建"}}</p>
         </div>
         <div class="body">
-            <p class="title">文件类型</p>
-            <p>{{item.title || '（空）'}}</p>
-            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.title">
-            <p class="title">清理风险</p>
-            <p ng-if="!item.uiEditStatus">{{item.alertInfo || '（空）'}}</p>
-            <input ng-if="item.uiEditStatus" type="text" class="form-control" value="" ng-model="item.alertInfo">
-            <p class="title">风险级别</p>
-            <p ng-if="!item.uiEditStatus">{{item.uiAdviceLevel.name}}</p>  
-            <select  ng-if="item.uiEditStatus" class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
+            <table class="table table-condensed">
+                <tr>
+                    <td class="title">文件类型</td>
+                    <td ng-if="!item.uiEditStatus">{{item.title || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.title">
+                    </td>
+                    <td class="title">清理风险</td>
+                    <td ng-if="!item.uiEditStatus">{{item.alertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <textarea type="text" class="form-control" value="" ng-model="item.alertInfo"></textarea>
+                    </td>
+                    <td class="title">风险级别</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiAdviceLevel.name}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">文件描述</td>
+                    <td ng-if="!item.uiEditStatus">{{item.desc || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.desc">
+                    </td>
+                    <td class="title">Label-id</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiLabelId.name || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiLabelId" ng-options="title.name for title in labelIdOptions"></select>
+                    </td>
+                    <td class="title">orderType</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiOrderType.name}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiOrderType" ng-options="title.name for title in contentOrderTypeOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">rank</td>
+                    <td ng-if="!item.uiEditStatus">{{item.rank}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.rank">
+                    </td>
+                    <td class="title">showType</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiShowType.name}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiShowType" ng-options="title.name for title in contentShowTypeOptions"></select>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="footer">
             <div class="btns">
@@ -26,7 +65,7 @@
             </div>
         </div>
     </div>
-    <h3 ng-if="!dataList.length" class="error">无数据</h3>
+    <h3 ng-if="!dataList.length && !firstFlag" class="error">无数据</h3>
 </div>
 
 <div wd-account-header></div>

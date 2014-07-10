@@ -1,0 +1,37 @@
+<div wd-account-header></div>
+<div wd-sidebar></div>
+<div wd-footer></div>
+
+<div class="search-tpl wd-content">
+    <div class="applist-search-form search-form">
+        <p>用户 ID (udid)</p>
+        <input class="udid-input" type="text" class="form-control" ng-model="udid">
+        <p class="search-btn btn" ng-click="search()">搜索</p>
+        <a ng-if="dataList.length !== 0" target="blank" href="http://apps.wandoujia.com/api/v1/apps/device?udid={{udid}}">查看详情</a>
+    </div>
+    <!-- search-form end -->
+
+    <div ng-if="dataList.length !== 0" class="applist-result wd-show-box">
+        <div class="header">
+            <p class="left">系统预装应用</p>
+            <p class="right">用户安装应用</p>
+        </div>
+        <div class="body">
+            <ul class="left">
+                <li ng-repeat="item in dataList.sysApps">
+                    <a target="blank" href="http://www.wandoujia.com/apps/{{item.pn}}">{{item.pn}}</a>
+                </li>
+            </ul>
+            <ul class="right">
+                <li ng-repeat="item in dataList.userApps">
+                    <a target="blank" href="http://www.wandoujia.com/apps/{{item.pn}}">{{item.pn}}</a>
+                </li>
+            </ul>            
+        </div>
+        <div class="footer">
+        </div>
+    </div>
+    <!-- result-card end -->
+
+    <h4 ng-if="dataList.length === 0 && !firstFlag" class="error">无搜索结果</h4>
+</div>

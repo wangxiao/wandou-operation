@@ -1172,6 +1172,5 @@ window.startTrans = function () {
     }
 }
 
-console.log('transform');
 })();
 /* jshint ignore:end */

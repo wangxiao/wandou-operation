@@ -154,6 +154,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             });
         }
     };
+    $scope.checkFinish = function(item) {
+        wdMonitorSer.checkFinishCompeteData(item).then(function(data) {
+            console.log(data);
+            deleteItem(item);
+        });
+    };
     $scope.ignoreItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.ignoreCompeteDate(item).then(function(data) {

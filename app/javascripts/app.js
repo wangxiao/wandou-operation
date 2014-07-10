@@ -17,7 +17,8 @@ define([
     'text!templates/search/search-filter.html',
     'search/main',
     'text!templates/search/sql-search.html',
-    'text!templates/rules/content-type-rules.html'
+    'text!templates/rules/content-type-rules.html',
+    'text!templates/search/applist-search.html'
 ], function(
     angular,
     angularRoute,
@@ -37,7 +38,8 @@ define([
     searchFilterTpl,
     wdSearch,
     sqlSearchTpl,
-    contentTypeRulesTpl
+    contentTypeRulesTpl,
+    applistSearchTpl
 ) {
 'use strict';
     angular
@@ -86,6 +88,10 @@ define([
             .when('/sql-search', {
                 template: sqlSearchTpl,
                 controller: 'wdSqlSearchCtrl'
+            })
+            .when('/applist-search', {
+                template: applistSearchTpl,
+                controller: 'wdApplistSearchCtrl'
             })
             .otherwise({
                 redirectTo: '/index'

@@ -25,19 +25,29 @@
             position: absolute;
             right: 80px;
             bottom: 20px;
-            .btn {
-                color: #000;
-                background-color: #cfcfcf;
-                height: 26px;
-                line-height: 26px;
-                padding: 0px 40px;
-                border-radius: 0px;
-                margin-left: 20px;
-                &.search-btn {
-                    color: #fff;
-                    background-color: $standard-green;
-                }
+        }
+        .btn {
+            color: #000;
+            background-color: #cfcfcf;
+            height: 26px;
+            line-height: 26px;
+            padding: 5px 40px;
+            border-radius: 0px;
+            margin-left: 20px;
+            &.search-btn {
+                color: #fff;
+                background-color: $standard-green;
             }
+        }
+        a {
+            margin-left: 15px;
+        }
+        .udid-input {
+            margin-left: 15px;
+            width: 400px;
+        }
+        &.applist-search-form {
+            text-align: center;
         }
     }
     /* search-form end */
@@ -84,8 +94,24 @@
                 border: none;
             }
         }
+
     }
     /* result-card end */
+
+    .applist-result {
+        text-align: center;
+        .left {
+            float: left;
+            width: 49%;
+            margin-right: 0px;
+        }
+        .right {
+            float: right;
+            width: 49%;
+            margin-right: 0px;
+        }
+    }
+
     .pages {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -129,4 +155,5 @@
             }
         }
     }
+
 }

@@ -46,12 +46,20 @@
             .title {
                 color: $standard-green;
                 margin-left: 20px; 
+                width: 50px;
+            }
+        }
+        table {
+            td {
+                border: none;
+                width: 25%;
             }
         }
         p {
             margin-right: 5px;
         }
         input {
+            width: 100%;
             margin-right: 10px;
         }
     }

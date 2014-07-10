@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdDataSetting', 'wdSearchSer',
-function($scope, wdDataSetting, wdSearchSer) {
+return ['$scope', 'wdDataSetting', 'wdSearchSer', '$location',
+function($scope, wdDataSetting, wdSearchSer, $location) {
     $scope.dataList = [];
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
@@ -17,7 +17,7 @@ function($scope, wdDataSetting, wdSearchSer) {
     $scope.pageListLength = wdDataSetting.pageListLength();
 
     // 是否第一次进入
-    var firstFlag = true;
+    $scope.firstFlag = true;
 
     // 原始数据，用来恢复
     var origin = _.clone($scope.filterMap);
@@ -30,31 +30,40 @@ function($scope, wdDataSetting, wdSearchSer) {
     };
     
     function filter() {
-        console.log($scope.filterMap.ui.pathTypeOption);
-        if ($scope.filterMap.ui.contentTypeOption) {
-            $scope.filterMap.contentType = $scope.filterMap.ui.contentTypeOption.id;
+        if ($scope.filterMap && $scope.filterMap.ui) {
+            if ($scope.filterMap.ui.contentTypeOption) {
+                $scope.filterMap.contentType = $scope.filterMap.ui.contentTypeOption.id;
+            }
+            if ($scope.filterMap.ui.pathTypeOption) {
+                $scope.filterMap.pathType = $scope.filterMap.ui.pathTypeOption.value;
+            }
+            if ($scope.filterMap.ui.adviceLevelOption) {
+                $scope.filterMap.adviceLevel = $scope.filterMap.ui.adviceLevelOption.value;
+            }
         }
-        if ($scope.filterMap.ui.pathTypeOption) {
-            $scope.filterMap.pathType = $scope.filterMap.ui.pathTypeOption.value;
-        }
-        if ($scope.filterMap.ui.adviceLevelOption) {
-            $scope.filterMap.adviceLevel = $scope.filterMap.ui.adviceLevelOption.value;
-        }
-        delete $scope.filterMap.ui;   
     }
 
     $scope.search = function() {
         filter();
+        var filterMap = _.clone($scope.filterMap);
+        // 服务端不能接受此字段
+        delete filterMap.ui;
         wdSearchSer.searchBy({
             offset: $scope.offset,
             length: $scope.pageListLength,
-            filter: $scope.filterMap
+            filter: filterMap
         }).then(function(data) {
-            firstFlag = false;
+            console.log(data);
+            $scope.firstFlag = false;
             $scope.dataList = data;
+            format();
         });
     };
-
+    function format() {
+        _.each($scope.dataList, function(v) {
+            v.uiContentType = wdDataSetting.getContentTypeTitle(v.contentType).uiTitle;
+        });
+    }
     $scope.pageUp = function() {
         $scope.offset = Math.max($scope.offset - $scope.pageListLength, 0);
     };
@@ -64,15 +73,19 @@ function($scope, wdDataSetting, wdSearchSer) {
 
     // 翻页逻辑
     $scope.$watch('offset', function(value) {
-        if (!firstFlag) {
+        if (!$scope.firstFlag) {
             $scope.search();
         }
     });
 
+    $scope.showDetail = function(id) {
+        $location.path('/monitor-detail').search({id: id});
+    };
+
     // 根据单页显示数量变化请求数据
     $scope.$watch('pageListLength', _.debounce(function(value) {
         $scope.$apply(function() {
-            if (!firstFlag) {
+            if (!$scope.firstFlag) {
                 var reg = /[^\d]/g;
                 if (value && !reg.test(value)) {
                     if (value < 1) {

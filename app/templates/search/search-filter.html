@@ -139,7 +139,7 @@
                     <th>风险级别</th>
                 </tr>
                 <tr>
-                    <td>{{item.contentType || '（空）' }}</td>
+                    <td>{{item.uiContentType || '（空）' }}</td>
                     <td>{{item.itemName || '（空）' }}</td>
                     <td>{{item.desc || '（空）' }}</td>
                     <td>{{item.alertInfo || '（空）' }}</td>
@@ -156,8 +156,9 @@
     </div>
     <!-- result-card end -->
 
+    <h4 class="error" ng-if="!dataList.length && !firstFlag">无搜索结果</h4>
 
-    <div class="pages" ng-if="dataList.length">
+    <div class="pages" ng-if="dataList.length === pageListLength">
         <p>上一页</p>
         <p>下一页</p>
     </div>

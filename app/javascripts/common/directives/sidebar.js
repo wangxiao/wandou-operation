@@ -18,7 +18,6 @@ return [function() {
         function($scope, wdSidebarSer) {
             $scope.monitorList = {};
             wdSidebarSer.getCounterListNum().then(function(data) {
-                console.log(data);
                 _.each(data, function(v){
                     $scope.monitorList[v.name] = v.value;
                 });

@@ -68,8 +68,33 @@ function($http) {
                     labelRule: opts
                 }
             });
+        },
+        addContentTypeRules: function(opts) {
+            return $http.post('/contentType/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'add',
+                    contentType: opts
+                }
+            });
+        },
+        deleteContentTypeRules: function(opts) {
+            return $http.post('/contentType/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'delete'
+                }
+            });
+        },
+        updateContentTypeRules: function(opts) {
+            return $http.post('/contentType/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'update',
+                    contentType: opts
+                }
+            });
         }
-
     };
 
     // 结束 
