@@ -71,10 +71,11 @@ function($http, $q, wdStorage) {
             if (contentTypeOptions.length) {
                 defer.resolve(contentTypeOptions);
             } else {
-                $http.get('/meta/list/').then(function(data) {
+                $http.get('/contentType/list/').then(function(data) {
+                    allContentTypeOptions = data;
                     contentTypeOptions = [];
                     // 根据运营给出的逻辑，去掉前 50，并且显示上面要增加 id。
-                    _.each(data.contentTypes, function(v, i) {
+                    _.each(data, function(v, i) {
                         if (v.id > 50) {
                             v.uiTitle = v.id + ' ' + v.title;
                             contentTypeOptions.push(v);
@@ -90,10 +91,10 @@ function($http, $q, wdStorage) {
             if (allContentTypeOptions.length) {
                 defer.resolve(allContentTypeOptions);
             } else {
-                $http.get('/meta/list/').then(function(data) {
+                $http.get('/contentType/list/').then(function(data) {
                     allContentTypeOptions = [];
                     // 根据运营给出的逻辑，去掉前 50，并且显示上面要增加 id。
-                    _.each(data.contentTypes, function(v, i) {
+                    _.each(data, function(v, i) {
                         v.uiTitle = v.id + ' ' + v.title;
                         allContentTypeOptions.push(v);
                     });
@@ -106,7 +107,7 @@ function($http, $q, wdStorage) {
             contentType = Number(contentType);
             return _.find(allContentTypeOptions, function(v) {
                 if (Number(v.id) === contentType) {
-                    return v.uiTitle;
+                    return true;
                 }
             });
         },

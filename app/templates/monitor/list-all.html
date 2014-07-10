@@ -53,7 +53,7 @@
                     </td>
                     <td ng-if="!item.uiEditStatus">
                         <span class="flag flag-our">新生成</span>
-                        {{item.uiContentTypeTitle || '（空）'}}
+                        {{item.uiContentTypeOption.uiTitle || '（空）'}}
                     </td>
                     <td ng-if="item.uiEditStatus">
                         <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>

@@ -52,12 +52,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         return wdDataSetting.getContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
             _.each($scope.dataList, function(v) {
-                var t = wdDataSetting.getContentTypeTitle(v.contentType);
-                if (t) {
-                    v.uiContentTypeTitle = t.title;
-                    // 给 select 使用
-                    v.uiContentTypeOption = t;
-                }              
+                v.uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.contentType); 
             });
         });
     }
@@ -91,7 +86,6 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             order: $scope.order.value
         };
         var success = function(data) {
-            console.log(data);
             $scope.isFirst = false;
             $scope.dataList = data;
             $scope.showLoading = false;
@@ -145,7 +139,6 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.finishEditItem = function(item, flag) {
         item.uiEditStatus = false;
         item.contentType = item.uiContentTypeOption.id;
-        item.uiContentTypeTitle = wdDataSetting.getContentTypeTitle(item.contentType).uiTitle;
         item.adviceLevel = item.uiAdviceLevel.value;
         delete item.uiOldData;
         if (!flag) {
