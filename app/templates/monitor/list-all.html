@@ -130,7 +130,7 @@
             </div>
         </div>
     </div>
-    <h3 ng-if="!dataList.length && !isFirst" class="error">无数据</h3>
+    <h3 ng-if="!dataList.length && !firstFlag" class="error">无数据</h3>
     <div class="footer" ng-if="dataList.length">
         <div class="left">
             <input type="checkbox" class="form-control" ng-checked="isCheckedAll" ng-click="toggleCheckAll()">

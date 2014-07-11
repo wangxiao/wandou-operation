@@ -10,16 +10,20 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting) {
     $scope.editStatus = false;
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
+    $scope.itemId = $location.search().id;
     $scope.getPathType = function(pathType) {
         var t = wdDataSetting.getPathType(pathType);
         if (t) {
             return t.title;
         }
     };
-    wdMonitorSer.getCompeteDetail($location.search().id).then(function(data) {
-        console.log(data);
+    wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
         $scope.detail = data;
         formatData();
+    });
+    wdMonitorSer.getCleanLog($scope.itemId).then(function(data) {
+        console.log(data);
+        $scope.cleanLog = data;
     });
     function formatData() {
         getContentTypeOptions();

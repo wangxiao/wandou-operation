@@ -19,7 +19,9 @@ define([
     'text!templates/search/sql-search.html',
     'text!templates/rules/content-type-rules.html',
     'text!templates/search/applist-search.html',
-    'text!templates/rules/client-label-rules.html'
+    'text!templates/rules/client-label-rules.html',
+    'setting/main',
+    'text!templates/setting/white-list.html'
 ], function(
     angular,
     angularRoute,
@@ -41,7 +43,9 @@ define([
     sqlSearchTpl,
     contentTypeRulesTpl,
     applistSearchTpl,
-    clientLabelRulesTpl
+    clientLabelRulesTpl,
+    wdSetting,
+    whiteListTpl
 ) {
 'use strict';
     angular
@@ -50,9 +54,10 @@ define([
         'wdAuth', 
         'wdIndex', 
         'wdCommon', 
-        'wdMonitor', 
+        'wdMonitor',
         'wdRules',
-        'wdSearch'
+        'wdSearch',
+        'wdSetting'
     ]).config(function ($routeProvider, $httpProvider) {
         $routeProvider
             .when('/auth', {
@@ -98,6 +103,10 @@ define([
             .when('/applist-search', {
                 template: applistSearchTpl,
                 controller: 'wdApplistSearchCtrl'
+            })
+            .when('/white-list', {
+                template: whiteListTpl,
+                controller: 'wdWhiteListCtrl'
             })
             .otherwise({
                 redirectTo: '/index'

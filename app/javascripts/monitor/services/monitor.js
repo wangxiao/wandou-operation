@@ -75,6 +75,9 @@ function($http) {
                     reviewAppStoragePath: data
                 }
             });
+        },
+        getCleanLog: function(id) {
+            return $http.get('/cleanLog/' + id);
         }
     };
 

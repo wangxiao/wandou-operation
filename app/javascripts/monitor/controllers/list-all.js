@@ -7,7 +7,7 @@ define([
 return ['$scope', 'wdMonitorSer', '$timeout', '$location', 'wdDataSetting', 'wdModalSer',
 function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdModalSer) {
     // 是否是第一次进入
-    $scope.isFirst = true; 
+    $scope.firstFlag = true; 
     $scope.dataList = [];
     $scope.counterList = {};
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
@@ -37,7 +37,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     // 是否显示 loading
     $scope.showLoading = true;
     $scope.contentTypeOptions = [];
-    
+
+    var action = $location.search().action;
+
     // 用于数据服务，获取根据 action 获取。
     var actionObj = {
         new: 1,
@@ -86,7 +88,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             order: $scope.order.value
         };
         var success = function(data) {
-            $scope.isFirst = false;
+            $scope.firstFlag = false;
             $scope.dataList = data;
             $scope.showLoading = false;
             if (data.length) {
@@ -95,17 +97,29 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                 $scope.pageUp();
             }
         };
-        if ($location.search().action === 'online') {
-            wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
-                success(data);
-            });            
-        } else {
-            opts.action = actionObj[$location.search().action];
-            wdMonitorSer.getCompeteAllList(opts).then(function(data) {
-                success(data);
-            });            
+        switch (action) {
+            case 'online':
+                wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
+                    success(data);
+                });
+            break;
+            case 'new':
+                if ($scope.firstFlag) {
+                    $scope.sort = $scope.sortOptions[2];
+                    opts.orderBy = $scope.sort.value;
+                }
+                opts.action = actionObj[action];
+                wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
+                    success(data);
+                });
+            break;
+            default:
+                opts.action = actionObj[action];
+                wdMonitorSer.getCompeteAllList(opts).then(function(data) {
+                    success(data);
+                });
+            break;
         }
-
     }
 
     function deleteItem(id) {

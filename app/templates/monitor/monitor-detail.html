@@ -16,30 +16,29 @@
         <p>上线状态（onlineStatus）：{{detail.onlineStatus || '（空）'}}</p><br>
         <p>客户端最低版本号（leastVC）：{{detail.leastVC || '（空）'}}</p>
     </div>
-<!--
-    <div class="title">今日警报详情</div>
+    <div class="title">清理日志详情</div>
     <div class="warn-detail">
-        <p class="title">建议清理被取消：12312 次</p><br>
-        <p>123213 次展示</p>
-        <p>0.12%取消率</p>
-        <p>被取消总体积 12.3M</p>
-        <p>次均被取消体积 12.1k</p>
+        <p class="title">展示次数：{{cleanLog.totalShowTimes}} 次</p><br>
+        <p>扫描总大小 {{cleanLog.totalShowSize}}</p>
+        <p>扫描人均大小 {{cleanLog.avgShowSize}}</p>
         <br>
-        <p class="title">谨慎清理被取消：0 次</p><br>
-        <p>1123123次展示</p>
-        <p>0.00% 清理率</p>
-        <p>被清理总体积0.0M</p>
-        <p>次均被清理体积0.0k</p>
+        <p class="title">清理次数：{{cleanLog.totalCleanTimes}} 次</p><br>
+        <p>清理率 {{cleanLog.cleanRate}}</p>
+        <p>清理总大小 {{cleanLog.totalCleanSize}}</p>
+        <p>人均清理总大小 {{cleanLog.avgCleanSize}}</p>
         <br>
-        <p class="title">被暂不清理：123次</p><br>
-        <p>123123次展示</p>
-        <p>0.12%暂不清理率</p>
-        <p>被暂不清理总体积12312M</p>
-        <p>次均被取消体积12.1k</p>
+        <p class="title">建议清理被取消：{{cleanLog.totalUncheckTimes}} 次</p><br>
+        <p>取消率 {{cleanLog.uncheckRate}}</p>
+        <p>取消总大小 {{cleanLog.totalUncheckSize}}</p>
+        <p>人均取消大小 {{cleanLog.avgUncheckSize}}</p>
         <br>
-        <p>暂不清理主要原因：“里面是有用的东西”，“其他”</p>
+        <p class="title">谨慎清理次数：{{cleanLog.totalDeepCleanTimes}} 次</p><br>
+        <p>清理率 {{cleanLog.deepCleanRate}}</p>
+        <p>清理总大小 {{cleanLog.totalDeepCleanSize}}</p>
+        <p>人均清理总大小 {{cleanLog.avgDeepCleanSize}}</p>
+        <br>
+        <p>暂不清理主要原因：“{{cleanLog.mainReason || '(空)' }}”</p>
     </div>
--->
     <div class="title">条目信息详情</div>
     <div class="editable-detail wd-show-box">
         <div class="body">

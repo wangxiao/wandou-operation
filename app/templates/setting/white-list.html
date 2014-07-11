@@ -1,0 +1,44 @@
+<div class="rules-tpl wd-content">
+    <h1>配置项编辑 - 白名单配置</h1>
+    <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
+
+    <div class="file-rule-form wd-show-box" ng-repeat="item in dataList">
+        <div class="header">
+            <p>id：{{item.id || "新建"}}</p>
+        </div>
+        <div class="body">
+            <table class="table table-condensed">
+                <tr>
+                    <td class="title">文件路径</td>
+                    <td ng-if="!item.uiEditStatus">{{item.filePath || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.name">
+                    </td>
+                    <td class="title">客户端条目</td>
+                    <td ng-if="!item.uiEditStatus">{{item.forClient || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <input type="text" class="form-control" value="" ng-model="item.rank">
+                    </td>
+                    <td class="title">白名单类型</td>
+                    <td ng-if="!item.uiEditStatus">{{item.type}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiOrderType" ng-options="title.name for title in labelOrderTypeOptions"></select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="btns">
+                <p ng-if="!item.uiEditStatus" class="edit" ng-click="editItem(item)">编辑条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="delItem(item)">删除条目</p>
+                <p ng-if="item.uiEditStatus" ng-click="cancelItem(item)">撤销编辑</p>
+                <p  ng-if="item.uiEditStatus" class="finish" ng-click="finishItem(item)">完成编辑</p>
+            </div>
+        </div>
+    </div>
+    <h3 ng-if="!dataList.length && !firstFlag" class="error">无数据</h3>
+</div>
+
+<div wd-account-header></div>
+<div wd-sidebar></div>
+<div wd-footer></div>

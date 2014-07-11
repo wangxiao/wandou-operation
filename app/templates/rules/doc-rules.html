@@ -81,7 +81,7 @@
         </div>
     </div>
     <!-- doc-rule-form end -->
-    <h3 ng-if="!dataList.length" class="error">无数据</h3>
+    <h3 ng-if="!dataList.length && !firstFlag" class="error">无数据</h3>
     <div ng-if="dataList.length === pageListLength" class="pages-btns">
         <p ng-click="pageUp();">上一页</p>
         <p ng-click="pageDown();">下一页</p>

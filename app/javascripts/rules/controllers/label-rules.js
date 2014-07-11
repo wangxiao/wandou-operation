@@ -9,9 +9,10 @@ function($scope, wdRulesSer, $location) {
     $scope.field = $location.search().action; 
     $scope.title = '';
     $scope.dataList = [];
+    $scope.firstFlag = true;
     wdRulesSer.getLabelRules().then(function(data) {
-        console.log(data);
         filter($scope.field, data);
+        $scope.firstFlag = false;
     });
     function filter(field, data) {
         switch ($scope.field) {

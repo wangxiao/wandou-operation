@@ -29,7 +29,7 @@ function($scope, wdRulesSer, wdDataSetting) {
     $scope.pageListLength = wdDataSetting.pageListLength();
 
     // 是否第一次进入
-    var firstFlag = true;
+    $scope.firstFlag = true;
 
     wdRulesSer.getLabelRules().then(function(data) {
         _.each(data, function(v) {
@@ -46,7 +46,7 @@ function($scope, wdRulesSer, wdDataSetting) {
             $scope.dataList = data;
             console.log(data);
             formatData();
-            firstFlag = false;
+            $scope.firstFlag = false;
         });
     }
 
@@ -135,7 +135,7 @@ function($scope, wdRulesSer, wdDataSetting) {
 
     // 翻页逻辑
     $scope.$watch('offset', function(value) {
-        if (!firstFlag) {
+        if (!$scope.firstFlag) {
             showAllData();
         }
     });
