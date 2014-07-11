@@ -18,7 +18,8 @@ define([
     'search/main',
     'text!templates/search/sql-search.html',
     'text!templates/rules/content-type-rules.html',
-    'text!templates/search/applist-search.html'
+    'text!templates/search/applist-search.html',
+    'text!templates/rules/client-label-rules.html'
 ], function(
     angular,
     angularRoute,
@@ -39,7 +40,8 @@ define([
     wdSearch,
     sqlSearchTpl,
     contentTypeRulesTpl,
-    applistSearchTpl
+    applistSearchTpl,
+    clientLabelRulesTpl
 ) {
 'use strict';
     angular
@@ -80,6 +82,10 @@ define([
             .when('/content-type-rules', {
                 template: contentTypeRulesTpl,
                 controller: 'wdContentTypeRulesCtrl'
+            })
+            .when('/client-label-rules', {
+                template: clientLabelRulesTpl,
+                controller: 'wdClientLabelRulesCtrl'
             })
             .when('/search-filter', {
                 template: searchFilterTpl,

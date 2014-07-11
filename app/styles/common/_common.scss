@@ -25,6 +25,13 @@
     }
     table {
         margin: 0px;
+        tr {
+            td {
+                input, select {
+                    margin-top: -3px;
+                }
+            }
+        }
     }
     select {
         width: auto;

@@ -305,7 +305,7 @@ module.exports = function (grunt) {
         // 'karma:travis'
     ]);
 
-    grunt.registerTask('build:staging', [
+    grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',
         'useminPrepare',

@@ -3,13 +3,15 @@ define([
     './controllers/doc-rules',
     './services/rules',
     './controllers/label-rules',
-    './controllers/content-type-rules'
+    './controllers/content-type-rules',
+    './controllers/client-label-rules'
 ], function(
     angular,
     docRulesCtrl,
     rulesSer,
     labelRulesCtrl,
-    contentTypeRulesCtrl
+    contentTypeRulesCtrl,
+    clientLabelRulesCtrl
 ) {
 'use strict';
 
@@ -18,7 +20,8 @@ define([
         .controller('wdDocRulesCtrl', docRulesCtrl)
         .factory('wdRulesSer', rulesSer)
         .controller('wdLabelRulesCtrl', labelRulesCtrl)
-        .controller('wdContentTypeRulesCtrl', contentTypeRulesCtrl);
+        .controller('wdContentTypeRulesCtrl', contentTypeRulesCtrl)
+        .controller('wdClientLabelRulesCtrl', clientLabelRulesCtrl);
 
 // 结束
 });

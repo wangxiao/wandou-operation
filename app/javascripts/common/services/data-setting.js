@@ -133,7 +133,6 @@ function($http, $q, wdStorage) {
         getLabelOrderTypeOptions: function() {
             var defer = $q.defer();
             $http.get('/enum/list').then(function(data) {
-                console.log(data);
                 var arr = [];
                 _.each(data, function(v) {
                     if (v.fieldName === 'labelOrderType') {

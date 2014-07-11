@@ -94,7 +94,36 @@ function($http) {
                     contentType: opts
                 }
             });
-        }
+        },
+        getClientLabelRules: function() {
+            return $http.get('/label/list');
+        },
+        addClientLabelRules: function(opts) {
+            return $http.post('/label/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'add',
+                    contentType: opts
+                }
+            });
+        },
+        deleteClientLabelRules: function(opts) {
+            return $http.post('/label/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'delete'
+                }
+            });
+        },
+        updateClientLabelRules: function(opts) {
+            return $http.post('/label/update', {}, {
+                params: {
+                    id: opts.id,
+                    action: 'update',
+                    contentType: opts
+                }
+            });
+        }        
     };
 
     // 结束 
