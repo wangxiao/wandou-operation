@@ -42,7 +42,9 @@ require.config({
             exports: '_'
         },
         snapSvg: {
-            exports: 'Snap'
+            exports: 'Snap',
+            deps: [
+            ]
         },
         svgLoader: {
             exports: 'SVGLoader',

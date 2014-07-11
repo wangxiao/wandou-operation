@@ -193,7 +193,7 @@ module.exports = function (grunt) {
         requirejs: {
             dist: {
                 options: {
-                    baseUrl: '<%= paths.app %>/scripts',
+                    baseUrl: '<%= paths.app %>/javascripts',
                     optimize: 'uglify',
                     uglify: {
                         toplevel: true,
@@ -282,7 +282,7 @@ module.exports = function (grunt) {
                 exclude: ['modernizr']
             },
             all: {
-                rjsConfig: '<%= paths.app %>/scripts/main.js'
+                rjsConfig: '<%= paths.app %>/javascripts/main.js'
             }
         }
     });
@@ -311,7 +311,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concat',
         'uglify',
-        // 'cssmin', // Uncomment this line if using none-sass style
+        'cssmin', // Uncomment this line if using none-sass style
         'requirejs:dist', // Uncomment this line if using RequireJS in your project
         'rev',
         'copy:compass',
@@ -326,7 +326,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concat',
         'uglify',
-        // 'cssmin', // Uncomment this line if using none-sass style
+        'cssmin', // Uncomment this line if using none-sass style
         'requirejs:dist', // Uncomment this line if using RequireJS in your project
         'rev',
         'copy:compass',
