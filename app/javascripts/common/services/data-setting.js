@@ -14,6 +14,7 @@ function($http, $q, wdStorage) {
     var labelOrderTypeOptions = [];
     var contentOrderTypeOptions = [];
     var contentShowTypeOptions = [];
+    var whiteListTypeOptions = [];
 
     return {
         userName: function(value) {
@@ -22,6 +23,17 @@ function($http, $q, wdStorage) {
             } else {
                 return wdStorage.value('user-name');
             }
+        },
+        forClientOptions: [
+            {value: true, name: '是'},
+            {value: false, name: '否'}
+        ],
+        getClientOptions: function(value) {
+            return _.find(this.forClientOptions, function(v) {
+                if (v.value === value) {
+                    return true;
+                }
+            });
         },
         pathTypeOptions: [
             {value: null, name: '全部'},
@@ -189,6 +201,27 @@ function($http, $q, wdStorage) {
         getContentShowType: function(value) {
             return _.find(contentShowTypeOptions, function(v) {
                 if (v.value === value) {
+                    return true;
+                }
+            });
+        },
+        getWhiteListTypeOptions: function() {
+            var defer = $q.defer();
+            $http.get('/enum/list').then(function(data) {
+                var arr = [];
+                _.each(data, function(v) {
+                    if (v.fieldName === 'whiteListType') {
+                        arr.push(v);
+                    }
+                });
+                whiteListTypeOptions = arr;
+                defer.resolve(arr);
+            });
+            return defer.promise;
+        },
+        getWhiteListType: function(name) {
+            return _.find(whiteListTypeOptions, function(v) {
+                if (v.name === name) {
                     return true;
                 }
             });

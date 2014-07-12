@@ -6,10 +6,10 @@ return ['$http',
 function($http) {
     return {
         getWhiteList: function(opts) {
-            return $http.get('/whitelist/list');
+            return $http.get('/whiteList/list');
         },
         deleteWhiteList: function(opts) {
-            return $http.post('/whitelist/update', {}, {
+            return $http.post('/whiteList/update', {}, {
                 params: {
                     id: opts.id,
                     action: 'delete'
@@ -17,7 +17,7 @@ function($http) {
             });
         },
         updateWhiteList: function(opts) {
-            return $http.post('/whitelist/update', {}, {
+            return $http.post('/whiteList/update', {}, {
                 params: {
                     id: opts.id,
                     action: 'update',
@@ -26,7 +26,7 @@ function($http) {
             });
         },
         addWhiteList: function(opts) {
-            return $http.post('/whitelist/update', {}, {
+            return $http.post('/whiteList/update', {}, {
                 params: {
                     id: opts.id,
                     action: 'add',

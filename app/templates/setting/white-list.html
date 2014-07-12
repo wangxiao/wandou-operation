@@ -12,17 +12,17 @@
                     <td class="title">文件路径</td>
                     <td ng-if="!item.uiEditStatus">{{item.filePath || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
-                        <input type="text" class="form-control" value="" ng-model="item.name">
+                        <input type="text" class="form-control" value="" ng-model="item.filePath">
                     </td>
                     <td class="title">客户端条目</td>
-                    <td ng-if="!item.uiEditStatus">{{item.forClient || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiforClientOptions.name}}</td>
                     <td ng-if="item.uiEditStatus">
-                        <input type="text" class="form-control" value="" ng-model="item.rank">
+                        <select class="form-control" ng-model="item.uiforClientOptions" ng-options="title.name for title in forClientOptions"></select>
                     </td>
                     <td class="title">白名单类型</td>
-                    <td ng-if="!item.uiEditStatus">{{item.type}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiType.name}}</td>
                     <td ng-if="item.uiEditStatus">
-                        <select class="form-control" ng-model="item.uiOrderType" ng-options="title.name for title in labelOrderTypeOptions"></select>
+                        <select class="form-control" ng-model="item.uiType" ng-options="title.name for title in whiteListTypeOptions"></select>
                     </td>
                 </tr>
             </table>

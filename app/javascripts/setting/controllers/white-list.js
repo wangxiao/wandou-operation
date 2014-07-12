@@ -4,16 +4,17 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdSettingSer', '$location', 'wdDataSetting', 'wdRulesSer',
-function($scope, wdSettingSer, $location, wdDataSetting, wdRulesSer) {    
+return ['$scope', 'wdSettingSer', '$location', 'wdDataSetting',
+function($scope, wdSettingSer, $location, wdDataSetting) {    
     $scope.dataList = [];
     $scope.firstFlag = true;
-
+    $scope.forClientOptions = wdDataSetting.forClientOptions;
     wdSettingSer.getWhiteList().then(function(data) {
         $scope.dataList = data;
+        console.log(data);
     }).then(function() {
-        return wdDataSetting.getLabelOrderTypeOptions().then(function(data) {
-            $scope.labelOrderTypeOptions = data;
+        return wdDataSetting.getWhiteListTypeOptions().then(function(data) {
+            $scope.whiteListTypeOptions = data;
         });
     }).then(function() {
         formatData();
@@ -22,17 +23,18 @@ function($scope, wdSettingSer, $location, wdDataSetting, wdRulesSer) {
 
     function formatData() {
         _.each($scope.dataList, function(v) {
-            v.uiOrderType = wdDataSetting.getLabelOrderType(v.orderType);
+            v.uiforClientOptions = wdDataSetting.getClientOptions(v.forClient);
+            v.uiType = wdDataSetting.getWhiteListType(v.type);
         });
     }
 
     $scope.addItem = function() {
         if (!$scope.dataList.length || $scope.dataList[0].id) {
             $scope.dataList.unshift({
-                id: null,
-                name: '',
-                orderType: 1,
-                rank: 0,
+                id: '',
+                filePath: '',
+                forClient: true,
+                type:'',
                 uiEditStatus: true
             });
         }
@@ -43,7 +45,7 @@ function($scope, wdSettingSer, $location, wdDataSetting, wdRulesSer) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdRulesSer.deleteContentTypeRules(item).then(function() {
+            wdSettingSer.deleteWhiteList(item).then(function() {
                 _.find($scope.dataList, function(v, i) {
                     if (item.id === v.id) {
                         $scope.dataList.splice(i, 1);
@@ -68,11 +70,12 @@ function($scope, wdSettingSer, $location, wdDataSetting, wdRulesSer) {
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
         delete item.uiOld;
-        item.orderType = item.uiOrderType.value;
+        item.type = item.uiType.value;
+        item.forClient = item.uiforClientOptions.value;
         if (item.id) {
-            wdRulesSer.updateContentTypeRules(item);
+            wdSettingSer.updateWhiteList(item);
         } else {
-            wdRulesSer.addContentTypeRules(item);
+            wdSettingSer.addWhiteList(item);
         }
     };
 }];
