@@ -53,6 +53,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     function getContentTypeOptions() {
         return wdDataSetting.getContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
+            console.log(data);
             _.each($scope.dataList, function(v) {
                 v.uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.contentType); 
             });

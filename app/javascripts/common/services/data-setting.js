@@ -66,9 +66,9 @@ function($http, $q, wdStorage) {
         // 这个字段应该从服务器获取，写在客户端不是很合理。
         sourceOptions: [
             {value: null, name: '全部'},
-            {value: 'liebao', name: 'liebao'},
-            {value: '360', name: '360'},
-            {value: 'lbe', name: 'lbe'},
+            {value: 'liebao', name: '竞品1'},
+            {value: '360', name: '竞品2'},
+            {value: 'lbe', name: '竞品3'},
             {value: 'wdj', name: 'wdj'}
         ],
        pageListLength: function(value) {

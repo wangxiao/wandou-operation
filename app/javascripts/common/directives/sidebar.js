@@ -14,9 +14,10 @@ return [function() {
         template: template,
         scope: true,
         replace: true,
-        controller: ['$scope', 'wdSidebarSer',
-        function($scope, wdSidebarSer) {
+        controller: ['$scope', 'wdSidebarSer', '$location',
+        function($scope, wdSidebarSer, $location) {
             $scope.monitorList = {};
+            $scope.preUrl = $location.absUrl().replace(/#.*/g, '#');
             wdSidebarSer.getCounterListNum().then(function(data) {
                 _.each(data, function(v){
                     $scope.monitorList[v.name] = v.value;

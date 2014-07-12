@@ -30,16 +30,10 @@ require.config({
                 'angular'
             ],
         },
-        // angularAnimate: {
-        //     deps: [
-        //         'angular'
-        //     ],
-        // },
-        jquery: {
-            exports: '$'
-        },
-        underscore: {
-            exports: '_'
+        angularAnimate: {
+            deps: [
+                'angular'
+            ],
         },
         snapSvg: {
             exports: 'Snap',
@@ -52,6 +46,12 @@ require.config({
                 'snapSvg',
                 'jquery'
             ]
+        },
+        jquery: {
+            exports: '$'
+        },
+        underscore: {
+            exports: '_'
         }
     }
 });

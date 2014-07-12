@@ -16,7 +16,8 @@ module.exports = function (grunt) {
         app: 'app',
         dist: 'dist',
         tmp: '.tmp',
-        test: 'test'
+        test: 'test',
+        components: 'components'
     };
 
     grunt.initConfig({
@@ -198,7 +199,13 @@ module.exports = function (grunt) {
                     uglify: {
                         toplevel: true,
                         ascii_only: false,
-                        beautify: false
+                        beautify: false,
+                        mangle: {
+                            except: [
+                                '<%= paths.components %>/Snap.svg/dist/snap.svg.js',
+                                '<%= paths.app %>/javascripts/base/svgLoader'
+                            ]
+                        }
                     },
                     preserveLicenseComments: true,
                     useStrict: false,

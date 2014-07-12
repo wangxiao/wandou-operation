@@ -32,7 +32,7 @@
     "grunt-newer": "0.7.0",
     "grunt-open": "0.2.3",
     "grunt-rev": "0.1.0",
-    "grunt-usemin": "0.1.12",
+    "grunt-usemin" : "2.2.0",
     "grunt-requirejs": "^0.4.2",
     "karma": "0.12.16",
     "karma-coverage": "0.2.4",

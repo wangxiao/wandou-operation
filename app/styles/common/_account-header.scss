@@ -43,4 +43,17 @@ $accountHeaderHeight: 50px;
             }
         }
     }
+    .ad {
+        position: absolute;
+        top: 0px;
+        left: 230px;
+        right: 230px;
+        height: 100%;
+        overflow: hidden;
+        .content {
+            position: absolute;
+            top: 0px;
+            right: -500px;
+        }
+    }
 }

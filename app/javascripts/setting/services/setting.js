@@ -21,7 +21,7 @@ function($http) {
                 params: {
                     id: opts.id,
                     action: 'update',
-                    mappingRule: opts
+                    whitelist: opts
                 }
             });
         },
@@ -30,7 +30,7 @@ function($http) {
                 params: {
                     id: opts.id,
                     action: 'add',
-                    mappingRule: opts
+                    whitelist: opts
                 }
             });
         }
