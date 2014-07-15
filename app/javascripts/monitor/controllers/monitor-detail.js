@@ -11,20 +11,33 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting) {
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.itemId = $location.search().id;
+    var action = $location.search().action;
     $scope.getPathType = function(pathType) {
         var t = wdDataSetting.getPathType(pathType);
         if (t) {
             return t.title;
         }
     };
-    wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
-        $scope.detail = data;
-        formatData();
-    });
-    wdMonitorSer.getCleanLog($scope.itemId).then(function(data) {
-        console.log(data);
-        $scope.cleanLog = data;
-    });
+    switch (action) {
+        case 'review':
+            wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
+                $scope.detail = data;
+                formatData();
+                wdMonitorSer.getCleanLog(data.onlineId).then(function(data) {
+                    $scope.cleanLog = data;
+                });
+            });
+        break;
+        case 'online':
+            wdMonitorSer.getListByOnlineId($scope.itemId).then(function(data) {
+                $scope.detail = data;
+                formatData();
+                wdMonitorSer.getCleanLog(data.id).then(function(data) {
+                    $scope.cleanLog = data;
+                });
+            });
+        break;
+    }
     function formatData() {
         getContentTypeOptions();
         $scope.detail.uiAdviceLevel = wdDataSetting.getAdviceLevel($scope.detail.adviceLevel);

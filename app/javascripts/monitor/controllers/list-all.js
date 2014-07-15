@@ -53,7 +53,6 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     function getContentTypeOptions() {
         return wdDataSetting.getContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
-            console.log(data);
             _.each($scope.dataList, function(v) {
                 v.uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.contentType); 
             });
@@ -74,9 +73,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     });
 
-    function formatData() {
+    function formatData(data) {
         getContentTypeOptions();
         getAdviceLevel();
+        _.each($scope.dataList, function(v) {
+            v.uiSource = wdDataSetting.getSource(v.source);
+        });
     }
 
     function showAllData() {
@@ -93,7 +95,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             $scope.dataList = data;
             $scope.showLoading = false;
             if (data.length) {
-                formatData();
+                formatData(data);
             } else {
                 $scope.pageUp();
             }
@@ -165,7 +167,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.checkFinish = function(item) {
         wdMonitorSer.checkFinishCompeteData(item).then(function(data) {
             console.log(data);
-            deleteItem(item);
+            deleteItem(item.id);
         });
     };
     $scope.ignoreItem = function(item) {
@@ -199,14 +201,14 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                 if (item.id === v.id) {
                     $scope.dataList[i] = data;
                     $scope.dataList[i].uiEditStatus = true;
-                    $scope.dataList[i].uiOldData = item.uiOldData;
+                    $scope.dataList[i].uiOldData = backup.uiOldData;
                 }
             });
             formatData();           
         });
     };
     $scope.showDetail = function(id) {
-        $location.path('/monitor-detail').search({id: id});
+        $location.path('/monitor-detail').search({id: id, action: 'review'});
     };
     $scope.batchEdit = function() {
         $scope.batchEditStatus = true;
@@ -221,6 +223,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         _.each($scope.dataList, function(v) {
             if (v.uiChecked) {
                 $scope.cancelEditItem(v);
+            }
+        });
+    };
+    $scope.batchAutoLabel = function() {
+        _.each($scope.dataList, function(v) {
+            if (v.uiChecked) {
+                $scope.autoLabelItem(v);
             }
         });
     };

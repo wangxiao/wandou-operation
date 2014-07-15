@@ -61,7 +61,10 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
     };
     function format() {
         _.each($scope.dataList, function(v) {
-            v.uiContentType = wdDataSetting.getContentTypeTitle(v.contentType).uiTitle;
+            var t = wdDataSetting.getContentTypeTitle(v.contentType);
+            if (t && t.uiTitle) {
+                v.uiContentType = t.uiTitle;
+            }
         });
     }
     $scope.pageUp = function() {
@@ -79,7 +82,7 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
     });
 
     $scope.showDetail = function(id) {
-        $location.path('/monitor-detail').search({id: id});
+        $location.path('/monitor-detail').search({id: id, action: 'online'});
     };
 
     // 根据单页显示数量变化请求数据

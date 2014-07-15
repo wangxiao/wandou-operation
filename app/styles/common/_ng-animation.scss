@@ -1,0 +1,22 @@
+/*
+ The animate class is apart of the element and the ng-enter class
+ is attached to the element once the enter animation event is triggered
+*/
+
+/* starting animations for leave */
+.angular-animation.ng-leave {
+    @include animation(ngLeave 1s);
+}
+
+/* terminal animations for leave */ 
+.angular-animation.ng-leave-active {
+    /* The animation preparation code */
+}
+
+@include keyframes (ngLeave) {
+    to {
+        -webkit-transform: rotateZ(360deg) translateX(1000px);
+        opacity: 0;
+    }
+}
+

@@ -12,6 +12,7 @@ $icon-font-path: "../components/bootstrap-sass-official/vendor/assets/fonts/boot
 @import "common/sidebar";
 @import "common/footer";
 @import "common/common";
+@import "common/ng-animation";
 
 /* 模块开始 */
 @import "auth/main";

@@ -6,14 +6,10 @@ return ['$http',
 function($http) {
     return {
         searchSql: function(sql) {
-            return $http.post('/appStoragePath/query', {}, {
-                params: {
-                    sql: sql
-                }
-            });
+            return $http.post('/appStoragePath/query', sql);
         },
         searchBy: function(opts) {
-            return $http.post('/appStoragePath/list', {}, {
+            return $http.post('/appStoragePath/list', {
                 offset: opts.offset,
                 length: opts.size,
                 params: opts

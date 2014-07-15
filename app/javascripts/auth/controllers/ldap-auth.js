@@ -37,14 +37,14 @@ function ldapCtrl($scope, wdLdap, $location, wdConfig, wdDataSetting, $timeout, 
     // 结束
 
     function success() {
-        if ($scope.name !== wdDataSetting.userName() || Math.floor(Math.random() * 11) > 7) {
+        // if ($scope.name !== wdDataSetting.userName() || Math.floor(Math.random() * 11) > 7) {
             $window.startTrans();
             $timeout(function() {
                 $location.path('/index');
             }, 8500);
-        } else {
-            $location.path('/index');
-        }
+        // } else {
+        //     $location.path('/index');
+        // }
         wdDataSetting.userName($scope.name);
         $scope.showLoginFrom = false;
     }

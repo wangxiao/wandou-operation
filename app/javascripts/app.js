@@ -1,6 +1,7 @@
 define([
     'angular',
     'angularRoute',
+    'angularAnimate',
     'jquery',
     'bootstrapModal',
     'text!templates/auth/sign-in.html',
@@ -25,6 +26,7 @@ define([
 ], function(
     angular,
     angularRoute,
+    angularAnimate,
     $,
     bootstrapModal,
     signInTpl,
@@ -51,6 +53,7 @@ define([
     angular
     .module('wdApp', [
         'ngRoute',
+        'ngAnimate',
         'wdAuth', 
         'wdIndex', 
         'wdCommon', 

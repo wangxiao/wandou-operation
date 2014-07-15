@@ -27,10 +27,10 @@
     <div class="edit-more-toolbar" ng-if="batchEditStatus">
         <p>批量编辑</p>
         <div class="btn" ng-click="cancelBatchEdit()">撤销编辑</div>
-        <div class="btn">自动生成</div>
+        <div class="btn" ng-click="batchAutoLabel()">自动生成</div>
         <div class="finish-btn btn" ng-click="finishBatchEdit()">完成编辑</div>
     </div>
-    <div class="monitor-item wd-show-box" ng-repeat="item in dataList">
+    <div class="monitor-item wd-show-box angular-animation" ng-repeat="item in dataList">
         <div class="header">
             <input type="checkbox" ng-checked="item.uiChecked" ng-click="checkedItem(item)">
             <p class="id">id:{{item.id}}</p>
@@ -48,7 +48,7 @@
                 <tr>
                     <td class="title">文件类别</td>
                     <td>
-                        <span class="flag flag-compete">{{item.source}}</span>
+                        <span class="flag flag-compete">{{item.uiSource.name}}</span>
                         （无）
                     </td>
                     <td ng-if="!item.uiEditStatus">
@@ -78,7 +78,7 @@
                 <tr>
                     <td class="title">清理风险</td>
                     <td>{{item.srcAlertInfo || '（空）'}}</td>
-                    <td ng-if="!item.uiEditStatus">{{item.desc || '（空）'}}</td>
+                    <td ng-if="!item.uiEditStatus">{{item.alertInfo || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
                         <input type="text" class="form-control" ng-model="item.alertInfo">
                     </td>
@@ -145,7 +145,7 @@
         </div>
     </div>
     <div class="wd-modal" wd-modal data-title="{{modalTitle}}" data-content="{{modalContent}}" data-show="{{showModal}}"></div>
-    <div ng-if="showLoading" class="wd-little-loading" data-visible="true"></div>
+    <!-- <div ng-if="showLoading" class="wd-little-loading" data-visible="true"></div> -->
 </div>
 <div wd-footer></div>
 <!-- <div wd-loading data-show="{{showLoading}}"></div> -->

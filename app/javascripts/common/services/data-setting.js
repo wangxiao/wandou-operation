@@ -71,7 +71,14 @@ function($http, $q, wdStorage) {
             {value: 'lbe', name: '竞品3'},
             {value: 'wdj', name: 'wdj'}
         ],
-       pageListLength: function(value) {
+        getSource: function(value) {
+            return _.find(this.sourceOptions, function(v) {
+                if (v.value === value) {
+                    return true;
+                }
+            });
+        },
+        pageListLength: function(value) {
             if (value) {
                 wdStorage.value('page-list-length', value);
             } else {
