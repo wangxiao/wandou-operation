@@ -44,6 +44,7 @@
             <li>清理风险缩写</li>
             <li>应用名</li>
             <li>下载量</li>
+            <li>客户端删除状态</li>
         </ul>
         <ul>
             <li>
@@ -64,6 +65,9 @@
             <li>
                 <input type="text" class="form-control" value="" ng-model="filterMap.installCount">
             </li>
+            <li>
+                <select class="form-control" ng-model="filterMap.ui.deleted" ng-options="title.name for title in deletedOptions"></select>
+            </li>
         </ul>
         <ul class="title-list">
             <li>条目类别</li>
@@ -78,7 +82,7 @@
                 <select class="form-control" ng-model="filterMap.ui.pathTypeOption" ng-options="value.name for value in pathTypeOptions"></select>
             </li>
             <li>
-                <select class="form-control" ng-model="filterMap.ui.contentTypeOption" ng-options="value.uiTitle for value in contentTypeOptions"></select>
+                <select class="form-control" ng-model="filterMap.ui.contentTypeOption" ng-options="(value.id + value.title) for value in contentTypeOptions"></select>
             </li>
             <li>
                 <select class="form-control" ng-model="filterMap.ui.adviceLevelOption" ng-options="value.name for value in adviceLevelOptions"></select>
@@ -122,7 +126,7 @@
             <p ng-if="item.id">id:{{item.id}}</p>
             <p ng-if="item.pathType">{{getPathType(item.pathType)}}</p>
             <p ng-if="item.appName">{{item.appName}}</p>
-            <p ng-if="item.installCount">{{item.installCount}} 下载</p>
+            <p ng-if="item.installCount">{{item.installCount}} 次下载</p>
             <br>
             <p ng-if="item.pkgName">包名:{{item.pkgName}}</p>
             <p ng-if="item.filePath">主路径:{{item.filePath}}</p>

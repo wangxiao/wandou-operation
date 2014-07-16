@@ -33,6 +33,13 @@ function($http) {
                 id: data.id
             });
         },
+        upDateOnLineData: function(data) {
+            return $http.post('/review/update', {
+                action: 'saveAndOnline',
+                reviewAppStoragePath: data,
+                id: data.id
+            });
+        },
         // 审核完成
         checkFinishCompeteData: function(data) {
             return $http.post('/review/update', {

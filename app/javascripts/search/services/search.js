@@ -9,11 +9,7 @@ function($http) {
             return $http.post('/appStoragePath/query', sql);
         },
         searchBy: function(opts) {
-            return $http.post('/appStoragePath/list', {
-                offset: opts.offset,
-                length: opts.size,
-                params: opts
-            });
+            return $http.post('/appStoragePath/list', opts);
         },
         applistSearch: function(udid) {
             return $http.get('/pkgName/list/' + udid);

@@ -56,6 +56,10 @@ function($http, $q, wdStorage) {
             {value: 0, name: '建议清理'},
             {value: 1, name: '谨慎清理'}
         ],
+        deletedOptions: [
+            {value: true, name: '客户端删除'},
+            {value: false, name: '客户端上线'}
+        ],
         getAdviceLevel: function(adviceLevel) {
             return _.find(this.adviceLevelOptions, function(v) {
                 if (adviceLevel === v.value) {

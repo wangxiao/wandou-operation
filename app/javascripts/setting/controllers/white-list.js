@@ -85,6 +85,7 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
                 if (data.reason) {
                     $window.alert('id:' + item.id + '，' + data.reason);
                 }
+                console.log(data);
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
                 }                

@@ -15,7 +15,142 @@
         <p>上次修改时间（latestModification）：{{detail.updateTime | date:'yyyy-MM-dd' || '（空）'}}</p><br>
         <p>最近跟新人（lastUpdateBy）：{{detail.lastUpdatedBy || '（空）'}}</p><br>
         <p>上线状态（onlineStatus）：{{detail.onlineStatus || '（空）'}}</p><br>
-        <p>客户端最低版本号（leastVC）：{{detail.leastVC || '（空）'}}</p>
+        <p>客户端最低版本号（leastVC）：{{detail.leastVC}}</p><br>
+        <p>风险级别：{{detail.uiSrcAdviceLevelTitle || "（空）"}}</p><br>
+        <p>清理通知：{{detail.notice}}</p>
+    </div>
+    <div class="title">条目信息详情</div>
+    <div class="editable-detail wd-show-box">
+        <div class="body">
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>原始数据</th>
+                    <th>线上数据</th>
+                </tr>
+                <tr>
+                    <td class="title">应用名（appName）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.appName || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.appName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">包名（pkgName）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.pkgName || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.pkgName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">正则包名（regPkgName）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.regPkgName || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.regPkgName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">路径（filePath）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.filePath || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.filePath">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">子路径（subPath）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.subPath || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.subPath">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">根路径（rootPath）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.rootPath || '（空）'}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.rootPath">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">客户端最低版本号（leastVC）</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.leastVC}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.leastVC">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">文件类别</td>
+                    <td>{{detail.uiSrcContentTypeTitle || "（无）"}}</td>
+                    <td ng-if="!editStatus">{{detail.uiContentTypeTitle || "（无）"}}</td>
+                    <td ng-if="editStatus">
+                        <select class="form-control" ng-model="detail.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions" ng-change="changeAdviceLevel(detail)"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">风险级别</td>
+                    <td>{{detail.uiSrcAdviceLevelTitle || "（空）"}}</td>
+                    <td>{{detail.uiAdviceLevel.name || "（空）"}}</td>
+                    <!--
+                    <td ng-if="editStatus">
+                        <select class="form-control" ng-model="detail.uiAdviceLevel" ng-options="t.name for t in adviceLevelOptions"></select>
+                    </td>
+                    -->
+                </tr>
+                <tr>
+                    <td class="title">项目名</td>
+                    <td>{{detail.srcItemName || "（空）"}}</td>
+                    <td ng-if="!editStatus">{{detail.itemName || "（空）"}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.itemName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">文件描述</td>
+                    <td>{{detail.srcDesc || "（空）"}}</td>
+                    <td ng-if="!editStatus">{{detail.desc || "（空）"}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.desc">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">清理风险</td>
+                    <td>{{detail.srcAlertInfo || "（空）"}}</td>
+                    <td ng-if="!editStatus">{{detail.alertInfo || "（空）"}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.alertInfo">
+                    </td>
+                </tr>                
+                <tr>
+                    <td class="title">清理风险缩写</td>
+                    <td>{{detail.srcSimpleAlertInfo || "（空）"}}</td>
+                    <td ng-if="!editStatus">{{detail.simpleAlertInfo || "（空）"}}</td>
+                    <td ng-if="editStatus">
+                        <input type="text" class="form-control" ng-model="detail.simpleAlertInfo">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">客户端删除状态</td>
+                    <td>（无）</td>
+                    <td ng-if="!editStatus">{{detail.uiDeleted.name}}</td>
+                    <td ng-if="editStatus">
+                        <select class="form-control" ng-model="detail.uiDeleted" ng-options="title.name for title in deletedOptions"></select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="btns">
+                <p ng-if="!editStatus" class="btn" ng-click="edit(detail);">编辑</p>
+                <p ng-if="editStatus" class="btn" ng-click="cancel(detail);">撤销</p>
+                <p ng-if="editStatus" class="btn finish" ng-click="finish(detail);">完成</p>
+            </div>
+        </div>
     </div>
     <div class="title">清理日志详情</div>
     <div class="warn-detail">
@@ -38,87 +173,19 @@
         <p>清理总大小 {{cleanLog.totalDeepCleanSize}}</p>
         <p>人均清理总大小 {{cleanLog.avgDeepCleanSize}}</p>
         <br>
-        <p>暂不清理主要原因：“{{cleanLog.mainReason || '(空)' }}”</p>
+        <p>暂不清理主要原因：“{{cleanLog.mainReason || '（空）' }}”</p>
     </div>
-    <div class="title">条目信息详情</div>
-    <div class="editable-detail wd-show-box">
-        <div class="body">
-            <table class="table table-striped">
-                <tr>
-                    <th></th>
-                    <th>原始数据</th>
-                    <th>线上数据</th>
-                </tr>
-                <tr>
-                    <td class="title">文件类别</td>
-                    <td>{{detail.uiSrcContentTypeTitle || "(无)"}}</td>
-                    <td ng-if="!editStatus">{{detail.uiContentTypeTitle || "(无)"}}</td>
-                    <td ng-if="editStatus">
-                        <select class="form-control" ng-model="detail.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title">项目名</td>
-                    <td>{{detail.srcItemName || "(空)"}}</td>
-                    <td ng-if="!editStatus">{{detail.itemName || "(空)"}}</td>
-                    <td ng-if="editStatus">
-                        <input type="text" class="form-control" ng-model="detail.itemName">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title">文件描述</td>
-                    <td>{{detail.srcDesc || "(空)"}}</td>
-                    <td ng-if="!editStatus">{{detail.desc || "(空)"}}</td>
-                    <td ng-if="editStatus">
-                        <input type="text" class="form-control" ng-model="detail.desc">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title">清理风险</td>
-                    <td>{{detail.srcAlertInfo || "(空)"}}</td>
-                    <td ng-if="!editStatus">{{detail.alertInfo || "(空)"}}</td>
-                    <td ng-if="editStatus">
-                        <input type="text" class="form-control" ng-model="detail.alertInfo">
-                    </td>
-                </tr>                
-                <tr>
-                    <td class="title">清理风险缩写</td>
-                    <td>{{detail.srcSimpleAlertInfo || "(空)"}}</td>
-                    <td ng-if="!editStatus">{{detail.simpleAlertInfo || "(空)"}}</td>
-                    <td ng-if="editStatus">
-                        <input type="text" class="form-control" ng-model="detail.simpleAlertInfo">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title">风险级别</td>
-                    <td>{{detail.uiSrcAdviceLevelTitle || "(空)"}}</td>
-                    <td>{{detail.uiAdviceLevelTitle || "(空)"}}</td>
-                    <!--
-                    <td ng-if="editStatus">
-                        <select class="form-control" ng-model="detail.uiAdviceLevel" ng-options="t.name for t in adviceLevelOptions"></select>
-                    </td>
-                    -->
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <div class="btns">
-                <p ng-if="!editStatus" class="btn" ng-click="edit(detail);">编辑</p>
-                <p ng-if="editStatus" class="btn" ng-click="cancel(detail);">撤销</p>
-                <p ng-if="editStatus" class="btn finish" ng-click="finish(detail);">完成</p>
-            </div>
-        </div>
-    </div>
+
     <div class="title" ng-if="detail.changeHistories.length">竞品监控历史</div>
     <div class="history-box" ng-if="detail.changeHistories.length">
         <ul>
             <li ng-repeat="item in detail.changeHistories">
-                <p>{{item.time || "(空)"}}</p>
-                <p>来源：{{item.src || "(空)"}}</p>
-                <p>字段：{{item.field || "(空)"}}</p>
-                <p>操作：{{item.action || "(空)"}}</p>
-                <p>从“{{item.from || "(空)"}}”</p>
-                <p>变成“{{item.to || "(空)"}}”</p>
+                <p>{{item.time || "（空）"}}</p>
+                <p>来源：{{item.src || "（空）"}}</p>
+                <p>字段：{{item.field || "（空）"}}</p>
+                <p>操作：{{item.action || "（空）"}}</p>
+                <p>从“{{item.from || "（空）"}}”</p>
+                <p>变成“{{item.to || "（空）"}}”</p>
             </li>
         </ul>
     </div>

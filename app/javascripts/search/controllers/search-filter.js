@@ -11,6 +11,7 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.filterMap = {};
     $scope.filterMap.ui = {};
+    $scope.deletedOptions = wdDataSetting.deletedOptions;
 
     // 当前数据显示的位置，用来分页获取数据，默认从头开始。
     $scope.offset = 0;
@@ -39,6 +40,9 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
             }
             if ($scope.filterMap.ui.adviceLevelOption) {
                 $scope.filterMap.adviceLevel = $scope.filterMap.ui.adviceLevelOption.value;
+            }
+            if ($scope.filterMap.ui.deleted) {
+                $scope.filterMap.deleted = $scope.filterMap.ui.deleted.value;
             }
         }
     }

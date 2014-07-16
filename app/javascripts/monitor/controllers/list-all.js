@@ -27,6 +27,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         {value:'desc', name: '降序'},
         {value:'asc', name: '升序'}
     ];
+    $scope.deletedOptions = wdDataSetting.deletedOptions;
     $scope.order = $scope.orderOptions[0];
     $scope.isCheckedAll = false;
     $scope.batchEditStatus = false;
@@ -62,7 +63,6 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     function getAdviceLevel() {
         _.each($scope.dataList, function(v) {
             v.uiAdviceLevel = wdDataSetting.getAdviceLevel(v.adviceLevel);
-            v.uiAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.adviceLevel).name;
             v.uiSrcAdviceLevelTitle = wdDataSetting.getAdviceLevel(v.srcAdviceLevel).name;
         });
     }
@@ -78,6 +78,11 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         getAdviceLevel();
         _.each($scope.dataList, function(v) {
             v.uiSource = wdDataSetting.getSource(v.source);
+            v.uiDeleted = _.find($scope.deletedOptions, function(a) {
+                if (a.value === v.deleted) {
+                    return true;
+                }
+            });
         });
     }
 
@@ -133,7 +138,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     }
     $scope.getPathType = function(pathType) {
-        return wdDataSetting.getPathType(pathType).title;
+        return wdDataSetting.getPathType(pathType).name;
     };
 
     $scope.editItem = function(item) {
@@ -157,6 +162,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         item.uiEditStatus = false;
         item.contentType = item.uiContentTypeOption.id;
         item.adviceLevel = item.uiAdviceLevel.value;
+        item.deleted = item.uiDeleted.value;
         delete item.uiOldData;
         if (!flag) {
             wdMonitorSer.upDateCompeteData(item).then(function(data) {
@@ -171,6 +177,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         }
     };
     $scope.checkFinish = function(item) {
+        if (!$window.confirm('确定审核完成吗？id:' + item.id)) {
+            return;
+        }
         wdMonitorSer.checkFinishCompeteData(item).then(function(data) {
             if (data.reason) {
                 $window.alert('id:' + item.id + '，' + data.reason);
@@ -185,6 +194,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     };
     $scope.ignoreItem = function(item) {
+        if (!$window.confirm('确定要忽略吗？id:' + item.id)) {
+            return;
+        }
         $scope.finishEditItem(item, true);
         wdMonitorSer.ignoreCompeteDate(item).then(function(data) {
             console.log(data);
@@ -200,6 +212,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     };
     $scope.publicItem = function(item) {
+        if (!$window.confirm('确定要发布上线吗？id:' + item.id)) {
+            return;
+        }
         $scope.finishEditItem(item, true);
         wdMonitorSer.publicCompeteData(item).then(function(data) {
             console.log(data);
@@ -215,6 +230,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     };
     $scope.offlineItem = function(item) {
+        if (!$window.confirm('确定让客户端删除吗？id:' + item.id)) {
+            return;
+        }
         $scope.finishEditItem(item, true);
         wdMonitorSer.offlineCompeteDate(item).then(function(data) {
             console.log(data);
@@ -247,6 +265,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     };
     $scope.showDetail = function(id) {
         $location.path('/monitor-detail').search({id: id, action: 'review'});
+    };
+    $scope.changeAdviceLevel = function(item) {
+        item.uiAdviceLevel = _.find($scope.adviceLevelOptions, function(v) {
+            if (item.uiContentTypeOption.adviceLevel === v.value) {
+                return true;
+            }
+        });
     };
     $scope.batchEdit = function() {
         $scope.batchEditStatus = true;
