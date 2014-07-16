@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdRulesSer', '$location', 'wdDataSetting',
-function($scope, wdRulesSer, $location, wdDataSetting) {    
+return ['$scope', 'wdRulesSer', '$location', 'wdDataSetting', '$window',
+function($scope, wdRulesSer, $location, wdDataSetting, $window) {    
     $scope.dataList = [];
     $scope.firstFlag = true;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
@@ -63,12 +63,20 @@ function($scope, wdRulesSer, $location, wdDataSetting) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdRulesSer.deleteContentTypeRules(item).then(function() {
-                _.find($scope.dataList, function(v, i) {
-                    if (item.id === v.id) {
-                        $scope.dataList.splice(i, 1);
-                    }
-                });
+            wdRulesSer.deleteContentTypeRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，删除失败');
+                } 
+                if (data.success) {
+                    _.find($scope.dataList, function(v, i) {
+                        if (item.id === v.id) {
+                            $scope.dataList.splice(i, 1);
+                        }
+                    });
+                }
             });
         } else {
             $scope.dataList.shift();
@@ -93,9 +101,23 @@ function($scope, wdRulesSer, $location, wdDataSetting) {
         item.orderType = item.uiOrderType.value;
         item.showType = item.uiShowType.value;
         if (item.id) {
-            wdRulesSer.updateContentTypeRules(item);
+            wdRulesSer.updateContentTypeRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，更新失败');
+                }
+            });
         } else {
-            wdRulesSer.addContentTypeRules(item);
+            wdRulesSer.addContentTypeRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，添加失败');
+                } 
+            });
         }
     };
 }];

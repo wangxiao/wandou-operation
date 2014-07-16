@@ -24,13 +24,18 @@ $sidebarWidth: 200px;
             cursor: pointer;
             a {
                 color: $standard-green;
-                &.current {
-                    border: 1px solid $standard-green;
+                &:hover {
+                    text-decoration: underline;
                 }
             }
-            &:hover {
-                text-decoration: underline;
+            .current {
+                border: 1px solid $standard-green;
+                cursor: default;
+                &:hover {
+                    text-decoration: none;
+                }
             }
+
             .num {
                 background-color: $standard-green;
                 color: #fff;

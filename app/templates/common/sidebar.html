@@ -5,31 +5,36 @@
     <ul class="group">
         <li class="title">竞品监控</li>
         <li class="item">
-            <a ng-href="{{preUrl}}/monitor-all">
+            <a ng-class="{current: (path === 'monitor-all' && !action)}" 
+                ng-href="{{preUrl}}/monitor-all">
                 全部竞品项目
                 <span ng-if="monitorList.monitorAll" class="num" title="{{monitorList.monitorAll}}">{{monitorList.monitorAll}}</span>
             </a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/monitor-all?action=new">
+            <a ng-class="{current: (path === 'monitor-all' && action === 'new')}" 
+                ng-href="{{preUrl}}/monitor-all?action=new">
                 竞品新增条目
                 <span ng-if="monitorList.monitorNew" class="num" title="{{monitorList.monitorNew}}">{{monitorList.monitorNew}}</span>
             </a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/monitor-all?action=offline">
+            <a ng-class="{current: (path === 'monitor-all' && action === 'offline')}" 
+                ng-href="{{preUrl}}/monitor-all?action=offline">
                 竞品下线条目
                 <span ng-if="monitorList.monitorDelete" class="num" title="{{monitorList.monitorDelete}}">{{monitorList.monitorDelete}}</span>
             </a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/monitor-all?action=change">
+            <a ng-class="{current: (path === 'monitor-all' && action === 'change')}" 
+                ng-href="{{preUrl}}/monitor-all?action=change">
                 竞品改变信息
                 <span ng-if="monitorList.monitorModify" class="num" title="{{monitorList.monitorModify}}">{{monitorList.monitorModify}}</span>
             </a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/monitor-all?action=online">
+            <a ng-class="{current: (path === 'monitor-all' && action === 'online')}"
+                 ng-href="{{preUrl}}/monitor-all?action=online">
                 审核完待上线
                 <span ng-if="monitorList.needOnline" class="num" title="{{monitorList.needOnline}}">{{monitorList.needOnline}}</span>
             </a>
@@ -38,37 +43,46 @@
     <ul class="group">
         <li class="title">竞品监控规则</li>
         <li class="item">
-            <a ng-href="{{preUrl}}/doc-rules">文案映射规则</a>
+            <a ng-class="{current: (path === 'doc-rules')}" 
+                ng-href="{{preUrl}}/doc-rules">文案映射规则</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/label-rules?action=desc">文件描述规则</a>
+            <a ng-class="{current: (path === 'label-rules' && action === 'desc')}"
+                ng-href="{{preUrl}}/label-rules?action=desc">文件描述规则</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/label-rules?action=alertInfo">清理风险规则</a>
+            <a ng-class="{current: (path === 'label-rules' && action === 'alertInfo')}"
+             ng-href="{{preUrl}}/label-rules?action=alertInfo">清理风险规则</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/content-type-rules">文件类型规则</a>
+            <a ng-class="{current: (path === 'content-type-rules')}" 
+                ng-href="{{preUrl}}/content-type-rules">文件类型规则</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/client-label-rules">客户端标签规则</a>
+            <a ng-class="{current: (path === 'client-label-rules')}" 
+                ng-href="{{preUrl}}/client-label-rules">客户端标签规则</a>
         </li>
     </ul>
     <ul class="group">
         <li class="title">数据库查询</li>
         <li class="item">
-            <a ng-href="{{preUrl}}/search-filter">数据搜索筛选</a>
+            <a ng-class="{current: (path === 'search-filter')}" 
+            ng-href="{{preUrl}}/search-filter">数据搜索筛选</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/sql-search">Mysql 检索</a>
+            <a ng-class="{current: (path === 'sql-search')}" 
+                ng-href="{{preUrl}}/sql-search">Mysql 检索</a>
         </li>
         <li class="item">
-            <a ng-href="{{preUrl}}/applist-search">AppList 检索</a>
+            <a ng-class="{current: (path === 'applist-search')}" 
+                ng-href="{{preUrl}}/applist-search">AppList 检索</a>
         </li>
     </ul>
     <ul class="group">
         <li class="title">配置项编辑</li>
         <li class="item">
-            <a ng-href="{{preUrl}}/white-list">白名单配置</a>
+            <a ng-class="{current: (path === 'white-list')}" 
+                ng-href="{{preUrl}}/white-list">白名单配置</a>
         </li>
     </ul>
 </div>

@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdRulesSer', 'wdDataSetting',
-function($scope, wdRulesSer, wdDataSetting) {
+return ['$scope', 'wdRulesSer', 'wdDataSetting', '$window',
+function($scope, wdRulesSer, wdDataSetting, $window) {
     $scope.alertInfoOptions = [
         {name: 'a', value: 'a'},
         {name: 'b', value: 'b'},
@@ -89,12 +89,20 @@ function($scope, wdRulesSer, wdDataSetting) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdRulesSer.deleteDocRules(item).then(function() {
-                _.find($scope.dataList, function(v, i) {
-                    if (item.id === v.id) {
-                        $scope.dataList.splice(i, 1);
-                    }
-                });
+            wdRulesSer.deleteDocRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，删除失败');
+                } 
+                if (data.success) {
+                    _.find($scope.dataList, function(v, i) {
+                        if (item.id === v.id) {
+                            $scope.dataList.splice(i, 1);
+                        }
+                    });
+                }
             });
         } else {
             $scope.dataList.shift();
@@ -118,10 +126,24 @@ function($scope, wdRulesSer, wdDataSetting) {
         item.ourSimpleAlertInfo = item.uiSimpleAlertInfo.value;
         item.ourAdviceLevel = item.uiAdviceLevel.value;
         if (item.id) {
-            wdRulesSer.updateDocRules(item);
+            wdRulesSer.updateDocRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，更新失败');
+                }                 
+            });
         } else {
             console.log(item);
-            wdRulesSer.addDocRules(item);
+            wdRulesSer.addDocRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，添加失败');
+                }                 
+            });
         }
     };
 

@@ -17,6 +17,8 @@ return [function() {
         controller: ['$scope', 'wdSidebarSer', '$location',
         function($scope, wdSidebarSer, $location) {
             $scope.monitorList = {};
+            $scope.path = $location.path().replace('/', '');
+            $scope.action = $location.search().action;
             $scope.preUrl = $location.absUrl().replace(/#.*/g, '#');
             wdSidebarSer.getCounterListNum().then(function(data) {
                 _.each(data, function(v){

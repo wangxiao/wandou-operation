@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdMonitorSer', '$timeout', '$location', 'wdDataSetting', 'wdModalSer',
-function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdModalSer) {
+return ['$scope', 'wdMonitorSer', '$timeout', '$location', 'wdDataSetting', 'wdModalSer', '$window',
+function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdModalSer, $window) {
     // 是否是第一次进入
     $scope.firstFlag = true; 
     $scope.dataList = [];
@@ -38,7 +38,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.showLoading = true;
     $scope.contentTypeOptions = [];
 
-    var action = $location.search().action;
+    $scope.action = $location.search().action || '';
 
     // 用于数据服务，获取根据 action 获取。
     var actionObj = {
@@ -100,7 +100,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                 $scope.pageUp();
             }
         };
-        switch (action) {
+        switch ($scope.action) {
             case 'online':
                 wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
                     success(data);
@@ -111,13 +111,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                     $scope.sort = $scope.sortOptions[2];
                     opts.orderBy = $scope.sort.value;
                 }
-                opts.action = actionObj[action];
+                opts.action = actionObj[$scope.action];
                 wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
                     success(data);
                 });
             break;
             default:
-                opts.action = actionObj[action];
+                opts.action = actionObj[$scope.action] || null;
                 wdMonitorSer.getCompeteAllList(opts).then(function(data) {
                     success(data);
                 });
@@ -161,34 +161,72 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         if (!flag) {
             wdMonitorSer.upDateCompeteData(item).then(function(data) {
                 console.log(data);
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，保存失败');
+                }
             });
         }
     };
     $scope.checkFinish = function(item) {
         wdMonitorSer.checkFinishCompeteData(item).then(function(data) {
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，审核完成失败');
+            }
+            if (data.success) {
+                deleteItem(item.id);
+            }
             console.log(data);
-            deleteItem(item.id);
         });
     };
     $scope.ignoreItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.ignoreCompeteDate(item).then(function(data) {
             console.log(data);
-            deleteItem(item.id);
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，忽略失败');
+            }
+            if (data.success) {
+                deleteItem(item.id);
+            }
         });
     };
     $scope.publicItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.publicCompeteData(item).then(function(data) {
             console.log(data);
-            deleteItem(item.id);
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，发布上线失败');
+            }
+            if (data.success) {
+                deleteItem(item.id);
+            }
         });
     };
     $scope.offlineItem = function(item) {
         $scope.finishEditItem(item, true);
         wdMonitorSer.offlineCompeteDate(item).then(function(data) {
             console.log(data);
-            deleteItem(item.id);
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，下线条目失败');
+            }
+            if (data.success) {
+                deleteItem(item.id);
+            }
         });
     };
     // 自动生成文案
@@ -238,6 +276,14 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         _.each($scope.dataList, function(v) {
             if (v.uiChecked) {
                 $scope.finishEditItem(v);
+            }
+        });
+    };
+    $scope.batchPublic = function() {
+        $scope.batchEditStatus = false;
+        _.each($scope.dataList, function(v) {
+            if (v.uiChecked) {
+                $scope.publicItem(v);
             }
         });
     };

@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdRulesSer', '$location',
-function($scope, wdRulesSer, $location) {
+return ['$scope', 'wdRulesSer', '$location', '$window',
+function($scope, wdRulesSer, $location, $window) {
     $scope.field = $location.search().action; 
     $scope.title = '';
     $scope.dataList = [];
@@ -77,15 +77,30 @@ function($scope, wdRulesSer, $location) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdRulesSer.deleteLabelRules(item).then(function() {
-                _.find($scope.dataList, function(v, i) {
-                    if (item.id === v.id) {
-                        $scope.dataList.splice(i, 1);
-                    }
-                });
+            wdRulesSer.deleteLabelRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，删除失败');
+                }
+                if (data.success) {
+                    _.find($scope.dataList, function(v, i) {
+                        if (item.id === v.id) {
+                            $scope.dataList.splice(i, 1);
+                        }
+                    });
+                } 
             });
             if (item.uiSimpleAlertInfo) {
-                wdRulesSer.deleteLabelRules(item.uiSimpleAlertInfo);
+                wdRulesSer.deleteLabelRules(item.uiSimpleAlertInfo).then(function(data) {
+                    if (data.reason) {
+                        $window.alert('id:' + item.id + '，' + data.reason);
+                    }
+                    if (!data.reason && !data.success) {
+                        $window.alert('id' + item.id + '，删除失败');
+                    }           
+                });
             }
         } else {
             $scope.dataList.shift();
@@ -106,16 +121,44 @@ function($scope, wdRulesSer, $location) {
         item.uiEditStatus = false;
         delete item.uiOld;
         if (item.id) {
-            wdRulesSer.updateLabelRules(item);
+            wdRulesSer.updateLabelRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，更新失败');
+                }
+            });
             if (item.uiSimpleAlertInfo) {
                 item.uiSimpleAlertInfo.type = item.type;
-                wdRulesSer.updateLabelRules(item.uiSimpleAlertInfo);
+                wdRulesSer.updateLabelRules(item.uiSimpleAlertInfo).then(function(data) {
+                    if (data.reason) {
+                        $window.alert('id:' + item.id + '，' + data.reason);
+                    }
+                    if (!data.reason && !data.success) {
+                        $window.alert('id' + item.id + '，更新失败');
+                    }
+                });
             }
         } else {
-            wdRulesSer.addLabelRules(item);
+            wdRulesSer.addLabelRules(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，添加失败');
+                }                
+            });
             if (item.uiSimpleAlertInfo) {
                 item.uiSimpleAlertInfo.type = item.type;
-                wdRulesSer.addLabelRules(item.uiSimpleAlertInfo);
+                wdRulesSer.addLabelRules(item.uiSimpleAlertInfo).then(function(data) {
+                    if (data.reason) {
+                        $window.alert('id:' + item.id + '，' + data.reason);
+                    }
+                    if (!data.reason && !data.success) {
+                        $window.alert('id' + item.id + '，添加失败');
+                    }   
+                });
             }
         }
     };

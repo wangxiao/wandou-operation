@@ -4,8 +4,8 @@ define([
     _
 ) {
 'use strict';
-return ['$scope', 'wdSettingSer', '$location', 'wdDataSetting',
-function($scope, wdSettingSer, $location, wdDataSetting) {    
+return ['$scope', 'wdSettingSer', '$location', 'wdDataSetting', '$window',
+function($scope, wdSettingSer, $location, wdDataSetting, $window) {    
     $scope.dataList = [];
     $scope.firstFlag = true;
     $scope.forClientOptions = wdDataSetting.forClientOptions;
@@ -45,12 +45,20 @@ function($scope, wdSettingSer, $location, wdDataSetting) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdSettingSer.deleteWhiteList(item).then(function() {
-                _.find($scope.dataList, function(v, i) {
-                    if (item.id === v.id) {
-                        $scope.dataList.splice(i, 1);
-                    }
-                });
+            wdSettingSer.deleteWhiteList(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，删除失败');
+                }   
+                if (data.success) {
+                    _.find($scope.dataList, function(v, i) {
+                        if (item.id === v.id) {
+                            $scope.dataList.splice(i, 1);
+                        }
+                    });
+                }
             });
         } else {
             $scope.dataList.shift();
@@ -73,9 +81,23 @@ function($scope, wdSettingSer, $location, wdDataSetting) {
         item.type = item.uiType.value;
         item.forClient = item.uiforClientOptions.value;
         if (item.id) {
-            wdSettingSer.updateWhiteList(item);
+            wdSettingSer.updateWhiteList(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，更新失败');
+                }                
+            });
         } else {
-            wdSettingSer.addWhiteList(item);
+            wdSettingSer.addWhiteList(item).then(function(data) {
+                if (data.reason) {
+                    $window.alert('id:' + item.id + '，' + data.reason);
+                }
+                if (!data.reason && !data.success) {
+                    $window.alert('id' + item.id + '，添加失败');
+                }                
+            });
         }
     };
 }];
