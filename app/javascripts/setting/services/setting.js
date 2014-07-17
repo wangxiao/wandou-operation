@@ -18,14 +18,14 @@ function($http) {
             return $http.post('/whiteList/update', {
                     id: opts.id,
                     action: 'update',
-                    whitelist: opts
+                    whiteList: opts
             });
         },
         addWhiteList: function(opts) {
             return $http.post('/whiteList/update', {
                     id: opts.id,
                     action: 'add',
-                    whitelist: opts
+                    whiteList: opts
             });
         }
     };

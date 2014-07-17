@@ -31,7 +31,6 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
     $scope.addItem = function() {
         if (!$scope.dataList.length || $scope.dataList[0].id) {
             $scope.dataList.unshift({
-                id: '',
                 filePath: '',
                 forClient: true,
                 type:'',
@@ -78,7 +77,7 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
         delete item.uiOld;
-        item.type = item.uiType.value;
+        item.type = item.uiType.name;
         item.forClient = item.uiforClientOptions.value;
         if (item.id) {
             wdSettingSer.updateWhiteList(item).then(function(data) {
