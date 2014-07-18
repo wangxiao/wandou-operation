@@ -35,7 +35,9 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
 
     wdRulesSer.getLabelRules().then(function(data) {
         _.each(data, function(v) {
-            $scope.docDescOptions.push(v.type);
+            if (v.field === 'desc') {
+                $scope.docDescOptions.push(v.type);
+            }
         });
         $scope.docDescOptions = _.uniq($scope.docDescOptions);
     });
