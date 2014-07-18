@@ -53,8 +53,17 @@ $accountHeaderHeight: 50px;
         .content {
             position: absolute;
             top: 0px;
-            right: -500px;
-            width: 500px;
+            right: -1500px;
+            width: 1500px;
+            .item {
+                margin-right: 200px;
+                display: inline-block;
+                float: left;
+                .photo, p {
+                    display: inline-block;
+                    float: left;
+                }
+            }
         }
     }
 }

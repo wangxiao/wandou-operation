@@ -6,11 +6,14 @@ return ['$http',
 function($http) {
     return {
         getDocRules: function(opts) {
+            if (!opts.srcItemName) {
+                delete opts.srcItemName;
+            }
+            if (!opts.itemName) {
+                delete opts.itemName;
+            }
             return $http.get('/mappingRule/list', {
-                params: {
-                    offset: opts.offset,
-                    length: opts.length
-                }
+                params: opts
             });
         },
         deleteDocRules: function(opts) {
@@ -99,7 +102,7 @@ function($http) {
                     action: 'update',
                     contentType: opts
             });
-        }        
+        }    
     };
 
     // 结束 

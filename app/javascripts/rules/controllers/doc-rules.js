@@ -20,6 +20,8 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
             }
         });
     }
+    $scope.searchSrcItemName = '';
+    $scope.searchItemName = '';
     $scope.dataList = [];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.docDescOptions = [];
@@ -40,6 +42,8 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
 
     function showAllData() {
         wdRulesSer.getDocRules({
+            srcItemName: $scope.searchSrcItemName,
+            itemName: $scope.searchItemName,
             offset: $scope.offset,
             length: $scope.pageListLength
         }).then(function(data) {
@@ -51,7 +55,7 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
     }
 
     function formatData() {
-        wdDataSetting.getContentTypeOptions().then(function(data) {
+        wdDataSetting.getAllContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
             _.each($scope.dataList, function(v, i) {
                 $scope.dataList[i].uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.ourContentType);
@@ -65,6 +69,10 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
     }
 
     showAllData();
+    $scope.search = function() {
+        showAllData();
+    };
+
     $scope.addItem = function() {
         if (!$scope.dataList.length || $scope.dataList[0].id) {
             $scope.dataList.unshift({
@@ -121,10 +129,20 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
     };
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
+        var clone = _.clone(item.uiOld);
         delete item.uiOld;
-        item.ourAlertInfo = item.uiAlertInfo.value;
-        item.ourSimpleAlertInfo = item.uiSimpleAlertInfo.value;
-        item.ourAdviceLevel = item.uiAdviceLevel.value;
+        if (item.uiAlertInfo) {
+            item.ourAlertInfo = item.uiAlertInfo.value;
+        }
+        if (item.uiSimpleAlertInfo) {
+            item.ourSimpleAlertInfo = item.uiSimpleAlertInfo.value;
+        }
+        if (item.uiAdviceLevel) {
+            item.ourAdviceLevel = item.uiAdviceLevel.value;
+        }
+        if (item.uiContentTypeOption) {
+            item.ourContentType = item.uiContentTypeOption.id;
+        }
         if (item.id) {
             wdRulesSer.updateDocRules(item).then(function(data) {
                 if (data.reason) {
@@ -133,6 +151,10 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
                 }                 
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         } else {
             console.log(item);
@@ -143,6 +165,10 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，添加失败');
                 }                 
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         }
     };
@@ -153,6 +179,14 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
 
     $scope.pageDown = function() {
         $scope.offset = $scope.offset + $scope.pageListLength;
+    };
+
+    $scope.changeAdviceLevel = function(item) {
+        item.uiAdviceLevel = _.find($scope.adviceLevelOptions, function(v) {
+            if (item.uiContentTypeOption.adviceLevel === v.value) {
+                return true;
+            }
+        });
     };
 
     // 翻页逻辑

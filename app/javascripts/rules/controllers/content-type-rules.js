@@ -95,11 +95,20 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
     };
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
+        var clone = _.clone(item.uiOld);
         delete item.uiOld;
-        item.adviceLevel = item.uiAdviceLevel.value;
-        item.labelId = item.uiLabelId.id;
-        item.orderType = item.uiOrderType.value;
-        item.showType = item.uiShowType.value;
+        if (item.uiAdviceLevel) {
+            item.adviceLevel = item.uiAdviceLevel.value;
+        }
+        if (item.uiLabelId) {
+            item.labelId = item.uiLabelId.id;
+        }
+        if (item.uiOrderType) {
+            item.orderType = item.uiOrderType.value;            
+        }
+        if (item.uiShowType) {
+            item.showType = item.uiShowType.value;
+        }
         if (item.id) {
             wdRulesSer.updateContentTypeRules(item).then(function(data) {
                 if (data.reason) {
@@ -108,6 +117,10 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
                 }
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         } else {
             wdRulesSer.addContentTypeRules(item).then(function(data) {
@@ -117,6 +130,10 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，添加失败');
                 } 
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         }
     };

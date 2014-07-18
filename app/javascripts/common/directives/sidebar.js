@@ -21,6 +21,7 @@ return [function() {
             $scope.action = $location.search().action;
             $scope.preUrl = $location.absUrl().replace(/#.*/g, '#');
             wdSidebarSer.getCounterListNum().then(function(data) {
+                console.log(data);
                 _.each(data, function(v){
                     $scope.monitorList[v.name] = v.value;
                 });

@@ -12,6 +12,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.deletedOptions = wdDataSetting.deletedOptions;
     $scope.itemId = $location.search().id;
+    $scope.cleanLog = {};
+    $scope.onlineData = {};
+    $scope.detail.mappingRuleId = '';
     var action = $location.search().action;
     $scope.getPathType = function(pathType) {
         var t = wdDataSetting.getPathType(pathType);
@@ -19,28 +22,42 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
             return t.name;
         }
     };
-    switch (action) {
-        case 'review':
-            wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
-                console.log(data);
-                $scope.detail = data;
-                formatData();
-                wdMonitorSer.getCleanLog(data.onlineId).then(function(data) {
-                    $scope.cleanLog = data;
+
+    function showAllData() {
+        switch (action) {
+            case 'review':
+                wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
+                    console.log(data);
+                    $scope.detail = data;
+                    wdMonitorSer.getCleanLog(data.onlineId).then(function(data) {
+                        $scope.cleanLog = data;
+                    });
+                    wdMonitorSer.getOnlineDataById(data.onlineId).then(function(data) {
+                        console.log(data);
+                        $scope.onlineData = data;
+                        formatData();
+                    });
                 });
-            });
-        break;
-        case 'online':
-            wdMonitorSer.getListByOnlineId($scope.itemId).then(function(data) {
-                console.log(data);
-                $scope.detail = data;
-                formatData();
-                wdMonitorSer.getCleanLog(data.id).then(function(data) {
-                    $scope.cleanLog = data;
+            break;
+            case 'online':
+                wdMonitorSer.getListByOnlineId($scope.itemId).then(function(data) {
+                    console.log(data);
+                    $scope.detail = data;
+                    wdMonitorSer.getCleanLog(data.id).then(function(data) {
+                        $scope.cleanLog = data;
+                    });
+                    wdMonitorSer.getOnlineDataById(data.onlineId).then(function(data) {
+                        console.log(data);
+                        $scope.onlineData = data;
+                        formatData();
+                    });
                 });
-            });
-        break;
+            break;
+        }
     }
+
+    showAllData();
+
     function formatData() {
         getContentTypeOptions();
         $scope.detail.uiDeleted = _.find($scope.deletedOptions, function(v) {
@@ -50,9 +67,15 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
         });
         $scope.detail.uiAdviceLevel = wdDataSetting.getAdviceLevel($scope.detail.adviceLevel);
         $scope.detail.uiSrcAdviceLevelTitle = wdDataSetting.getAdviceLevel($scope.detail.srcAdviceLevel).name;
+        $scope.onlineData.uiAdviceLevelOption = wdDataSetting.getAdviceLevel($scope.onlineData.adviceLevel);
+        $scope.onlineData.uiDeleted = _.find($scope.deletedOptions, function(v) {
+            if (v.value === $scope.onlineData.deleted) {
+                return true;
+            }
+        });
     }
     function getContentTypeOptions() {
-        return wdDataSetting.getContentTypeOptions().then(function(data) {
+        return wdDataSetting.getAllContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
             var t = wdDataSetting.getContentTypeTitle($scope.detail.contentType);
             if (t) {
@@ -66,6 +89,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
                 // 给 select 使用
                 $scope.detail.uiSrcContentTypeOption = t;
             }
+            $scope.onlineData.uiContentTypeOption = wdDataSetting.getContentTypeTitle($scope.onlineData.contentType);
         });
     }
     $scope.edit = function(item) {
@@ -80,6 +104,8 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
         $scope.editStatus = false;
         item.adviceLevel = item.uiAdviceLevel.value;
         item.uiContentTypeTitle = item.uiContentTypeOption.uiTitle;
+        item.contentType = item.uiContentTypeOption.id;
+        var clone = _.clone(item.uiOld);
         delete item.uiOld;
         switch (action) {
             case 'review':
@@ -87,11 +113,17 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
                     if (data.reason) {
                         $window.alert('id:' + item.id + '，' + data.reason);
                     }
-                    console.log(data);
                     if (!data.reason && !data.success) {
                         $window.alert('id' + item.id + '，保存失败');
                     }
                     console.log(data);
+                    if (data.success) {
+                        showAllData();
+                    }
+                    if (!data.success) {
+                        $scope.editStatus = true;
+                        item.uiOld = _.clone(clone);
+                    }              
                 });
             break;
             case 'online':
@@ -99,27 +131,37 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
                     if (data.reason) {
                         $window.alert('id:' + item.id + '，' + data.reason);
                     }
-                    console.log(data);
                     if (!data.reason && !data.success) {
                         $window.alert('id' + item.id + '，保存失败');
                     }
                     console.log(data);
+                    if (data.success) {
+                        showAllData();
+                    }
+                    if (!data.success) {
+                        $scope.editStatus = true;
+                        item.uiOld = _.clone(clone);
+                    }  
                 });
             break;
         }
     };
     // 自动生成文案
-    // $scope.autoLabelItem = function(item) {
-    //     var backup = _.clone(item);
-    //     delete item.uiOldData;
-    //     wdMonitorSer.autoLabel(item).then(function(data) {
-    //         console.log(data);
-    //         item.uiEditStatus = true;
-    //         item.uiOldData = backup.uiOldData;
-    //         $scope.detail = data;
-    //         formatData();
-    //     });
-    // };
+    $scope.autoLabelItem = function(item) {
+        var backup = _.clone(item);
+        delete item.uiOldData;
+        if (!item.mappingRuleId) {
+            delete item.mappingRuleId;
+        } else {
+            item.mappingRuleId = Number(item.mappingRuleId);
+        }
+        wdMonitorSer.autoLabel(item).then(function(data) {
+            item.uiEditStatus = true;
+            item.uiOldData = backup.uiOldData;
+            $scope.detail = data;
+            formatData();
+        });
+    };
     $scope.changeAdviceLevel = function(item) {
         item.uiAdviceLevel = _.find($scope.adviceLevelOptions, function(v) {
             if (item.uiContentTypeOption.adviceLevel === v.value) {

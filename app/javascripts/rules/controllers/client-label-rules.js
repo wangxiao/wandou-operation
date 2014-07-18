@@ -43,7 +43,7 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
     };
     $scope.delItem = function(item) {
         if (item.id) {
-            wdRulesSer.deleteContentTypeRules(item).then(function(data) {
+            wdRulesSer.deleteClientLabelRules(item).then(function(data) {
                 if (data.reason) {
                     $window.alert('id:' + item.id + '，' + data.reason);
                 }
@@ -75,25 +75,34 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
     };
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
+        var clone = _.clone(item.uiOld);
         delete item.uiOld;
         item.orderType = item.uiOrderType.value;
         if (item.id) {
-            wdRulesSer.updateContentTypeRules(item).then(function(data) {
+            wdRulesSer.updateClientLabelRules(item).then(function(data) {
                 if (data.reason) {
                     $window.alert('id:' + item.id + '，' + data.reason);
                 }
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
-                }                
+                }  
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         } else {
-            wdRulesSer.addContentTypeRules(item).then(function(data) {
+            wdRulesSer.addClientLabelRules(item).then(function(data) {
                 if (data.reason) {
                     $window.alert('id:' + item.id + '，' + data.reason);
                 }
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，添加失败');
                 }                 
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
         }
     };

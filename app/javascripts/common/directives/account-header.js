@@ -23,7 +23,7 @@ return [function() {
             // 广告部分
             $element.find('.content').animate({
                 right: 2000
-            }, 40000);
+            }, 50000);
         }
     };
 }];

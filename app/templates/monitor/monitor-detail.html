@@ -26,127 +26,170 @@
                 <tr>
                     <th></th>
                     <th>原始数据</th>
+                    <th>待上线数据</th>
                     <th>线上数据</th>
                 </tr>
                 <tr>
                     <td class="title">应用名（appName）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.appName || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.appName != onlineData.appName}"
+                    >{{detail.appName || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.appName">
                     </td>
+                    <td ng-class="{error: detail.appName != onlineData.appName}">{{onlineData.appName || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">包名（pkgName）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.pkgName || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.pkgName != onlineData.pkgName}"
+                    >{{detail.pkgName || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.pkgName">
                     </td>
+                    <td ng-class="{error: detail.pkgName != onlineData.pkgName}">{{onlineData.pkgName || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">正则包名（regPkgName）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.regPkgName || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.regPkgName != onlineData.regPkgName}"
+                    >{{detail.regPkgName || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.regPkgName">
                     </td>
+                    <td ng-class="{error: detail.regPkgName != onlineData.regPkgName}">{{onlineData.regPkgName || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">路径（filePath）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.filePath || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.filePath != onlineData.filePath}"
+                    >{{detail.filePath || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.filePath">
                     </td>
+                    <td ng-class="{error: detail.filePath != onlineData.filePath}">{{onlineData.filePath || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">子路径（subPath）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.subPath || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.subPath != onlineData.subPath}"
+                    >{{detail.subPath || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.subPath">
                     </td>
+                    <td ng-class="{error: detail.subPath != onlineData.subPath}">{{onlineData.subPath || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">根路径（rootPath）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.rootPath || '（空）'}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.rootPath != onlineData.rootPath}"
+                    >{{detail.rootPath || '（空）'}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.rootPath">
                     </td>
+                    <td ng-class="{error: detail.rootPath != onlineData.rootPath}">{{onlineData.rootPath || '（空）'}}</td>
                 </tr>
                 <tr>
                     <td class="title">客户端最低版本号（leastVC）</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.leastVC}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.leastVC != onlineData.leastVC}"
+                    >{{detail.leastVC}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.leastVC">
                     </td>
+                    <td ng-class="{error: detail.leastVC != onlineData.leastVC}">{{onlineData.leastVC}}</td>
                 </tr>
                 <tr>
                     <td class="title">文件类别</td>
                     <td>{{detail.uiSrcContentTypeTitle || "（无）"}}</td>
-                    <td ng-if="!editStatus">{{detail.uiContentTypeTitle || "（无）"}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.contentType != onlineData.contentType}"
+                    >{{detail.uiContentTypeTitle || "（无）"}}</td>
                     <td ng-if="editStatus">
                         <select class="form-control" ng-model="detail.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions" ng-change="changeAdviceLevel(detail)"></select>
                     </td>
+                    <td ng-class="{error: detail.contentType != onlineData.contentType}">{{onlineData.uiContentTypeOption.uiTitle || "（无）"}}</td>
                 </tr>
                 <tr>
                     <td class="title">风险级别</td>
                     <td>{{detail.uiSrcAdviceLevelTitle || "（空）"}}</td>
-                    <td>{{detail.uiAdviceLevel.name || "（空）"}}</td>
+                    <td ng-class="{error: detail.adviceLevel != onlineData.adviceLevel}">{{detail.uiAdviceLevel.name || "（空）"}}</td>
                     <!--
                     <td ng-if="editStatus">
                         <select class="form-control" ng-model="detail.uiAdviceLevel" ng-options="t.name for t in adviceLevelOptions"></select>
                     </td>
                     -->
+                    <td ng-class="{error: detail.adviceLevel != onlineData.adviceLevel}">{{onlineData.uiAdviceLevelOption.name || "（空）"}}</td>
                 </tr>
                 <tr>
                     <td class="title">项目名</td>
                     <td>{{detail.srcItemName || "（空）"}}</td>
-                    <td ng-if="!editStatus">{{detail.itemName || "（空）"}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.itemName != onlineData.itemName}"
+                    >{{detail.itemName || "（空）"}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.itemName">
                     </td>
+                    <td ng-class="{error: detail.itemName != onlineData.itemName}">{{onlineData.itemName || "（空）"}}</td>
                 </tr>
                 <tr>
                     <td class="title">文件描述</td>
                     <td>{{detail.srcDesc || "（空）"}}</td>
-                    <td ng-if="!editStatus">{{detail.desc || "（空）"}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.desc != onlineData.desc}"
+                    >{{detail.desc || "（空）"}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.desc">
                     </td>
+                    <td ng-class="{error: detail.desc != onlineData.desc}">{{onlineData.desc || "（空）"}}</td>
                 </tr>
                 <tr>
                     <td class="title">清理风险</td>
                     <td>{{detail.srcAlertInfo || "（空）"}}</td>
-                    <td ng-if="!editStatus">{{detail.alertInfo || "（空）"}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.alertInfo != onlineData.alertInfo}"
+                    >{{detail.alertInfo || "（空）"}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.alertInfo">
                     </td>
+                    <td ng-class="{error: detail.alertInfo != onlineData.alertInfo}">{{onlineData.alertInfo || "（空）"}}</td>
                 </tr>                
                 <tr>
                     <td class="title">清理风险缩写</td>
                     <td>{{detail.srcSimpleAlertInfo || "（空）"}}</td>
-                    <td ng-if="!editStatus">{{detail.simpleAlertInfo || "（空）"}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.simpleAlertInfo != onlineData.simpleAlertInfo}"
+                    >{{detail.simpleAlertInfo || "（空）"}}</td>
                     <td ng-if="editStatus">
                         <input type="text" class="form-control" ng-model="detail.simpleAlertInfo">
                     </td>
+                    <td ng-class="{error: detail.simpleAlertInfo != onlineData.simpleAlertInfo}">{{onlineData.simpleAlertInfo || "（空）"}}</td>
                 </tr>
                 <tr>
                     <td class="title">客户端删除状态</td>
                     <td>（无）</td>
-                    <td ng-if="!editStatus">{{detail.uiDeleted.name}}</td>
+                    <td ng-if="!editStatus"
+                        ng-class="{error: detail.deleted != onlineData.deleted}"
+                    >{{detail.uiDeleted.name}}</td>
                     <td ng-if="editStatus">
                         <select class="form-control" ng-model="detail.uiDeleted" ng-options="title.name for title in deletedOptions"></select>
                     </td>
+                    <td ng-class="{error: detail.deleted != onlineData.deleted}">{{onlineData.uiDeleted.name}}</td>
                 </tr>
             </table>
         </div>
         <div class="footer">
             <div class="btns">
                 <p ng-if="!editStatus" class="btn" ng-click="edit(detail);">编辑</p>
+                <p ng-if="editStatus">根据规则 id：<input type="text" class="form-control mapping-id" ng-model="detail.mappingRuleId"></p>
+                <p ng-if="editStatus" class="btn" ng-click="autoLabelItem(detail)">生成文案</p>
                 <p ng-if="editStatus" class="btn" ng-click="cancel(detail);">撤销</p>
                 <p ng-if="editStatus" class="btn finish" ng-click="finish(detail);">完成</p>
             </div>

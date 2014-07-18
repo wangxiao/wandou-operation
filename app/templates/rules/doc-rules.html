@@ -3,7 +3,13 @@
 <div class="rules-tpl wd-content">
     <h1>竞品监控规则 - 文案映射规则</h1>
     <div class="btn add-rule-btn" ng-click="addItem();">添加一条规则</div>
-
+    <div class="search-toolbar">
+        <p>原始项目名：</p>
+        <input type="text" class="form-control" value="" ng-model="searchSrcItemName">
+        <p>项目名：</p>
+        <input type="text" class="form-control" value="" ng-model="searchItemName">
+        <div class="btn" ng-click="search();">搜索</div>
+    </div>
     <div class="doc-rule-form wd-show-box angular-animation" ng-repeat="item in dataList">
         <div class="header">
             <p>规则 {{item.id}}</p>
@@ -37,7 +43,7 @@
                     <td class="title">文件分类</td>
                     <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
-                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions"></select>
+                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions" ng-change="changeAdviceLevel(item)"></select>
                     </td>
                     <td class="title">清理风险</td>
                     <td ng-if="!item.uiEditStatus">{{item.ourAlertInfo || '（空）'}}</td>
@@ -57,10 +63,12 @@
                         <select class="form-control" ng-model="item.uiSimpleAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
                     </td>
                     <td class="title">风险级别</td>
-                    <td ng-if="!item.uiEditStatus">{{item.uiAdviceLevel.name}}</td>
+                    <td>{{item.uiAdviceLevel.name || '（空）'}}</td>
+                    <!--
                     <td ng-if="item.uiEditStatus">
                         <select class="form-control" ng-model="item.uiAdviceLevel" ng-options="title.name for title in adviceLevelOptions"></select>
                     </td>
+                    -->
                 </tr>
                 <tr>
                     <td class="title">原始风险</td>

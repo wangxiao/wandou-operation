@@ -39,6 +39,12 @@
                 <span ng-if="monitorList.needOnline" class="num" title="{{monitorList.needOnline}}">{{monitorList.needOnline}}</span>
             </a>
         </li>
+        <li class="item">
+            <a ng-class="{current: (path === 'monitor-all' && action === 'ignored')}"
+                 ng-href="{{preUrl}}/monitor-all?action=ignored">
+                已忽略信息
+            </a>
+        </li>
     </ul>
     <ul class="group">
         <li class="title">竞品监控规则</li>

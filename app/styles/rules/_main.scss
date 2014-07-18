@@ -3,6 +3,17 @@
         background-color: $background-gray;
         border-radius: 0px;
     }
+    .search-toolbar {
+        display: inline-block;
+        border: 1px solid $standard-green;
+        margin-left: 170px;
+        padding: 0px 20px;
+        .btn {
+            color: #fff;
+            background-color: $standard-green;
+            margin: 3px;
+        }
+    }
     .doc-rule-form {
         .body {
             position: relative;

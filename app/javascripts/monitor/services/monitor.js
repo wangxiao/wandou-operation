@@ -17,6 +17,18 @@ function($http) {
                 params: opts
             });
         },
+        getCompeteNeedReviewList: function(opts) {
+            opts.type = 'needReview';
+            return $http.get('/review/list', {
+                params: opts
+            });
+        },
+        getCompeteIgnoredList: function(opts) {
+            opts.type = 'ignored';
+            return $http.get('/review/list', {
+                params: opts
+            });
+        },
         getCounterList: function() {
             return $http.get('/counter/list');
         },
@@ -67,13 +79,21 @@ function($http) {
         },
         // 自动生成文案
         autoLabel: function(data) {
-            return $http.post('/rule/autolabel', data);
+            var opts = {};
+            opts.reviewAppStoragePath = data;
+            if (data.mappingRuleId) {
+                opts.mappingRuleId = data.mappingRuleId;
+            }
+            return $http.post('/rule/autolabel', opts);
         },
         getCleanLog: function(id) {
             return $http.get('/cleanLog/' + id);
+        },
+        getOnlineDataById: function(onlineId) {
+            return $http.get('/appStoragePath/list/' + onlineId);
         }
     };
-
+ 
     // 结束 
 }];
 });

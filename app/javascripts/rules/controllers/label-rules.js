@@ -119,6 +119,7 @@ function($scope, wdRulesSer, $location, $window) {
     };
     $scope.finishItem = function(item) {
         item.uiEditStatus = false;
+        var clone = _.clone(item.uiOld);
         delete item.uiOld;
         if (item.id) {
             wdRulesSer.updateLabelRules(item).then(function(data) {
@@ -128,6 +129,10 @@ function($scope, wdRulesSer, $location, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
                 }
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
             if (item.uiSimpleAlertInfo) {
                 item.uiSimpleAlertInfo.type = item.type;
@@ -138,6 +143,10 @@ function($scope, wdRulesSer, $location, $window) {
                     if (!data.reason && !data.success) {
                         $window.alert('id' + item.id + '，更新失败');
                     }
+                    if (!data.success) {
+                        item.uiEditStatus = true;
+                        item.uiOld = _.clone(clone);
+                    }              
                 });
             }
         } else {
@@ -148,6 +157,10 @@ function($scope, wdRulesSer, $location, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，添加失败');
                 }                
+                if (!data.success) {
+                    item.uiEditStatus = true;
+                    item.uiOld = _.clone(clone);
+                }              
             });
             if (item.uiSimpleAlertInfo) {
                 item.uiSimpleAlertInfo.type = item.type;
@@ -158,6 +171,10 @@ function($scope, wdRulesSer, $location, $window) {
                     if (!data.reason && !data.success) {
                         $window.alert('id' + item.id + '，添加失败');
                     }   
+                    if (!data.success) {
+                        item.uiEditStatus = true;
+                        item.uiOld = _.clone(clone);
+                    }              
                 });
             }
         }

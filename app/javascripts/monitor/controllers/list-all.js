@@ -52,7 +52,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.offset = 0;
 
     function getContentTypeOptions() {
-        return wdDataSetting.getContentTypeOptions().then(function(data) {
+        return wdDataSetting.getAllContentTypeOptions().then(function(data) {
             $scope.contentTypeOptions = data;
             _.each($scope.dataList, function(v) {
                 v.uiContentTypeOption = wdDataSetting.getContentTypeTitle(v.contentType); 
@@ -117,7 +117,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                     opts.orderBy = $scope.sort.value;
                 }
                 opts.action = actionObj[$scope.action];
-                wdMonitorSer.getCompeteOnlineList(opts).then(function(data) {
+                wdMonitorSer.getCompeteNeedReviewList(opts).then(function(data) {
+                    success(data);
+                });
+            break;
+            case 'ignore':                
+                wdMonitorSer.getCompeteIgnoredList(opts).then(function(data) {
                     success(data);
                 });
             break;
