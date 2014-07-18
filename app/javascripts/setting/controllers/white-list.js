@@ -88,6 +88,9 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，更新失败');
                 }                
+                if (data.success) {
+                    item.id = '新条目';
+                } 
             });
         } else {
             wdSettingSer.addWhiteList(item).then(function(data) {
@@ -96,7 +99,10 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
                 }
                 if (!data.reason && !data.success) {
                     $window.alert('id' + item.id + '，添加失败');
-                }                
+                }   
+                if (data.success) {
+                    item.id = '新条目';
+                }              
             });
         }
     };

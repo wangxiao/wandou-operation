@@ -121,6 +121,9 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
                     item.uiEditStatus = true;
                     item.uiOld = _.clone(clone);
                 }              
+                if (data.success) {
+                    item.id = '新条目';
+                } 
             });
         } else {
             wdRulesSer.addContentTypeRules(item).then(function(data) {
@@ -133,6 +136,9 @@ function($scope, wdRulesSer, $location, wdDataSetting, $window) {
                 if (!data.success) {
                     item.uiEditStatus = true;
                     item.uiOld = _.clone(clone);
+                } 
+                if (data.success) {
+                    item.id = '新条目';
                 }              
             });
         }

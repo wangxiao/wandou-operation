@@ -35,23 +35,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="title">Notice</td>
-                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcNotice || '（空）'}}</td>
-                    <td ng-if="item.uiEditStatus">
-                        <textarea class="form-control" value="" ng-model="item.srcNotice"></textarea>
-                    </td>
-                    <td class="title">文件分类</td>
-                    <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
-                    <td ng-if="item.uiEditStatus">
-                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions" ng-change="changeAdviceLevel(item)"></select>
-                    </td>
-                    <td class="title">清理风险</td>
-                    <td ng-if="!item.uiEditStatus">{{item.ourAlertInfo || '（空）'}}</td>
-                    <td ng-if="item.uiEditStatus">
-                        <select class="form-control" ng-model="item.uiAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
-                    </td>
-                </tr>
-                <tr>
                     <td class="title">原始描述信息</td>
                     <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcDesc || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
@@ -61,6 +44,23 @@
                     <td ng-if="!item.uiEditStatus">{{item.ourSimpleAlertInfo || '（空）'}}</td>
                     <td ng-if="item.uiEditStatus">
                         <select class="form-control" ng-model="item.uiSimpleAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
+                    </td>
+                    <td class="title">清理风险</td>
+                    <td ng-if="!item.uiEditStatus">{{item.ourAlertInfo || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiAlertInfo" ng-options="title.name for title in alertInfoOptions"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">Notice</td>
+                    <td ng-if="!item.uiEditStatus" class="border-right">{{item.srcNotice || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <textarea class="form-control" value="" ng-model="item.srcNotice"></textarea>
+                    </td>
+                    <td class="title">文件分类</td>
+                    <td ng-if="!item.uiEditStatus">{{item.uiContentTypeTitle || '（空）'}}</td>
+                    <td ng-if="item.uiEditStatus">
+                        <select class="form-control" ng-model="item.uiContentTypeOption" ng-options="t.uiTitle for t in contentTypeOptions" ng-change="changeAdviceLevel(item)"></select>
                     </td>
                     <td class="title">风险级别</td>
                     <td>{{item.uiAdviceLevel.name || '（空）'}}</td>

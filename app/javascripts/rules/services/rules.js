@@ -12,9 +12,7 @@ function($http) {
             if (!opts.itemName) {
                 delete opts.itemName;
             }
-            return $http.get('/mappingRule/list', {
-                params: opts
-            });
+            return $http.post('/mappingRule/list', opts);
         },
         deleteDocRules: function(opts) {
             return $http.post('/mappingRule/update', {
