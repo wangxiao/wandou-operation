@@ -134,7 +134,7 @@ function($scope, wdRulesSer, $location, $window) {
                     item.uiOld = _.clone(clone);
                 } 
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 }              
             });
             if (item.uiSimpleAlertInfo) {
@@ -151,7 +151,7 @@ function($scope, wdRulesSer, $location, $window) {
                         item.uiOld = _.clone(clone);
                     } 
                     if (data.success) {
-                        item.id = '新条目';
+                        item.id = data.id;
                     }              
                 });
             }
@@ -168,7 +168,7 @@ function($scope, wdRulesSer, $location, $window) {
                     item.uiOld = _.clone(clone);
                 }
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 }               
             });
             if (item.uiSimpleAlertInfo) {
@@ -185,7 +185,7 @@ function($scope, wdRulesSer, $location, $window) {
                         item.uiOld = _.clone(clone);
                     } 
                     if (data.success) {
-                        item.id = '新条目';
+                        item.id = data.id;
                     }                                  
                 });
             }

@@ -89,7 +89,7 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
                     $window.alert('id' + item.id + '，更新失败');
                 }                
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 } 
             });
         } else {
@@ -101,7 +101,7 @@ function($scope, wdSettingSer, $location, wdDataSetting, $window) {
                     $window.alert('id' + item.id + '，添加失败');
                 }   
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 }              
             });
         }

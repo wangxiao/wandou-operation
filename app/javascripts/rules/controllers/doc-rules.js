@@ -158,7 +158,7 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
                     item.uiOld = _.clone(clone);
                 }              
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 } 
             });
         } else {
@@ -175,7 +175,7 @@ function($scope, wdRulesSer, wdDataSetting, $window) {
                     item.uiOld = _.clone(clone);
                 }  
                 if (data.success) {
-                    item.id = '新条目';
+                    item.id = data.id;
                 }             
             });
         }
