@@ -216,8 +216,8 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             }
         });
     };
-    $scope.publicItem = function(item) {
-        if (!$window.confirm('确定要发布上线吗？id:' + item.id)) {
+    $scope.publicItem = function(item, noConfirm) {
+        if (!noConfirm && !$window.confirm('确定要发布上线吗？id:' + item.id)) {
             return;
         }
         $scope.finishEditItem(item, true);
@@ -310,10 +310,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     };
     $scope.batchPublic = function() {
+        if (!$window.confirm('确定要批量发布上线吗？')) {
+            return;
+        }
         $scope.batchEditStatus = false;
         _.each($scope.dataList, function(v) {
             if (v.uiChecked) {
-                $scope.publicItem(v);
+                $scope.publicItem(v, true);
             }
         });
     };
