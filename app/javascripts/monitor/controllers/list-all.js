@@ -11,7 +11,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.dataList = [];
     $scope.counterList = {};
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
-    var filterObject = wdMonitorSer.filterObject();
+    var filterObject = wdMonitorSer.filterObject;
     $scope.pathType = filterObject.pathType || $scope.pathTypeOptions[0];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.sortOptions = [
@@ -96,12 +96,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     });
 
-    wdMonitorSer.filterObject({
+    wdMonitorSer.filterObject = {
         pathType: $scope.pathType,
         source: $scope.source,
         sort: $scope.sort,
         order: $scope.order
-    });
+    };
 
     function formatData(data) {
         getContentTypeOptions();
@@ -128,6 +128,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         var success = function(data) {
             $scope.firstFlag = false;
             $scope.dataList = data;
+            wdMonitorSer.setIdList($scope.dataList);
             $scope.showLoading = false;
             if (data.length) {
                 formatData(data);
@@ -171,6 +172,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
                 $scope.dataList.splice(i, 1);
             }
         });
+        wdMonitorSer.setIdList($scope.dataList);
     }
     $scope.getPathType = function(pathType) {
         return wdDataSetting.getPathType(pathType).name;
@@ -434,12 +436,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             $scope.showLoading = true;
             $scope.offset = 0;
             showAllData();
-            wdMonitorSer.filterObject({
+            wdMonitorSer.filterObject = {
                 pathType: $scope.pathType,
                 source: $scope.source,
                 sort: $scope.sort,
                 order: $scope.order
-            });
+            };
         });
     }, 300));
     

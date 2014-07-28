@@ -159,6 +159,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
             if (!data.reason && !data.success) {
                 $window.alert('id' + item.id + '，发布上线失败');
             }
+            if (data.success) {
+                getNextDetail(item.id);
+            }
         });
     };
     $scope.checkFinish = function(item) {
@@ -171,6 +174,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
             }
             if (!data.reason && !data.success) {
                 $window.alert('id' + item.id + '，审核完成失败');
+            }
+            if (data.success) {
+                getNextDetail(item.id);
             }
             console.log(data);
         });
@@ -198,5 +204,34 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
             }
         });
     };
+    $scope.showDetail = function(id) {
+        switch ($scope.action) {
+            case 'online':
+                $location.path('/monitor-detail').search({id: id, action: 'public'});
+            break;
+            default:
+                $location.path('/monitor-detail').search({id: id, action: 'review'});
+            break;
+        }
+    };
+    function getNextDetail(id) {
+        var index = 0;
+        if (!wdMonitorSer.idList.length) {
+            $location.path('/monitor-all');
+            return;
+        }
+        _.find(wdMonitorSer.idList, function(v, i) {
+            if (v === id) {
+                wdMonitorSer.idList.splice(i, 1);
+                if (i < wdMonitorSer.idList.length) {
+                    index = i;
+                } else {
+                    index = 0;
+                }
+                return true;
+            }
+        });
+        $scope.showDetail(wdMonitorSer.idList[index]);
+    }
 }];
 });

@@ -1,26 +1,25 @@
 define([
+    'underscore'
 ], function(
+    _
 ) {
 'use strict';
 return ['$http',
 function($http) {
-
-    // 保存当前的过滤选项
-    var filterObject = {
-        pathType: null,
-        source: null,
-        sort: null,
-        order: null
-    };
-
     return {
-        filterObject: function(opts) {
-            if (arguments.length) {
-                filterObject = opts;
-            } else {
-                console.log(filterObject);
-                return filterObject;
-            }
+        idList: [],
+        setIdList: function(list) {
+            var me = this;
+            me.idList = [];
+            _.each(list, function(v) {
+                me.idList.push(v.id);
+            });
+        },
+        filterObject: {
+            pathType: null,
+            source: null,
+            sort: null,
+            order: null
         },
         getCompeteAllList: function(opts) {
             opts.type = 'needReview';
