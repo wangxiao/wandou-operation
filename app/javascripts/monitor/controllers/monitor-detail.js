@@ -206,20 +206,16 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
     };
     $scope.showDetail = function(id) {
         switch ($scope.action) {
-            case 'online':
+            case 'public':
                 $location.path('/monitor-detail').search({id: id, action: 'public'});
             break;
-            default:
+            case 'review':
                 $location.path('/monitor-detail').search({id: id, action: 'review'});
             break;
         }
     };
     function getNextDetail(id) {
         var index = 0;
-        if (!wdMonitorSer.idList.length) {
-            $location.path('/monitor-all');
-            return;
-        }
         _.find(wdMonitorSer.idList, function(v, i) {
             if (v === id) {
                 wdMonitorSer.idList.splice(i, 1);
@@ -231,6 +227,10 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
                 return true;
             }
         });
+        if (!wdMonitorSer.idList.length) {
+            $location.path('/monitor-all').search({});
+            return;
+        }
         $scope.showDetail(wdMonitorSer.idList[index]);
     }
 }];
