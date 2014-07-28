@@ -15,7 +15,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
     $scope.cleanLog = {};
     $scope.onlineData = {};
     $scope.detail.mappingRuleId = '';
-    var action = $location.search().action;
+    $scope.action = $location.search().action;
     $scope.getPathType = function(pathType) {
         var t = wdDataSetting.getPathType(pathType);
         if (t) {
@@ -24,8 +24,9 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
     };
 
     function showAllData() {
-        switch (action) {
+        switch ($scope.action) {
             case 'review':
+            case 'public':
                 wdMonitorSer.getCompeteDetail($scope.itemId).then(function(data) {
                     console.log(data);
                     $scope.detail = data;
@@ -107,7 +108,7 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
         item.contentType = item.uiContentTypeOption.id;
         var clone = _.clone(item.uiOld);
         delete item.uiOld;
-        switch (action) {
+        switch ($scope.action) {
             case 'review':
                 wdMonitorSer.upDateCompeteData(item).then(function(data) {
                     if (data.reason) {
@@ -145,6 +146,34 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
                 });
             break;
         }
+    };
+    $scope.public = function(item) {
+        if (!$window.confirm('确定要发布上线吗？id:' + item.id)) {
+            return;
+        }
+        wdMonitorSer.publicCompeteData(item).then(function(data) {
+            console.log(data);
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，发布上线失败');
+            }
+        });
+    };
+    $scope.checkFinish = function(item) {
+        if (!$window.confirm('确定审核完成吗？id:' + item.id)) {
+            return;
+        }
+        wdMonitorSer.checkFinishCompeteData(item).then(function(data) {
+            if (data.reason) {
+                $window.alert('id:' + item.id + '，' + data.reason);
+            }
+            if (!data.reason && !data.success) {
+                $window.alert('id' + item.id + '，审核完成失败');
+            }
+            console.log(data);
+        });
     };
     // 自动生成文案
     $scope.autoLabelItem = function(item) {

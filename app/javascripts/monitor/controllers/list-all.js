@@ -269,7 +269,14 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         });
     };
     $scope.showDetail = function(id) {
-        $location.path('/monitor-detail').search({id: id, action: 'review'});
+        switch ($scope.action) {
+            case 'online':
+                $location.path('/monitor-detail').search({id: id, action: 'public'});
+            break;
+            default:
+                $location.path('/monitor-detail').search({id: id, action: 'review'});
+            break;
+        }
     };
     $scope.changeAdviceLevel = function(item) {
         item.uiAdviceLevel = _.find($scope.adviceLevelOptions, function(v) {

@@ -188,10 +188,12 @@
         <div class="footer">
             <div class="btns">
                 <p ng-if="!editStatus" class="btn" ng-click="edit(detail);">编辑</p>
+                <p ng-if="!editStatus && action ==='public'" class="btn" ng-click="public(detail)">上线</p>
+                <p ng-if="!editStatus && action ==='review'" class="btn" ng-click="checkFinish(detail)">审核完成</p>
                 <p ng-if="editStatus">根据规则 id：<input type="text" class="form-control mapping-id" ng-model="detail.mappingRuleId"></p>
                 <p ng-if="editStatus" class="btn" ng-click="autoLabelItem(detail)">生成文案</p>
                 <p ng-if="editStatus" class="btn" ng-click="cancel(detail);">撤销</p>
-                <p ng-if="editStatus" class="btn finish" ng-click="finish(detail);">完成</p>
+                <p ng-if="editStatus" class="btn finish" ng-click="finish(detail);">保存</p>
             </div>
         </div>
     </div>

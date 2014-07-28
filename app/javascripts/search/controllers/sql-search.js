@@ -38,7 +38,7 @@ function($scope, wdSearchSer, wdStorage, wdDataSetting, $location, $window) {
     };
     
     $scope.showDetail = function(id) {
-        $location.path('/monitor-detail').search({id: id});
+        $location.path('/monitor-detail').search({id: id, action: 'online'});
     };
 
 }];
