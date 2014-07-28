@@ -11,7 +11,8 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
     $scope.dataList = [];
     $scope.counterList = {};
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
-    $scope.pathType = $scope.pathTypeOptions[0];
+    var filterObject = wdMonitorSer.filterObject();
+    $scope.pathType = filterObject.pathType || $scope.pathTypeOptions[0];
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
     $scope.sortOptions = [
         {value: 'installCount', name: '按照下载量排序'},
@@ -20,15 +21,15 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         {value: 'contentType', name: '按照条目类型排序'},
         {value: 'source', name: '按照来源排序'}
     ];
-    $scope.sort = $scope.sortOptions[0];
+    $scope.sort = filterObject.sort || $scope.sortOptions[0];
     $scope.sourceOptions = wdDataSetting.sourceOptions;
-    $scope.source = $scope.sourceOptions[0];
+    $scope.source = filterObject.source || $scope.sourceOptions[0];
     $scope.orderOptions = [
         {value:'desc', name: '降序'},
         {value:'asc', name: '升序'}
     ];
     $scope.deletedOptions = wdDataSetting.deletedOptions;
-    $scope.order = $scope.orderOptions[0];
+    $scope.order = filterObject.order || $scope.orderOptions[0];
     $scope.isCheckedAll = false;
     $scope.batchEditStatus = false;
     $scope.batchEditBtnDisabled = true;
@@ -71,6 +72,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         _.each(data, function(v){
             $scope.counterList[v.name] = v.value;
         });
+    });
+
+    wdMonitorSer.filterObject({
+        pathType: $scope.pathType,
+        source: $scope.source,
+        sort: $scope.sort,
+        order: $scope.order
     });
 
     function formatData(data) {
@@ -404,6 +412,12 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
             $scope.showLoading = true;
             $scope.offset = 0;
             showAllData();
+            wdMonitorSer.filterObject({
+                pathType: $scope.pathType,
+                source: $scope.source,
+                sort: $scope.sort,
+                order: $scope.order
+            });
         });
     }, 300));
     

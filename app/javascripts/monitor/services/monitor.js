@@ -4,7 +4,25 @@ define([
 'use strict';
 return ['$http',
 function($http) {
+
+    // 保存当前的过滤选项
+    var filterObject = {
+        pathType: null,
+        source: null,
+        sort: null,
+        order: null
+    };
+
     return {
+        filterObject: function(opts) {
+            if (arguments.length) {
+                filterObject = opts;
+                console.log(filterObject);
+            } else {
+                console.log(filterObject);
+                return filterObject;
+            }
+        },
         getCompeteAllList: function(opts) {
             opts.type = 'needReview';
             return $http.get('/review/list', {
