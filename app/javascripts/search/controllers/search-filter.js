@@ -6,11 +6,10 @@ define([
 'use strict';
 return ['$scope', 'wdDataSetting', 'wdSearchSer', '$location',
 function($scope, wdDataSetting, wdSearchSer, $location) {
-    $scope.dataList = [];
+    $scope.dataList = wdSearchSer.searchList;
     $scope.pathTypeOptions = wdDataSetting.pathTypeOptions;
     $scope.adviceLevelOptions = wdDataSetting.adviceLevelOptions;
-    $scope.filterMap = {};
-    $scope.filterMap.ui = {};
+    $scope.filterMap = wdSearchSer.filterMap;
     $scope.deletedOptions = wdDataSetting.deletedOptions;
 
     // 当前数据显示的位置，用来分页获取数据，默认从头开始。
@@ -60,6 +59,7 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
             console.log(data);
             $scope.firstFlag = false;
             $scope.dataList = data;
+            wdSearchSer.searchList = $scope.dataList;
             format();
         });
     };
@@ -107,5 +107,9 @@ function($scope, wdDataSetting, wdSearchSer, $location) {
             }
         });
     }, 300));
+    
+    if ($scope.dataList.length) {
+        format();
+    }
 }];
 });

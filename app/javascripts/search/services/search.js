@@ -5,6 +5,10 @@ define([
 return ['$http',
 function($http) {
     return {
+        filterMap: {
+            ui: {}
+        },
+        searchList: [],
         searchSql: function(sql) {
             return $http.post('/appStoragePath/query', sql);
         },
