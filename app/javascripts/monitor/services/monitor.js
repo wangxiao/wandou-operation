@@ -17,7 +17,6 @@ function($http) {
         filterObject: function(opts) {
             if (arguments.length) {
                 filterObject = opts;
-                console.log(filterObject);
             } else {
                 console.log(filterObject);
                 return filterObject;

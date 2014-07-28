@@ -21,7 +21,18 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         {value: 'contentType', name: '按照条目类型排序'},
         {value: 'source', name: '按照来源排序'}
     ];
-    $scope.sort = filterObject.sort || $scope.sortOptions[0];
+    // $scope.sort = filterObject.sort || $scope.sortOptions[0];
+    if (filterObject.sort) {
+        $scope.sort = _.find($scope.sortOptions, function(item) {
+            for (var k in item) {
+                if (item[k] === filterObject.sort[k]) {
+                    return true;
+                }
+            }
+        });
+    } else {
+        $scope.sort = $scope.sortOptions[0];
+    }
     $scope.sourceOptions = wdDataSetting.sourceOptions;
     $scope.source = filterObject.source || $scope.sourceOptions[0];
     $scope.orderOptions = [
@@ -29,7 +40,18 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, wdM
         {value:'asc', name: '升序'}
     ];
     $scope.deletedOptions = wdDataSetting.deletedOptions;
-    $scope.order = filterObject.order || $scope.orderOptions[0];
+    // $scope.order = filterObject.order || $scope.orderOptions[0];
+    if (filterObject.order) {
+        $scope.order = _.find($scope.orderOptions, function(item) {
+            for (var k in item) {
+                if (item[k] === filterObject.order[k]) {
+                    return true;
+                }
+            }
+        });
+    } else {
+        $scope.order = $scope.orderOptions[0];
+    }
     $scope.isCheckedAll = false;
     $scope.batchEditStatus = false;
     $scope.batchEditBtnDisabled = true;
