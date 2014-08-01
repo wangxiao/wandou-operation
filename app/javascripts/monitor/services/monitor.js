@@ -62,9 +62,9 @@ function($http) {
             });
         },
         upDateOnLineData: function(data) {
-            return $http.post('/review/update', {
-                action: 'saveAndOnline',
-                reviewAppStoragePath: data,
+            return $http.post('/appStoragePath/update', {
+                action: 'save',
+                appStoragePath: data,
                 id: data.id
             });
         },
