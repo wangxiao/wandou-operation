@@ -104,8 +104,13 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
     $scope.finish = function(item) {
         $scope.editStatus = false;
         item.adviceLevel = item.uiAdviceLevel.value;
-        item.uiContentTypeTitle = item.uiContentTypeOption.uiTitle;
-        item.contentType = item.uiContentTypeOption.id;
+        if (item.uiContentTypeOption && item.uiContentTypeOption.uiTitle) {
+            item.uiContentTypeTitle = item.uiContentTypeOption.uiTitle;
+        }
+        if (item.uiContentTypeOption && item.uiContentTypeOption.id) {
+            item.contentType = item.uiContentTypeOption.id;
+        }
+        item.deleted = item.uiDeleted.value;
         var clone = _.clone(item.uiOld);
         delete item.uiOld;
         switch ($scope.action) {
@@ -130,10 +135,10 @@ function indexCtrl($scope, wdMonitorSer, $timeout, $location, wdDataSetting, $wi
             case 'online':
                 wdMonitorSer.upDateOnLineData(item).then(function(data) {
                     if (data.reason) {
-                        $window.alert('id:' + item.id + '，' + data.reason);
+                        $window.alert('onlineId:' + item.onlineId + '，' + data.reason);
                     }
                     if (!data.reason && !data.success) {
-                        $window.alert('id' + item.id + '，保存失败');
+                        $window.alert('onlineId:' + item.onlineId + '，保存失败');
                     }
                     console.log(data);
                     if (data.success) {

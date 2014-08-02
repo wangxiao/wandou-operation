@@ -240,7 +240,7 @@
             <li ng-repeat="item in detail.editHistories">
                 <p>{{item.editUser}}</p>
                 <p>操作：{{item.actionType}}</p>
-                <p>“{{item.content}}”</p>
+                <p ng-if="item.content">“{{item.content}}”</p>
                 <p>修改时间：{{item.editTime}}</p>
             </li>
         </ul>

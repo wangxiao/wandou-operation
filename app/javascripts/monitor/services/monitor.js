@@ -65,7 +65,7 @@ function($http) {
             return $http.post('/appStoragePath/update', {
                 action: 'save',
                 appStoragePath: data,
-                id: data.id
+                id: data.onlineId
             });
         },
         // 审核完成
